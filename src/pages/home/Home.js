@@ -66,54 +66,59 @@ function Home() {
                 <Col className='white-bg'>
                     <div className="greet-text">
                         <h2>Hello, Kristian</h2>
-                        <p>Maintenance Dashboard</p>
+                        <p>SmokeBud Dashboard</p>
                     </div>
                     <Row>
-                        <Col xl="4" lg="6" className='mt-2'>
+                        <Col xl='4' lg='6' className='mt-2'>
                             <div className='charts'>
                                 <Chart
-                                    title={"Total Users"}
-                                    subTitle={"Users"}
+                                    title={'Total Users'}
+                                    // subTitle={'Users'}
                                     desc={totalUsers}
                                 />
-                                <br />
+                            </div>
+                        </Col>
+                        <Col xl='4' lg='6' className='mt-2'>
+                            <div className='charts'>
                                 <Chart
-                                    title={"Total User Subscriptions"}
-                                    subTitle={"Subscriptions Payments"}
+                                    title={'Total User Subscriptions'}
+                                    // subTitle={'Subscriptions Payments'}
                                     desc={totalSubscribeUsers}
                                 />
-                                <br />
+                            </div>
+                        </Col>
+                        <Col xl='4' className='mt-2'>
+                            <div className='charts'>
                                 <Chart
-                                    title={"Total Events"}
-                                    subTitle={"Events"}
+                                    title={'Total Events'}
+                                    // subTitle={'Events'}
                                     desc={totalEvents}
                                 />
-                                <br />
-                                <Chart
-                                    title={"Total Stores"}
-                                    subTitle={"Stores"}
-                                    desc={totalStores}
-                                />
-                                <br />
-                                <Chart
-                                    title={"Total Products"}
-                                    subTitle={"Products"}
-                                    desc={totalProducts}
-                                />
-                            </div>
-                        </Col>
-                        <Col xl="4" lg="6" className='mt-2'>
-                            <div className='charts'>
-                                <Progress />
-                            </div>
-                        </Col>
-                        <Col xl="4" className='mt-2'>
-                            <div className='charts'>
-                                <Units />
                             </div>
                         </Col>
                     </Row>
                     <Row>
+                        <Col xl='4' className='mt-2'>
+                            <div className='charts'>
+                                <Chart
+                                    title={'Total Stores'}
+                                    // subTitle={'Stores'}
+                                    desc={totalStores}
+                                />
+                            </div>
+                        </Col>
+                        <Col xl='4' className='mt-2'>
+                            <div className='charts'>
+                                <Chart
+                                    title={'Total Products'}
+                                    // subTitle={'Products'}
+                                    desc={totalProducts}
+                                />
+                            </div>
+                        </Col>
+                        {/* Add more columns/Charts as needed */}
+                    </Row>
+                    {/* <Row>
                         <Col lg="8" className='home-appliance-list'>
                             <DataTable />
                         </Col>
@@ -123,7 +128,7 @@ function Home() {
                                 <BarCharts />
                             </div>
                         </Col>
-                    </Row>
+                    </Row> */}
                 </Col>
             </Row>
         </>
