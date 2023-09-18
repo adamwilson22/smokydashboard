@@ -56,7 +56,8 @@ const Home = ({ originalList = [], updatedList = [], searchKey = "" }) => {
             </div>
           </Col>
 
-          <Col xs="10" className="d-flex align-items-center justify-content-end"><Form className="d-flex">
+          <Col xs="10" className="d-flex align-items-center justify-content-end">
+            <Form className="d-flex">
             <Form.Control
               type="search"
               placeholder="Search here..."
@@ -67,12 +68,12 @@ const Home = ({ originalList = [], updatedList = [], searchKey = "" }) => {
             <Button className='search-btn' variant="outline-success"><img src={search} alt="Logo" /></Button>
           </Form>
             <Nav>
-              <Dropdown>
+              {/* <Dropdown>
                 <Dropdown.Toggle variant="" id="dropdown-basic"><img src={notify} alt="Logo" /></Dropdown.Toggle>
                 <Dropdown.Menu>
                   <Dropdown.Item>abc</Dropdown.Item>
                 </Dropdown.Menu>
-              </Dropdown>
+              </Dropdown> */}
               <Dropdown>
                 <Dropdown.Toggle variant="" id="dropdown-basic"><img src={Admin} alt="Logo" />{user.displayName ?? "Admin"}</Dropdown.Toggle>
                 <Dropdown.Menu align="end">
