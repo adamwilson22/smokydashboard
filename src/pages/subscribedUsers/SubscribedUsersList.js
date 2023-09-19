@@ -80,6 +80,7 @@ function SubscribedUsersList({ }) { // getUnitId }) {
                 originalList={subsPaymentListFiltered}
                 updatedList={(val) => setSearchList(val)}
                 searchKey={"username"}
+                showSearh={true}
             />
             <Row className='full-height'>
                 <Col className='white-bg'>

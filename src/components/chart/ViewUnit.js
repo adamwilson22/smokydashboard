@@ -79,11 +79,10 @@ function Home({ id, setUnitId }) {
                     variant=''
                     className='edit'
                     onClick={(e) => {
-                      history.push('/update', { userId: user.uid })
-                    }
-                    }
+                      // history.push('/update', { userId: user.uid })
+                    }}
                   >
-                    Edit
+                    Block
                   </Button>
                 </td>
               </tr>

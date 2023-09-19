@@ -43,6 +43,7 @@ function Home() {
                 originalList={usersList}
                 updatedList={(val) => setSearchList(val)}
                 searchKey={"fullName"}
+                showSearh={true}
             />
             <Row className='full-height'>
                 <Col className='white-bg'>

@@ -8,27 +8,28 @@ import DataTable from "../../components/chart/DataTable";
 
 function Home() {
     const [unitId, setUnitId] = useState("");
-    const getUnitIdHandler =(id) => {
+    const getUnitIdHandler = (id) => {
         console.log("the id of the click unit is:", id);
         setUnitId(id);
     }
     return (
         <>
-        <div className='side-wrp'>
+            <div className='side-wrp'>
                 <Sidebar />
             </div>
-            <Navigation />
+            <Navigation showSearh={true}
+            />
             <Row className='full-height'>
-                
+
                 <Col className='white-bg list-page'>
-                   
+
                     <Row>
                         <Col>
-                            <DataTable getUnitId={getUnitIdHandler}/>
-                
+                            <DataTable getUnitId={getUnitIdHandler} />
+
                         </Col>
-            </Row>
-        </Col>
+                    </Row>
+                </Col>
             </Row >
         </>
     );

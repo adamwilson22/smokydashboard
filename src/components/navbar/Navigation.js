@@ -16,7 +16,7 @@ import { useUserAuth } from '../../Context/UserAuthContext';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { AppLogger } from '../../services/AppLogger';
 
-const Home = ({ originalList = [], updatedList = [], searchKey = "" }) => {
+const Home = ({ originalList = [], updatedList = [], searchKey = "", showSearh = false }) => {
   const history = useHistory();
   const { logOut, user } = useUserAuth();
 
@@ -57,16 +57,18 @@ const Home = ({ originalList = [], updatedList = [], searchKey = "" }) => {
           </Col>
 
           <Col xs="10" className="d-flex align-items-center justify-content-end">
-            <Form className="d-flex">
-            <Form.Control
-              type="search"
-              placeholder="Search here..."
-              className="me-2"
-              aria-label="Search"
-              onChange={(e) => handleSearch(e.target.value)}
-            />
-            <Button className='search-btn' variant="outline-success"><img src={search} alt="Logo" /></Button>
-          </Form>
+            {showSearh &&
+              <Form className="d-flex">
+                <Form.Control
+                  type="search"
+                  placeholder="Search here..."
+                  className="me-2"
+                  aria-label="Search"
+                  onChange={(e) => handleSearch(e.target.value)}
+                />
+                <Button className='search-btn' variant="outline-success"><img src={search} alt="Logo" /></Button>
+              </Form>
+            }
             <Nav>
               {/* <Dropdown>
                 <Dropdown.Toggle variant="" id="dropdown-basic"><img src={notify} alt="Logo" /></Dropdown.Toggle>

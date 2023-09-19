@@ -26,13 +26,13 @@ function App() {
         <UserAuthContextProvider>
           <Switch>
             <Route component={UnitSearch} path="/unitsearch" ></Route>
-            <Route component={ViewUnit} path="/viewunit" ></Route>
-            <Route component={ViewProducts} path="/viewproducts" ></Route>
-            <Route component={UnitsList} path="/unitslist" ></Route>
-            <Route component={ListOfEvents} path="/listevents" ></Route>
-            <Route component={ListOfStores} path="/liststores" ></Route>
-            <Route component={SubscribedUsersList} path="/listubspay" ></Route>
-            <Route component={NotifyUsers} path="/notifyUsers" ></Route>
+            <Route component={ViewUnit} path="/view-user" ></Route>
+            <Route component={ViewProducts} path="/view-products" ></Route>
+            <Route component={UnitsList} path="/list-users" ></Route>
+            <Route component={ListOfEvents} path="/list-events" ></Route>
+            <Route component={ListOfStores} path="/list-stores" ></Route>
+            <Route component={SubscribedUsersList} path="/list-subscription-payments" ></Route>
+            <Route component={NotifyUsers} path="/notify-users" ></Route>
             <Route component={List} path="/list" ></Route>
             <Route component={UnitCreate} path="/add" ></Route>
             <Route component={UnitUpdate} path="/update" ></Route>

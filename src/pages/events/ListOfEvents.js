@@ -50,6 +50,7 @@ function ListOfEvents() {
                 originalList={eventsList}
                 updatedList={(val) => setSearchList(val)}
                 searchKey={"eventName"}
+                showSearh={true}
             />
             <Row className='full-height'>
                 <Col className='white-bg'>

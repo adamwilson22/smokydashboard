@@ -49,10 +49,11 @@ function ViewProducts() {
                 originalList={productsList}
                 updatedList={(val) => setSearchList(val)}
                 searchKey={"productName"}
+                showSearh={true}
             />
             <Row className='full-height'>
                 <Col className='white-bg'>
-                    <Link className='back-btn' to="/liststores"><ArrowBackIcon /> Back to Stores list </Link>
+                    <Link className='back-btn' to="/list-stores"><ArrowBackIcon /> Back to Stores list </Link>
                     <Row>
                         <Col>
                             <div className='charts '>

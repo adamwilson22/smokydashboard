@@ -44,6 +44,7 @@ function ListOfStores({ }) { // getUnitId }) {
                 originalList={storesList}
                 updatedList={(val) => setSearchList(val)}
                 searchKey={"storeName"}
+                showSearh={true}
             />
             <Row className='full-height'>
                 <Col className='white-bg'>
@@ -96,7 +97,7 @@ function ListOfStores({ }) { // getUnitId }) {
                                                                         className='edit'
                                                                         onClick={(e) => {
                                                                             // getUnitId(doc.id)
-                                                                            history.push('/viewproducts',
+                                                                            history.push('/view-products',
                                                                                 { storeId: doc.storeId, storeName: doc.storeName }
                                                                             )
                                                                         }}

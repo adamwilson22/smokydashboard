@@ -61,7 +61,7 @@ function Home({ finalArray = [], getUnitId }) {
                         className='edit'
                         onClick={(e) => {
                           // getUnitId(doc.id)
-                          history.push('/viewunit', { selectedUser: doc });
+                          history.push('/view-user', { selectedUser: doc });
                         }}
                       >
                         View

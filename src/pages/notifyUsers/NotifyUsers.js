@@ -5,7 +5,7 @@ import { AppLogger } from '../../services/AppLogger';
 import { default as ReactSelect } from "react-select";
 import { components } from "react-select";
 import { AppImages } from '../../services/AppImages';
-import { handleDateTime } from '../../services/AppConstant';
+import { AppConstant, handleDateTime } from '../../services/AppConstant';
 import UnitDataService from "../../services/unit.service"
 import FBServices from "../../services/unit.services"
 import Table from 'react-bootstrap/Table';
@@ -36,17 +36,11 @@ function NotifyUsers({ }) {
         setListOfUsers(data.docs.map((doc) => ({
             value: doc.data().fcmToken, label: doc.data().fullName
         })))
-
-        // data.docs.map((doc) => {
-        //     AppLogger("doc.data()", doc.data())
-        //     AppLogger("doc.id", doc.id)
-        // })
     };
 
     useEffect(() => {
-        AppLogger("listOfUsers", listOfUsers)
-    }, [listOfUsers])
-
+        AppLogger("selectedOptions", selectedOptions)
+    }, [selectedOptions])
 
     // const handleUserName = () => {
     //     var finalArray = []
@@ -73,91 +67,46 @@ function NotifyUsers({ }) {
     }
 
     const sendNotification = (title, body, fcmToken) => {
-        // This registration token comes from the client FCM SDKs.
-        // const registrationToken = 'YOUR_REGISTRATION_TOKEN';
-
-        // const message = {
-        //     data: {
-        //         title: title,
-        //         body: body
-        //     },
-        //     token: fcmToken
-        // };
-
-        // Send a message to the device corresponding to the provided
-        // registration token.
-        // firebaseMessaging.send(message)
-        //     .then((response) => {
-        //         // Response is a message ID string.
-        //         console.log('Successfully sent message:', response);
-        //     })
-        //     .catch((error) => {
-        //         console.log('Error sending message:', error);
-        //     });
-
-
-
-        // const bodyObj = {
-        //     "message": {
-        //         "topic": "matchday",
-        //         "notification": {
-        //             "title": "Test",
-        //             "body": "testing notifications"
-        //         },
-        //     }
-        // }
-        // fetch("https://fcm.googleapis.com//v1/projects/smokersclub-e39db/messages:send", {
-        //     method: "POST",
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         Authorization: `Bearer ${"AIzaSyC4G2LPBhl5R-OMx-RnWYf5yDDhxUYDeWw"}`,
-        //     },
-        //     body: JSON.stringify(bodyObj)
-        // },)
-        //     .then((response) => response.json())
-        //     .then((data) => {
-        //         AppLogger("data fcm send", data)
-        //     })
-        //     .catch((error) => {
-        //         AppLogger("error fcm send", error)
-        //     })
-
+        var apiBody = {
+            notification: {
+                body: body,
+                title: title,
+                priority: "high"
+            },
+            data: {},
+            to: `${fcmToken}`
+        }
+        fetch("https://fcm.googleapis.com/fcm/send", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `key=${AppConstant.FCM_SERVER_KEY}`
+            },
+            body: JSON.stringify(apiBody)
+        },)
+            .then((response) => response.json())
+            .then((data) => {
+                AppLogger("data fcm send notification", data)
+            })
+            .catch((error) => {
+                AppLogger("error fcm send notification", error)
+            })
     }
 
+    const selectAllOption = { label: 'Select All', value: '*' };
 
-    const handleChange = (value) => {
-        // AppLogger("value", value)
-        setSelectedOptions(value)
-    }
+    const handleChange = (newSelectedOptions) => {
+        AppLogger("value", newSelectedOptions)
 
-    const colourOptions = [
-        { value: "ocean1", label: "Ocean" },
-        { value: "blue", label: "Blue" },
-        { value: "purple", label: "Purple" },
-        { value: "red", label: "Red" },
-        { value: "orange", label: "Orange" },
-        { value: "yellow", label: "Yellow" },
-        { value: "green", label: "Green" },
-        { value: "forest", label: "Forest" },
-        { value: "slate", label: "Slate" },
-        { value: "silver", label: "Silver" }
-    ];
-
-    const Option = (props) => {
-        return (
-            <div>
-                <components.Option {...props}>
-                    <input
-                        type="checkbox"
-                        checked={props.isSelected}
-                        onChange={() => null}
-                    />{" "}
-                    <label>{props.label}</label>
-                </components.Option>
-            </div>
+        const selectAllIsSelected = !!newSelectedOptions.find(
+            o => o.value === selectAllOption.value,
         );
-    };
-
+        setSelectedOptions(
+            selectAllIsSelected ?
+                [{ label: "All", value: "*" }, ...listOfUsers]
+                : newSelectedOptions
+        )
+    }
 
     return (
         <>
@@ -168,6 +117,7 @@ function NotifyUsers({ }) {
                 originalList={[]}
                 updatedList={() => { }}
                 searchKey={""}
+                showSearh={false}
             />
             <Row className='full-height'>
 
@@ -186,7 +136,7 @@ function NotifyUsers({ }) {
                                             <ReactSelect
                                                 styles={{ height: "100%" }}
                                                 // maxMenuHeight={100}
-                                                options={listOfUsers}
+                                                options={[{ label: "All", value: "*" }, ...listOfUsers]}
                                                 isMulti
                                                 closeMenuOnSelect={false}
                                                 hideSelectedOptions={false}
@@ -195,8 +145,9 @@ function NotifyUsers({ }) {
                                                 // }}
                                                 onChange={handleChange}
                                                 allowSelectAll={true}
-                                                // value={optionSelected}
+                                                value={selectedOptions}
                                                 placeholder={"Select Users"}
+                                                required
                                             />}
                                     </Col>
                                 </Row>
