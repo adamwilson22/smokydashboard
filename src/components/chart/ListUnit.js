@@ -5,6 +5,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Table from 'react-bootstrap/Table';
 import { format, parseISO } from 'date-fns'; // Import format and parseISO functions
 import '../../App.css';
+import { AppImages } from '../../services/AppImages';
 
 function Home({ finalArray = [], getUnitId }) {
   const history = useHistory();
@@ -14,18 +15,20 @@ function Home({ finalArray = [], getUnitId }) {
       <Link className='back-btn' to="/home"><ArrowBackIcon /> Back to Home</Link>
       <div className='table-wrap'>
         <h3 className='main-third'>List of All Users</h3>
-        <Table striped bordered hover>
+        <Table striped bordered hover responsive>
           <thead>
             <tr>
               <th>S.No</th>
               <th>Profile Picture</th>
               <th>Name</th>
               <th>Email</th>
+              <th>Gender</th>
+              <th>Phone</th>
               <th>Date of Birth</th>
               <th>Country</th>
               <th>State</th>
               <th>City</th>
-              <th>Action</th>
+              {/* <th>Action</th> */}
             </tr>
           </thead>
           <tbody>
@@ -42,20 +45,22 @@ function Home({ finalArray = [], getUnitId }) {
                     <td>{index + 1}</td>
                     <td>
                       <img
-                        src={doc.profilePicture}
+                        src={doc.profilePicture != "" ? doc.profilePicture : AppImages.placeholder}
                         alt="Logo"
                         width={60}
                         height={60}
-                        style={{ borderRadius: 8, objectFit: "cover" }}
+                        style={{ borderRadius: 8, objectFit: "cover", }}
                       />
                     </td>
                     <td>{doc.fullName}</td>
                     <td>{doc.userEmail}</td>
+                    <td>{doc.gender}</td>
+                    <td>{doc.phone}</td>
                     <td>{formattedDateOfBirth}</td> {/* Display the formatted date */}
                     <td>{doc.country}</td>
                     <td>{doc.state}</td>
                     <td>{doc.city}</td>
-                    <td>
+                    {/* <td>
                       <Button
                         variant=''
                         className='edit'
@@ -66,7 +71,7 @@ function Home({ finalArray = [], getUnitId }) {
                       >
                         View
                       </Button>
-                    </td>
+                    </td> */}
                   </tr>
                 );
               })

@@ -22,12 +22,18 @@ function Home() {
     }, [])
 
     const getAllUsers = async () => {
+        var userDummyArray = []
         const data = await UnitDataService.getAllUnit();
-        setUsersList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+        data.docs.map((doc) => {
+            if (doc.data().country != "") {
+                userDummyArray.push({ ...doc.data(), id: doc.id })
+            }
+        })
+        setUsersList(userDummyArray)
 
         // data.docs.map((doc) => {
-        //   AppLogger("doc.data()", doc.data())
-        //   AppLogger("doc.id", doc.id)
+        // AppLogger("doc.data()", doc.data())
+        // AppLogger("doc.id", doc.id)
         // })
     };
 

@@ -7,9 +7,12 @@ import Col from 'react-bootstrap/Col';
 import '../../App.css';
 import { Link } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useLocation } from 'react-router-dom';
 
 function UnitCreate() {
+    const { state } = useLocation();
     const [unitNo, setunitNo] = useState("");
+
     return (
         <>
             <div className='side-wrp'>
@@ -23,7 +26,7 @@ function UnitCreate() {
             />
             <Row className='full-height'>
                 <Col className='white-bg'>
-                    <Link className='back-btn' to="/list-users"><ArrowBackIcon /> Back to list </Link>
+                    <Link className='back-btn' to={state.backToPath ?? ""}><ArrowBackIcon /> Back to list </Link>
                     <Row>
                         <Col>
                             <div className='charts '>

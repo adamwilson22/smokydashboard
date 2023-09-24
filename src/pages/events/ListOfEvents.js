@@ -12,6 +12,8 @@ import Table from 'react-bootstrap/Table';
 import { AppLogger } from '../../services/AppLogger';
 import { AppImages } from '../../services/AppImages';
 import { useHistory, useLocation } from 'react-router-dom';
+import moment from 'moment';
+import { handleDateString } from '../../services/AppConstant';
 
 
 
@@ -65,13 +67,14 @@ function ListOfEvents() {
                                             <thead>
                                                 <tr>
                                                     {/* <th>Profile Photo</th> */}
+                                                    <th>S.No</th>
                                                     <th>Event Name</th>
                                                     <th>Type</th>
                                                     <th>Description</th>
                                                     <th>Address</th>
                                                     <th>Start Date/Time</th>
                                                     <th>End Date/Time</th>
-                                                    <th>Is Posted</th>
+                                                    {/* <th>Is Posted</th> */}
                                                     <th>Created At</th>
                                                     <th>Modified At</th>
                                                 </tr>
@@ -90,17 +93,18 @@ function ListOfEvents() {
                                                                         style={{ borderRadius: 60, objectFit: "cover" }}
                                                                     />
                                                                 </td> */}
+                                                                <td>{index + 1}</td>
                                                                 <td>{item.eventName}</td>
                                                                 <td>{item.eventType}</td>
                                                                 <td>{item.eventDescription}</td>
                                                                 <td>{item.eventAddress}</td>
                                                                 <td>{`${item.eventStartDate}/${item.eventStartTime}`}</td>
                                                                 <td>{`${item.eventEndDate}/${item.eventEndTime}`}</td>
-                                                                <td>{item.isPosted}</td>
-                                                                <td>{item.createdAt}</td>
-                                                                <td>{item.modifiedAt}</td>
+                                                                {/* <td>{item.isPosted}</td> */}
+                                                                <td>{handleDateString(item.createdAt)}</td>
+                                                                <td>{handleDateString(item.modifiedAt)}</td>
                                                                 {/* <td>{doc.setupdateDate ? doc.setupdateDate : '-'}</td> */}
-                                                                <td>
+                                                                {/* <td>
                                                                     <Button
                                                                         variant=''
                                                                         className='edit'
@@ -113,7 +117,7 @@ function ListOfEvents() {
                                                                     >
                                                                         Edit
                                                                     </Button>
-                                                                </td>
+                                                                </td> */}
                                                             </tr>
                                                         )
                                                     })

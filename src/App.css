@@ -6,7 +6,10 @@ body {
   text-align: center;
 }
 
-
+:root {
+  --bs-link-color: #91cc3f;
+    --bs-link-hover-color: #7cb927;
+}
 
 .App-logo {
   height: 40vmin;
@@ -29,37 +32,51 @@ p {
 .navbar a:hover {
   color: #ddd
 }
+.form-control:focus {
+  border-color: #91cc3f;
+}
+.form-check-input:checked {
+  background-color: #91cc3f;
+  border-color: #91cc3f;
+}
 .btn {
-  padding: 10px 45px;
-  font-size: 18px;
-  border-radius: 30px;
+  padding: 10px 30px;
+    font-size: 14px;
+    border-radius: 6px;
 }
 .btn-success {
   background: #00BF787B;
   border: 1px solid #00BF78;
 }
 .custom-navigation {
-  background: #f2f8fe;
+  background: linear-gradient(287deg, #0c0c0c, #3e5c1f);
   padding: 8px 30px;
   position: fixed;
   top: 0;
   left: 380px;
   right: 0;
   transition: all .3s;
-  z-index: 1;
+  z-index: 999;
 }
 .form-control,.form-select {
   border-color: #C1C1C1;
-  padding: 14px 20px;
-  border-radius: 50px;
-  color: #434343;
-  font-weight: 500;
-  background-color: #F6F6F6;
+  padding: 10px 20px;
+  border-radius: 6px;
+  color: #000000;
+  font-size: 14px;
+  background-color: #f7f7f7;
+}
+.form-select:focus,.form-control:focus {
+  border-color: #91cc3f;
+  outline: 0;
+  box-shadow: none;
 }
 .custom-navigation form {
-  background: #fff;
-  border-radius: 30px;
-  overflow: hidden
+  background: #8cc63e47;
+  border-radius: 4px;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  border: 1px solid #8cc63e;
 }
 
 .custom-navigation form input {
@@ -71,7 +88,22 @@ p {
 .btn-primary {
   background-color: #91CC3F;;
 }
-
+.btn-primary {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: #8CC63E;
+  --bs-btn-border-color: #8CC63E;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #89ca34;
+  --bs-btn-hover-border-color: #89ca34;
+  --bs-btn-focus-shadow-rgb: 49,132,253;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #89ca34;
+  --bs-btn-active-border-color: #89ca34;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: #8CC63E;
+  --bs-btn-disabled-border-color: #8CC63E;
+}
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -114,8 +146,9 @@ p {
 }
 
 .main-third {
-  color: #91CC3F;;
-  font-size: 20px;
+  color: #000000;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .main-pera {
@@ -126,6 +159,9 @@ p {
 
 .side-wrp {
   background: #428009;
+  background-image: url(./assets/sidebg.png);
+  background-size: cover;
+  background-repeat: no-repeat;
   position: fixed;
   top: 0;
   bottom: 0;
@@ -141,25 +177,33 @@ p {
 }
 
 .side-wrp a {
-  margin: 10px 0;
-  font-weight: 500;
-  color: #91CC3F;;
-  background: #fff;
-  padding: 15px;
+  margin: 6px 0;
+  color: #ffffff;
+  background: #8cc63e69;
+  backdrop-filter: blur(10px);
+  border: 1px solid #8cc63e;
+  padding: 12px 20px;
   text-align: left;
-  border-top-left-radius: 40px;
-  border-bottom-left-radius: 40px;
+  border-radius: 6px;
 }
-
+/* .side-wrp a.active, */
+.side-wrp a:hover {
+  background: #8cc63e;
+  color: #fff;
+}
 .side-nav a img {
   width: 20px;
   margin-right: 12px;
   vertical-align: sub;
+  filter: invert(1);
 }
-
+.side-wrp .logo-wrp .logo {
+  width: 140px;
+  margin-top: 20px;
+}
 .side-nav {
-  padding-left: 150px !important;
-  margin-top: 60px;
+  margin-top: 20px;
+    padding: 15px;
 }
 .full-height {
   margin: 0 0 0 380px;
@@ -176,6 +220,7 @@ p {
 .custom-navigation .nav-toogle {
   text-align: left;
   cursor: pointer;
+  display: none;
 }
 
 .custom-navigation input[type="search"] {
@@ -222,58 +267,83 @@ p {
 }
 
 .greet-text p {
-  color: #707070;
-  font-size: 18px;
+  color: #9ba58e;
+  font-size: 16px;
   margin-bottom: 0;
 }
 
 .table-wrap {
   text-align: left;
   border: 1px solid #70707047;
-  padding: 15px 0;
-  border-radius: 30px;
+  padding: 10px 0;
+  border-radius: 6px;
   margin-top: 30px;
 }
 .table-wrap .main-third {
-  padding: 10px 20px 20px;
+  padding: 10px 20px;
 }
 
 table tr {
     border-color: #70707057;
 }
-
+table {
+  font-size: 14px;
+}
 table tr th {
-    color: #434343;
+  border: none;
+    color: #000000;
     font-weight: 500;
     text-align: center;
 }
 table tr td,.table-striped>tbody>tr td:nth-of-type(odd),.table-striped>tbody>tr td:nth-of-type(even) {
-  border-color: #70707057;
+  border-color: #000;
+  border: none;
   background: transparent;
   box-shadow: none;
-  color: #7D7D7D;
-  font-size: 14px;
+  color: #333333;
+  font-size: 12px;
   text-align: center;
   vertical-align: middle;
 }
 table.table-striped>tbody>tr td:nth-child(1) {
-  color: #434343;
-  font-size: 16px;
+  color: #000000;
+  font-size: 12px;
+  font-weight: 500;
 }
 table tr td button.btn {
-  color: #7A86FA;
+  color: #8cc63e;
   padding: 0 2px;
+  font-size: 12px;
 }
 .table>:not(caption)>*>* {
     box-shadow: none;
 }
 .chart-wrap {
   text-align: left;
-  border: 1px solid #70707047;
-  padding: 15px;
-  border-radius: 30px;
+  border: 1px solid #7c7c7c47;
+  padding: 16px;
+  border-radius: 8px;
+}
+.card .chart-wrap {
+  padding: 0;
+  border: none;
 }
 
+.flexcard.card .card-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.flexcard.card .card-body .text-center.row {
+    text-align: left !important;
+}
+
+.flexcard.card .card-body img {
+  width: 64px;
+  object-fit: contain;
+  margin-left: 10px;
+}
 .chart-wrap .feature-circular {
   width: 140px;
   margin: 20px auto 10px;
@@ -296,9 +366,9 @@ table tr td button.btn {
 }
 
 .chart-wrap p {
-  font-size: 13px;
-  font-weight: 600;
-  margin-bottom: 0;
+  font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 0;
 }
 
 .chart-inner-content .main-forth {
@@ -399,14 +469,14 @@ table tr td button.btn {
 .create-new-form input[type="file"] {
   height: 250px;
   width: 100%;
-  background: #F6F6F6;
+  background: #f7f7f7;
   font-size: 0;
   border: 0;
   outline: none;
   box-shadow: none;
   position: relative;
   border: 1px solid #C1C1C1;
-  border-radius: 20px;
+  border-radius: 6px;
   vertical-align: top;
 }
 
@@ -444,8 +514,15 @@ table tr td button.btn {
   text-align: center;
 }
 .custom-navigation .form-control {
-  background: #fff;
+  background: #8cc63e47;
   width: 220px;
+  padding: 6px 20px;
+  border-radius: 0;
+  background: transparent;
+  color: #fff;
+}
+.custom-navigation .form-control::placeholder {
+  color: rgba(0, 0, 0, 0.644);
 }
 
 .custom-navigation .form-control:focus {
@@ -455,28 +532,28 @@ table tr td button.btn {
   margin-top: 10px;
 }
 .custom-navigation .search-btn {
-  padding: 0 20px;
+  padding: 0 10px;
   background: transparent !important;
 }
 img.upload_photo_main {
   height: 250px;
   width: 100%;
-  background: #F6F6F6;
+  background: #f7f7f7;
   font-size: 0;
   border: 0;
   outline: none;
   box-shadow: none;
   position: relative;
   border: 1px solid #C1C1C1;
-  border-radius: 20px;
+  border-radius: 6px;
   display: inline-block;
   vertical-align: middle;
 }
 .custom-navigation .nav .dropdown .btn {
-  padding: 0 10px;
-  font-size: 16px;
-  color: #707070;
-  font-weight: 500;
+  padding: 0 20px;
+  font-size: 14px;
+  color: #ffffff;
+  font-weight: 400;
   border: none !important;
 }
 
@@ -494,11 +571,11 @@ img.upload_photo_main {
 }
 
 .login-form input {
-  border-radius: 30px;
+  border-radius: 6px;
   border: 1px solid #DEDEDE;
   font-size: 16px;
   color: #878787;
-  padding: 15px 30px;
+  padding: 10px 20px;
   box-shadow: none !important;
 }
 
@@ -541,7 +618,7 @@ label.form-check-label {
 
 .loginbg:before {
   content: '';
-  background-image: url(../src/assets/maskgroup174.png);
+  background-image: url(../src/assets/leaf.jpg);
   background-size: cover;
   background-repeat: no-repeat;
   position: fixed;
@@ -685,9 +762,7 @@ label.form-check-label {
   .side-wrp {
       width: 280px;
   }
-  .side-nav {
-    padding-left: 50px !important;
-  }
+  
   .full-height {
     margin-left: 280px;
     padding: 20px;
@@ -697,7 +772,10 @@ label.form-check-label {
     padding: 12px 30px;
   }
 }
-@media (max-width: 991px) {
+@media (max-width: 1199px) {
+  .custom-navigation .nav-toogle {
+    display: block;
+  }
   body.hide-sidebar {
     overflow: hidden;
 }
@@ -816,6 +894,8 @@ a.back-btn {
   text-align: left;
   display:inline-block;
   width: 100%;
+  color: #000;
+  font-size: 14px;
 }
 .home-appliance-list .back-btn{
   display:none;

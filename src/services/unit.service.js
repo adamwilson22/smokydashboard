@@ -6,6 +6,7 @@ const eventsCollection = collection(db, 'events');
 const storesCollection = collection(db, 'stores');
 const productsCollection = collection(db, 'products');
 const subpayCollection = collection(db, 'subscriptionPayments');
+const superAdminCollect = collection(db, 'superadmin');
 
 class UnitDataService {
 
@@ -22,11 +23,14 @@ class UnitDataService {
     getAllStores = () => { // all stores
         return getDocs(storesCollection);
     }
-    getAllProducts = () => { // all 
+    getAllProducts = () => { // all products
         return getDocs(productsCollection);
     }
     getAllSubsciptionsPayments = () => { // all 
         return getDocs(subpayCollection);
+    }
+    getSuperAdmins = () => { // super admin 
+        return getDocs(superAdminCollect);
     }
 
 }

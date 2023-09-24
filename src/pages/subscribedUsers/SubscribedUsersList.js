@@ -39,14 +39,14 @@ function SubscribedUsersList({ }) { // getUnitId }) {
 
         subsPaymentList.forEach(async (element) => {
             const userDetails = await FBServices.getUserDetails(element.userId);
-            AppLogger("userDetails", userDetails.docs[0].data().fullName)
+            // AppLogger("userDetails", userDetails.docs[0].data())
             // AppLogger("typeof userDetails.docs", userDetails.docs)
             finalArray.push({
                 ...element,
-                username: userDetails.docs[0].data().fullName
+                userDetails: userDetails.docs[0].data()
             })
 
-            AppLogger("finallarrray", finalArray)
+            // AppLogger("finallarrray payment", finalArray)
             setSubsPaymentListFiltered(...subsPaymentListFiltered, finalArray)
         })
 
@@ -55,11 +55,11 @@ function SubscribedUsersList({ }) { // getUnitId }) {
     }
 
 
-    useEffect(() => {
-        console.log('====================================');
-        console.log("subsPaymentListFiltered", subsPaymentListFiltered);
-        console.log('====================================');
-    }, [subsPaymentListFiltered])
+    // useEffect(() => {
+    // console.log('====================================');
+    // console.log("subsPaymentListFiltered", subsPaymentListFiltered);
+    // console.log('====================================');
+    // }, [subsPaymentListFiltered])
 
     useEffect(() => {
         if (subsPaymentList.length != 0) {
@@ -96,13 +96,15 @@ function SubscribedUsersList({ }) { // getUnitId }) {
                                             <thead>
                                                 <tr>
                                                     <th>S.No</th>
-                                                    <th>User Name</th>
+                                                    <th>Name</th>
+                                                    <th>Email</th>
                                                     <th>Package Name</th>
                                                     <th>Amount</th>
-                                                    <th>Payment Method</th>
-                                                    <th>Payment Type</th>
+                                                    {/* <th>Payment Method</th> */}
+                                                    {/* <th>Payment Type</th> */}
                                                     <th>Created At</th>
                                                     <th>Expiry At</th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -111,13 +113,29 @@ function SubscribedUsersList({ }) { // getUnitId }) {
                                                         return (
                                                             <tr key={doc.id}>
                                                                 <td>{index + 1}</td>
-                                                                <td>{doc.username}</td>
+                                                                <td>{doc.userDetails.fullName}</td>
+                                                                <td>{doc.userDetails.userEmail}</td>
                                                                 <td>{doc.packageName}</td>
-                                                                <td>{doc.amount}</td>
-                                                                <td>{doc.paymentMethod}</td>
-                                                                <td>{doc.paymentType}</td>
+                                                                <td>${doc.amount}</td>
+                                                                {/* <td>{doc.paymentMethod}</td> */}
+                                                                {/* <td>{doc.paymentType}</td> */}
                                                                 <td>{handleDateTime(doc.createdAt)}</td>
                                                                 <td>{handleDateTime(doc.expiryAt)}</td>
+                                                                <td>
+                                                                    <Button
+                                                                        variant=''
+                                                                        className='edit'
+                                                                        onClick={(e) => {
+                                                                            // getUnitId(doc.id)
+                                                                            history.push('/view-user', {
+                                                                                selectedUser: doc.userDetails,
+                                                                                backToPath: "/list-subscription-payments"
+                                                                            });
+                                                                        }}
+                                                                    >
+                                                                        View User
+                                                                    </Button>
+                                                                </td>
                                                             </tr>
                                                         )
                                                     }) :

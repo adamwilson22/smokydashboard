@@ -5,7 +5,7 @@ import { AppLogger } from '../../services/AppLogger';
 import { default as ReactSelect } from "react-select";
 import { components } from "react-select";
 import { AppImages } from '../../services/AppImages';
-import { AppConstant, handleDateTime } from '../../services/AppConstant';
+import { AppConstant, handleDateTime, showErrorToast, showSuccessToast } from '../../services/AppConstant';
 import UnitDataService from "../../services/unit.service"
 import FBServices from "../../services/unit.services"
 import Table from 'react-bootstrap/Table';
@@ -32,15 +32,14 @@ function NotifyUsers({ }) {
     }, [])
 
     const getUsersForNotification = async () => {
+        var dummyList = []
         const data = await FBServices.getNotificationUsers();
-        setListOfUsers(data.docs.map((doc) => ({
-            value: doc.data().fcmToken, label: doc.data().fullName
-        })))
+        data.docs.map((doc) => {
+            if (doc.data().fcmToken != "iOS Device")
+                dummyList.push({ value: doc.data().fcmToken, label: doc.data().fullName })
+        })
+        setListOfUsers(dummyList)
     };
-
-    useEffect(() => {
-        AppLogger("selectedOptions", selectedOptions)
-    }, [selectedOptions])
 
     // const handleUserName = () => {
     //     var finalArray = []
@@ -58,8 +57,7 @@ function NotifyUsers({ }) {
         e.preventDefault()
         if (selectedOptions.length != 0) {
             selectedOptions.forEach((item) => {
-                AppLogger("item", item)
-                if (item.value != "iOS Device") {
+                if (item.value != "*") {
                     sendNotification(notifyBody.title, notifyBody.body, item.value)
                 }
             })
@@ -86,31 +84,58 @@ function NotifyUsers({ }) {
         },)
             .then((response) => response.json())
             .then((data) => {
-                AppLogger("data fcm send notification", data)
+                // AppLogger("data fcm send notification", data)
+                setSelectedOptions([])
+                showSuccessToast("Notification Send Successfully")
+                setNotifyBody({
+                    title: "",
+                    body: "",
+                })
             })
             .catch((error) => {
-                AppLogger("error fcm send notification", error)
+                // AppLogger("error fcm send notification", error)
+                showErrorToast("Unable to send Notification")
             })
     }
 
     const selectAllOption = { label: 'Select All', value: '*' };
 
-    const handleChange = (newSelectedOptions) => {
-        AppLogger("value", newSelectedOptions)
+    const handleChange = (newSelectedOptions, actionMeta) => {
+        var allSelected = false
+        // AppLogger("value", newSelectedOptions)
+        // AppLogger("actionMeta", actionMeta)
 
-        const selectAllIsSelected = !!newSelectedOptions.find(
-            o => o.value === selectAllOption.value,
-        );
-        setSelectedOptions(
-            selectAllIsSelected ?
-                [{ label: "All", value: "*" }, ...listOfUsers]
-                : newSelectedOptions
-        )
+        if (actionMeta.action == "select-option") {
+            allSelected = actionMeta.option.label == "All"
+            setSelectedOptions(
+                allSelected ?
+                    [{ label: "All", value: "*" }, ...listOfUsers]
+                    : newSelectedOptions
+            )
+        } else if (actionMeta.action == "remove-value" || actionMeta.action == "deselect-option") {
+            var key = ""
+            key = actionMeta.action == "remove-value" ? "removedValue" : "option"
+            allSelected = actionMeta[key].label == "All"
+            setSelectedOptions(
+                allSelected ? [] : newSelectedOptions
+            )
+        } else if (actionMeta.action == "clear") {
+            setSelectedOptions([])
+        }
     }
+
+    const customStyles = {
+        control: base => ({
+            ...base,
+            height: 80,
+            minHeight: 35,
+            overflowX: "scroll",
+        })
+    };
 
     return (
         <>
-            <div className='side-wrp'>
+            <div style={{}} className='side-wrp'>
                 <Sidebar />
             </div>
             <Navigation
@@ -131,24 +156,24 @@ function NotifyUsers({ }) {
                         <Col>
                             <div className='charts '>
                                 <Row>
-                                    <Col style={{ height: "50px", marginBottom: "24px" }}>
-                                        {listOfUsers.length != 0 &&
-                                            <ReactSelect
-                                                styles={{ height: "100%" }}
-                                                // maxMenuHeight={100}
-                                                options={[{ label: "All", value: "*" }, ...listOfUsers]}
-                                                isMulti
-                                                closeMenuOnSelect={false}
-                                                hideSelectedOptions={false}
-                                                // components={{
-                                                //     Option
-                                                // }}
-                                                onChange={handleChange}
-                                                allowSelectAll={true}
-                                                value={selectedOptions}
-                                                placeholder={"Select Users"}
-                                                required
-                                            />}
+                                    <Col style={{ height: "50px", marginBottom: "44px" }}>
+                                        {/* {listOfUsers.length != 0 && */}
+                                        <ReactSelect
+                                            styles={customStyles}
+                                            options={[{ label: "All", value: "*" }, ...listOfUsers]}
+                                            isMulti
+                                            closeMenuOnSelect={false}
+                                            hideSelectedOptions={false}
+                                            // components={{
+                                            //     Option
+                                            // }}
+                                            onChange={(e, actionMeta) => handleChange(e, actionMeta)}
+                                            allowSelectAll={true}
+                                            value={selectedOptions}
+                                            placeholder={"Select Users"}
+                                            required
+                                        />
+                                        {/* } */}
                                     </Col>
                                 </Row>
                                 <Form onSubmit={handleSubmit}>

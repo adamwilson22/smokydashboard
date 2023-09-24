@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import './navbar.css';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Admin from '../../assets/team.png'
+import Admin from '../../assets/logo.jpeg'
 import Toggle from '../../assets/toggle.png'
 import search from '../../assets/search.png'
 import notify from '../../assets/notify.png'
@@ -15,16 +15,26 @@ import { useHistory } from 'react-router-dom';
 import { useUserAuth } from '../../Context/UserAuthContext';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { AppLogger } from '../../services/AppLogger';
+import { showSuccessToast } from '../../services/AppConstant';
 
 const Home = ({ originalList = [], updatedList = [], searchKey = "", showSearh = false }) => {
   const history = useHistory();
   const { logOut, user } = useUserAuth();
+  const loginResp = JSON.parse(localStorage.getItem("USER"))
 
-  // AppLogger("user", user)
+  useEffect(() => {
+    AppLogger("loginResp ", loginResp)
+    if (loginResp == null) {
+      history.push("/")
+    }
+  }, [loginResp])
+
   const handleLogout = async () => {
     try {
       await logOut();
-      console.log('Hello From Logout')
+      // console.log('Hello From Logout')
+      localStorage.setItem("USER", JSON.stringify(null))
+      showSuccessToast("Logged Out Sucessfully")
       history.push("/");
     } catch (error) {
       console.log(error.message);
@@ -77,7 +87,7 @@ const Home = ({ originalList = [], updatedList = [], searchKey = "", showSearh =
                 </Dropdown.Menu>
               </Dropdown> */}
               <Dropdown>
-                <Dropdown.Toggle variant="" id="dropdown-basic"><img src={Admin} alt="Logo" />{user.displayName ?? "Admin"}</Dropdown.Toggle>
+                <Dropdown.Toggle variant="" id="dropdown-basic"><img src={Admin} height={40} width={40} alt="Logo" />{user != null ? user.displayName : "Admin"}</Dropdown.Toggle>
                 <Dropdown.Menu align="end">
                   <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
                 </Dropdown.Menu>

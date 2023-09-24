@@ -11,6 +11,7 @@ import Navigation from '../../components/navbar/Navigation';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { AppImages } from '../../services/AppImages';
+import { handleDateString } from '../../services/AppConstant';
 
 function ListOfStores({ }) { // getUnitId }) {
     const history = useHistory();
@@ -64,9 +65,9 @@ function ListOfStores({ }) { // getUnitId }) {
                                                     <th>Store Name</th>
                                                     <th>Owner Name</th>
                                                     <th>Description</th>
-                                                    <th>Is Approved</th>
+                                                    {/* <th>Is Approved</th> */}
                                                     <th>Created At</th>
-                                                    <th>Modified At</th>
+                                                    {/* <th>Modified At</th> */}
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -88,9 +89,9 @@ function ListOfStores({ }) { // getUnitId }) {
                                                                 <td>{doc.storeName}</td>
                                                                 <td>{doc.storeOwnerName}</td>
                                                                 <td>{doc.storeDescription}</td>
-                                                                <td>{doc.isApproved}</td>
-                                                                <td>{doc.createdAt}</td>
-                                                                <td>{doc.modifiedAt}</td>
+                                                                {/* <td>{doc.isApproved}</td> */}
+                                                                <td>{handleDateString(doc.createdAt)}</td>
+                                                                {/* <td>{doc.modifiedAt}</td> */}
                                                                 <td>
                                                                     <Button
                                                                         variant=''
