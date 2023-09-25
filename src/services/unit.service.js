@@ -1,5 +1,5 @@
 import { db } from "../firebase-config";
-import { collection, getDocs, getDoc, addDoc, updateDoc, deleteDoc, doc } from "firebase/firestore";
+import { collection, getDocs, getDoc, addDoc, getCountFromServer } from "firebase/firestore";
 
 const unitCollection = collection(db, 'user');
 const eventsCollection = collection(db, 'events');
@@ -32,7 +32,29 @@ class UnitDataService {
     getSuperAdmins = () => { // super admin 
         return getDocs(superAdminCollect);
     }
+    getUserCount = async () => {
+        const snapshot = await getCountFromServer(unitCollection);
+        // console.log('user list count: ', snapshot.data().count);
+        return snapshot.data().count
+    }
+    getEventsCount = async () => {
+        const snapshot = await getCountFromServer(eventsCollection);
+        return snapshot.data().count
+    }
+    getSubsPaymentCount = async () => {
+        const snapshot = await getCountFromServer(subpayCollection);
+        return snapshot.data().count
+    }
+    getStoresCount = async () => {
+        const snapshot = await getCountFromServer(storesCollection);
+        return snapshot.data().count
+    }
+    getProductsCount = async () => {
+        const snapshot = await getCountFromServer(productsCollection);
+        return snapshot.data().count
+    }
 
 }
 
 export default new UnitDataService();
+

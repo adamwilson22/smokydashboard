@@ -3,12 +3,8 @@ import { Link, useHistory } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { AppLogger } from '../../services/AppLogger';
 import { default as ReactSelect } from "react-select";
-import { components } from "react-select";
-import { AppImages } from '../../services/AppImages';
-import { AppConstant, handleDateTime, showErrorToast, showSuccessToast } from '../../services/AppConstant';
-import UnitDataService from "../../services/unit.service"
+import { AppConstant, showErrorToast, showSuccessToast } from '../../services/AppConstant';
 import FBServices from "../../services/unit.services"
-import Table from 'react-bootstrap/Table';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Sidebar from '../../components/sidebar/Sidebar';
 import Navigation from '../../components/navbar/Navigation';
@@ -16,7 +12,6 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import '../../App.css';
-import { firebaseMessaging } from '../../firebase-config';
 
 function NotifyUsers({ }) {
     const history = useHistory();
@@ -29,6 +24,7 @@ function NotifyUsers({ }) {
 
     useEffect(() => {
         getUsersForNotification();
+        AppLogger("getUsersForNotification", "called")
     }, [])
 
     const getUsersForNotification = async () => {

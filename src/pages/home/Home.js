@@ -1,22 +1,20 @@
 import React, { useState, useEffect } from 'react'
+import { Card } from 'react-bootstrap';
+import { AppLogger } from '../../services/AppLogger';
+import { useUserAuth } from '../../Context/UserAuthContext';
 import Navigation from '../../components/navbar/Navigation'
 import Sidebar from '../../components/sidebar/Sidebar'
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Chart from '../../components/chart/Chart';
-import Progress from '../../components/chart/Progress';
-import { Units } from '../../components/chart/Unit';
-import DataTable from '../../components/chart/DataTable';
-import BarCharts from '../../components/chart/BarCharts'
-import '../../App.css';
-import { useUserAuth } from '../../Context/UserAuthContext';
 import UnitDataService from '../../services/unit.service';
 import storeIco from '../../assets/3018711_ecommerce_platform_shopify_applications_online_icon.png';
 import eventIco from '../../assets/8683108_calendar_care_medicine_events_schedule_icon.png';
 import subscIco from '../../assets/678140_feed_media_news_rss_social_icon.png';
 import usersIco from '../../assets/309041_users_group_people_icon.png';
 import prodIco from '../../assets/6843036_courier_deliver_delivery_package_product_icon.png';
-import { Card } from 'react-bootstrap';
+import '../../App.css';
+
 
 function Home() {
     const { user } = useUserAuth();
@@ -30,32 +28,33 @@ function Home() {
 
     useEffect(() => {
         getDashboardData()
+        AppLogger("getDashboardData", "called")
     }, [])
 
     const getDashboardData = async () => {
-        const eventsData = await UnitDataService.getAllEvents()
-        if (!eventsData.empty) {
-            setTotalEvents(eventsData.docs.length)
+        const eventsData = await UnitDataService.getEventsCount()
+        if (eventsData) {
+            setTotalEvents(eventsData)
         }
 
-        const usersData = await UnitDataService.getAllUnit()
-        if (!usersData.empty) {
-            setTotalUsers(usersData.docs.length)
+        const usersData = await UnitDataService.getUserCount()
+        if (usersData) {
+            setTotalUsers(usersData)
         }
 
-        const storesData = await UnitDataService.getAllStores()
-        if (!storesData.empty) {
-            setTotalStores(storesData.docs.length)
+        const storesData = await UnitDataService.getStoresCount()
+        if (storesData) {
+            setTotalStores(storesData)
         }
 
-        const productsData = await UnitDataService.getAllProducts()
-        if (!productsData.empty) {
-            setTotalProducts(productsData.docs.length)
+        const productsData = await UnitDataService.getProductsCount()
+        if (productsData) {
+            setTotalProducts(productsData)
         }
 
-        const subPayData = await UnitDataService.getAllSubsciptionsPayments()
-        if (!subPayData.empty) {
-            setTotalSubscribedUsers(subPayData.docs.length)
+        const subPayData = await UnitDataService.getSubsPaymentCount()
+        if (subPayData) {
+            setTotalSubscribedUsers(subPayData)
         }
     };
 

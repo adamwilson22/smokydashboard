@@ -9,6 +9,7 @@ import {
   sendPasswordResetEmail,
 } from "firebase/auth";
 import { auth } from "../firebase-config";
+import { AppLogger } from "../services/AppLogger";
 
 const userAuthContext = createContext();
 
@@ -32,6 +33,7 @@ export function UserAuthContextProvider({ children }) {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentuser) => {
       // console.log("Auth", currentuser);
+      AppLogger("onAuthStateChanged", "called ::  " + " Auth Called")
       setUser(currentuser);
     });
 

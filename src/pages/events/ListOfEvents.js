@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
+import { AppLogger } from '../../services/AppLogger';
+import { useHistory, } from 'react-router-dom';
+import { handleDateString } from '../../services/AppConstant';
 import UnitDataService from "../../services/unit.service"
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Navigation from "../../components/navbar/Navigation"
 import Sidebar from "../../components/sidebar/Sidebar";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import '../../App.css';
-import { Button } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
-import { AppLogger } from '../../services/AppLogger';
-import { AppImages } from '../../services/AppImages';
-import { useHistory, useLocation } from 'react-router-dom';
-import moment from 'moment';
-import { handleDateString } from '../../services/AppConstant';
+import '../../App.css';
 
 
 
@@ -25,6 +22,7 @@ function ListOfEvents() {
 
     useEffect(() => {
         getListOfEvents()
+        AppLogger("getListOfEvents", "called")
     }, [])
 
     const getListOfEvents = async () => {

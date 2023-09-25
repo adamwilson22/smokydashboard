@@ -11,7 +11,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 function Home({ getUnitId }) {
   const [units, setUnits] = useState([]);
   useEffect(() => {
-    getUnits();
+    // getUnits();
   }, [])
   const getUnits = async () => {
     const data = await UnitDataService.getAllUnit();
@@ -19,7 +19,7 @@ function Home({ getUnitId }) {
   };
   const [filterUnits, setFilterUnits] = useState([]);
   useEffect(() => {
-    getFilterUnits();
+    // getFilterUnits();
   }, [])
 
   const getFilterUnits = async () => {
@@ -34,13 +34,13 @@ function Home({ getUnitId }) {
 
   const deleteHandler = async (id) => {
     await UnitDataService.deleteUnit(id);
-    getUnits();
+    // getUnits();
   };
 
   const history = useHistory();
   return (
     <>
-    <Link className='back-btn' to="/home"><ArrowBackIcon /> Back to Home </Link>
+      <Link className='back-btn' to="/home"><ArrowBackIcon /> Back to Home </Link>
       <div className='table-wrap'>
         <h3 className='main-third'>Appliances List</h3>
 

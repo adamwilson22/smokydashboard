@@ -2,17 +2,16 @@ import React, { useEffect, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { AppLogger } from '../../services/AppLogger';
+import { handleDateTime } from '../../services/AppConstant';
 import UnitDataService from "../../services/unit.service"
 import FBServices from "../../services/unit.services"
 import Table from 'react-bootstrap/Table';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import '../../App.css';
 import Sidebar from '../../components/sidebar/Sidebar';
 import Navigation from '../../components/navbar/Navigation';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { AppImages } from '../../services/AppImages';
-import { handleDateTime } from '../../services/AppConstant';
+import '../../App.css';
 
 function SubscribedUsersList({ }) { // getUnitId }) {
     const history = useHistory();
@@ -22,6 +21,7 @@ function SubscribedUsersList({ }) { // getUnitId }) {
 
     useEffect(() => {
         getAllSubsPayments();
+        AppLogger("getAllSubsPayments", "called")
     }, [])
 
     const getAllSubsPayments = async () => {

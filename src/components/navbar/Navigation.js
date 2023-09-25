@@ -1,5 +1,8 @@
 import React, { useEffect } from 'react';
-import './navbar.css';
+import { useHistory } from 'react-router-dom';
+import { useUserAuth } from '../../Context/UserAuthContext';
+import { AppLogger } from '../../services/AppLogger';
+import { showSuccessToast } from '../../services/AppConstant';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Button from 'react-bootstrap/Button';
@@ -9,13 +12,8 @@ import Col from 'react-bootstrap/Col';
 import Admin from '../../assets/logo.jpeg'
 import Toggle from '../../assets/toggle.png'
 import search from '../../assets/search.png'
-import notify from '../../assets/notify.png'
-import NavDropdown from 'react-bootstrap/NavDropdown';
-import { useHistory } from 'react-router-dom';
-import { useUserAuth } from '../../Context/UserAuthContext';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { AppLogger } from '../../services/AppLogger';
-import { showSuccessToast } from '../../services/AppConstant';
+import './navbar.css';
 
 const Home = ({ originalList = [], updatedList = [], searchKey = "", showSearh = false }) => {
   const history = useHistory();
@@ -23,7 +21,7 @@ const Home = ({ originalList = [], updatedList = [], searchKey = "", showSearh =
   const loginResp = JSON.parse(localStorage.getItem("USER"))
 
   useEffect(() => {
-    AppLogger("loginResp ", loginResp)
+    // AppLogger("loginResp ", loginResp)
     if (loginResp == null) {
       history.push("/")
     }

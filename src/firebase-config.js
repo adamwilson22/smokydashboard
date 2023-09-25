@@ -1,10 +1,7 @@
 
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, CACHE_SIZE_UNLIMITED, persistentLocalCache } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
-import { getMessaging, getToken, onMessage } from "firebase/messaging";
-
-
 
 // const firebaseConfig = {
 //   apiKey: "AIzaSyCKQ76VlGDlvbbGdMmjkbikk6WGFOjSga4",
@@ -26,8 +23,10 @@ const firebaseConfig = {
   appId: "1:190062256556:web:35120a69516fd3202f5a09"
 };
 
-const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig, {
+  // cacheSizeBytes: CACHE_SIZE_UNLIMITED,
+  // localCache: persistentLocalCache(/*settings*/{})
+});
 export const auth = getAuth(app);
 export const db = getFirestore(app);
-export const firebaseMessaging = getMessaging(app);
 export default app;

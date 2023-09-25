@@ -19,6 +19,7 @@ function Home() {
 
     useEffect(() => {
         getAllUsers();
+        AppLogger("getAllUsers", "called")
     }, [])
 
     const getAllUsers = async () => {

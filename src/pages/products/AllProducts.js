@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
+import { AppImages } from '../../services/AppImages';
+import { handleTags } from '../../services/AppConstant';
+import { AppLogger } from '../../services/AppLogger';
 import UnitDataService from "../../services/unit.service"
 import Table from 'react-bootstrap/Table';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import '../../App.css';
 import Sidebar from '../../components/sidebar/Sidebar';
 import Navigation from '../../components/navbar/Navigation';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { AppImages } from '../../services/AppImages';
-import { handleDateTime, handleTags } from '../../services/AppConstant';
-import { AppLogger } from '../../services/AppLogger';
+import '../../App.css';
 
 function AllProducts({ }) {
     const history = useHistory();
@@ -20,6 +19,7 @@ function AllProducts({ }) {
 
     useEffect(() => {
         getAllProducts();
+        AppLogger("getAllProducts", "called")
     }, [])
 
     const getAllProducts = async () => {
