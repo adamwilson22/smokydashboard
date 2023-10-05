@@ -12,7 +12,7 @@ function Home({ finalArray = [], getUnitId }) {
 
   return (
     <>
-      <Link className='back-btn' to="/home"><ArrowBackIcon /> Back to Home</Link>
+      <Link className='back-btn' to="/home"><ArrowBackIcon /> Back to Dashboard</Link>
       <div className='table-wrap'>
         <h3 className='main-third'>List of All Users</h3>
         <Table striped bordered hover responsive>
@@ -28,7 +28,7 @@ function Home({ finalArray = [], getUnitId }) {
               <th>Country</th>
               <th>State</th>
               <th>City</th>
-              {/* <th>Action</th> */}
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -60,7 +60,7 @@ function Home({ finalArray = [], getUnitId }) {
                     <td>{doc.country}</td>
                     <td>{doc.state}</td>
                     <td>{doc.city}</td>
-                    {/* <td>
+                    <td>
                       <Button
                         variant=''
                         className='edit'
@@ -71,7 +71,7 @@ function Home({ finalArray = [], getUnitId }) {
                       >
                         View
                       </Button>
-                    </td> */}
+                    </td>
                   </tr>
                 );
               })

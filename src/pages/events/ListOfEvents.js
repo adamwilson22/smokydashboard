@@ -3,7 +3,9 @@ import { Link } from 'react-router-dom';
 import { AppLogger } from '../../services/AppLogger';
 import { useHistory, } from 'react-router-dom';
 import { handleDateString } from '../../services/AppConstant';
+import { Button } from 'react-bootstrap';
 import UnitDataService from "../../services/unit.service"
+import firebaseServices from "../../services/unit.services"
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Navigation from "../../components/navbar/Navigation"
 import Sidebar from "../../components/sidebar/Sidebar";
@@ -11,14 +13,14 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Table from 'react-bootstrap/Table';
 import '../../App.css';
-
-
+import CustomModal from '../../components/CustomModal';
 
 function ListOfEvents() {
     const history = useHistory();
     const [eventsList, setEventsList] = useState([]);
     const [searchList, setSearchList] = useState([]);
-
+    const [selectedEvent, setSelectedEvent] = useState(null)
+    const [showModal, setShowModal] = useState(false)
 
     useEffect(() => {
         getListOfEvents()
@@ -38,6 +40,16 @@ function ListOfEvents() {
         }
     };
 
+    const handleRemoveEvent = async () => {
+        // AppLogger("selectedveent", selectedEvent)
+        try {
+            await firebaseServices.deleteEvent(selectedEvent.id)
+            setShowModal(false)
+        } catch (error) {
+            AppLogger("error removing product", error)
+        }
+    }
+
     var finalList = []
     finalList = searchList.length != 0 ? searchList : eventsList
 
@@ -54,13 +66,13 @@ function ListOfEvents() {
             />
             <Row className='full-height'>
                 <Col className='white-bg'>
-                    <Link className='back-btn' to="/home"><ArrowBackIcon /> Back to Home </Link>
+                    <Link className='back-btn' to="/home"><ArrowBackIcon /> Back to Dashboard </Link>
                     <Row>
                         <Col>
                             <div className='charts '>
                                 <>
                                     <div className='table-wrap'>
-                                        <h3 className='main-third'>List Of Events</h3>
+                                        <h3 className='main-third'>Events List</h3>
                                         <Table striped bordered hover responsive>
                                             <thead>
                                                 <tr>
@@ -75,6 +87,7 @@ function ListOfEvents() {
                                                     {/* <th>Is Posted</th> */}
                                                     <th>Created At</th>
                                                     <th>Modified At</th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -102,20 +115,31 @@ function ListOfEvents() {
                                                                 <td>{handleDateString(item.createdAt)}</td>
                                                                 <td>{handleDateString(item.modifiedAt)}</td>
                                                                 {/* <td>{doc.setupdateDate ? doc.setupdateDate : '-'}</td> */}
-                                                                {/* <td>
+                                                                <td>
                                                                     <Button
                                                                         variant=''
                                                                         className='edit'
-                                                                    // onClick={(e) => {
-                                                                    //     history.push('/update',
-                                                                    //         // { eventID: id }
-                                                                    //     )
-                                                                    // }
-                                                                    // }
+                                                                        onClick={(e) => {
+                                                                            history.push('/update',
+                                                                                { state: "" }
+                                                                                // { eventID: id }
+                                                                            )
+                                                                        }
+                                                                        }
                                                                     >
                                                                         Edit
                                                                     </Button>
-                                                                </td> */}
+                                                                    <Button
+                                                                        variant=''
+                                                                        className='edit'
+                                                                        onClick={(e) => {
+                                                                            setSelectedEvent(item)
+                                                                            setShowModal(true)
+                                                                        }}
+                                                                    >
+                                                                        Remove
+                                                                    </Button>
+                                                                </td>
                                                             </tr>
                                                         )
                                                     })
@@ -139,6 +163,16 @@ function ListOfEvents() {
                     </Row>
                 </Col>
             </Row>
+            {selectedEvent != null &&
+                <CustomModal
+                    show={showModal}
+                    setShow={(val) => setShowModal(val)}
+                    title={`Remove Event`}
+                    desc={`Are you sure you want to remove ${selectedEvent.eventName}?`}
+                    btnText={`Yes`}
+                    onClickDone={() => handleRemoveEvent()}
+                />
+            }
         </>
     );
 }

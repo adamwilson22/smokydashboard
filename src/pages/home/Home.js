@@ -72,7 +72,10 @@ function Home() {
             <Row className='full-height'>
                 <Col className='white-bg'>
                     <div className="greet-text">
-                        <h2>Hello, {user != null ? user.displayName : "Admin"}</h2>
+                        <h2>
+                            Hello Admin
+                            {/* {user != null ? user.displayName : "Admin"} */}
+                        </h2>
                         <p>SmokeBud Dashboard</p>
                     </div>
                     <Row>

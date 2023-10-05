@@ -17,115 +17,115 @@ import Modal from 'react-bootstrap/Modal';
 import InputGroup from 'react-bootstrap/InputGroup';
 
 function UnitCreateForm({ id, setUnitId }) {
-    const setupdateDate = Moment().format('DD-MM-YYYY')
+  const setupdateDate = Moment().format('DD-MM-YYYY')
 
-    const [modelNo, setModelNo] = useState("");
-    const [serialNo, setSerialNo] = useState("");
-    const [poNo, setPoNo] = useState("");
-    const [unitNo, setAge] = React.useState('');
+  const [modelNo, setModelNo] = useState("");
+  const [serialNo, setSerialNo] = useState("");
+  const [poNo, setPoNo] = useState("");
+  const [unitNo, setAge] = React.useState('');
 
-    const handleChange = (event) => {
-        setAge(event.target.value);
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
+
+  const [colorUnit, setUnitColor] = React.useState('');
+  const colorChange = (event) => {
+    setUnitColor(event.target.value);
+  };
+  const [appliance, setApplianceType] = React.useState('');
+  const applianceChange = (event) => {
+    setApplianceType(event.target.value);
+  };
+
+  const [imgsrc, setimgSrc] = React.useState('');
+  const handleInputFileChange = (event) => {
+    //setimage(event)
+    var file = event
+
+    var reader = new FileReader();
+    // console.log(file);
+
+    var url = reader.readAsDataURL(file);
+    reader.onloadend = function (e) {
+      setimgSrc(reader.result)
     };
+  }
+  const [flag, setFlag] = useState(true);
+  const [message, setMessage] = useState({ error: false, msg: "" });
 
-    const [colorUnit, setUnitColor] = React.useState('');
-    const colorChange = (event) => {
-        setUnitColor(event.target.value);
-    };
-    const [appliance, setApplianceType] = React.useState('');
-    const applianceChange = (event) => {
-        setApplianceType(event.target.value);
-    };
-
-    const [imgsrc, setimgSrc] = React.useState('');
-    const handleInputFileChange = (event) => {
-        //setimage(event)
-        var file = event
-
-        var reader = new FileReader();
-        // console.log(file);
-
-        var url = reader.readAsDataURL(file);
-        reader.onloadend = function (e) {
-            setimgSrc(reader.result)
-        };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setMessage("");
+    if (modelNo === "") {
+      setMessage({ error: true, msg: "All Fields are mandatory" });
+      return;
     }
-    const [flag, setFlag] = useState(true);
-    const [message, setMessage] = useState({ error: false, msg: "" });
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setMessage("");
-        if (modelNo === "") {
-            setMessage({ error: true, msg: "All Fields are mandatory" });
-            return;
-        }
-        const newUnit = {
-            modelNo,
-            poNo,
-            serialNo,
-            unitNo,
-            colorUnit,
-            appliance,
-            imgsrc,
-            setupdateDate,
-        }
-        try {
-            if (state.state !== undefined && state.state !== "") { 
-            await UnitDataService.updateUnit(state.state, newUnit);
-            setUnitId("");
-            setMessage({ error: false, msg: "Update successfully!" });
-            }
-            else{
-                await UnitDataService.addUnits(newUnit);
-                setMessage({ error: false, msg: "New Unit added successfully!" });
-
-            }
-        } catch (err) {
-            setMessage({ error: true, msg: err.message });
-        }
-        setModelNo("");
-        setPoNo("")
-        setSerialNo("")
-        setApplianceType("")
-        setUnitColor("")
-        setAge("")
-        setimgSrc("")
-        imgsrc("")
-    };
-
-    const { state } = useLocation()
-    const editHandler = async () => {
-        setMessage("");
-        try {
-            const docSnap = await UnitDataService.getUnit(state.state);
-            setModelNo(docSnap.data().modelNo);
-            setPoNo(docSnap.data().poNo);
-            setSerialNo(docSnap.data().serialNo);
-            setApplianceType(docSnap.data().appliance)
-            setUnitColor(docSnap.data().colorUnit)
-            setAge(docSnap.data().unitNo)
-            setimgSrc(docSnap.data().imgsrc)
-            //imgsrc(docSnap.data().imgsrc)
-        } catch (err) {
-            setMessage({ error: true, msg: err.message });
-        }
+    const newUnit = {
+      modelNo,
+      poNo,
+      serialNo,
+      unitNo,
+      colorUnit,
+      appliance,
+      imgsrc,
+      setupdateDate,
     }
-    useEffect(() => {
-        if (state.state !== undefined && state.state !== "") {
-            editHandler();
-        }
-    }, [state.state]);
+    try {
+      if (state.state !== undefined && state.state !== "") {
+        await UnitDataService.updateUnit(state.state, newUnit);
+        setUnitId("");
+        setMessage({ error: false, msg: "Update successfully!" });
+      }
+      else {
+        await UnitDataService.addUnits(newUnit);
+        setMessage({ error: false, msg: "New Unit added successfully!" });
 
-    const [units, setUnits] = useState([]);
-    useEffect(() => {
-      getUnits();
-    }, [])
-    const getUnits = async () => {
-      const data = await unitService.getAllUnit();
-      setUnits(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-    };
-    const [colors, setColors] = useState([]);
+      }
+    } catch (err) {
+      setMessage({ error: true, msg: err.message });
+    }
+    setModelNo("");
+    setPoNo("")
+    setSerialNo("")
+    setApplianceType("")
+    setUnitColor("")
+    setAge("")
+    setimgSrc("")
+    imgsrc("")
+  };
+
+  const { state } = useLocation()
+  const editHandler = async () => {
+    setMessage("");
+    try {
+      const docSnap = await UnitDataService.getUnit(state.state);
+      setModelNo(docSnap.data().modelNo);
+      setPoNo(docSnap.data().poNo);
+      setSerialNo(docSnap.data().serialNo);
+      setApplianceType(docSnap.data().appliance)
+      setUnitColor(docSnap.data().colorUnit)
+      setAge(docSnap.data().unitNo)
+      setimgSrc(docSnap.data().imgsrc)
+      //imgsrc(docSnap.data().imgsrc)
+    } catch (err) {
+      setMessage({ error: true, msg: err.message });
+    }
+  }
+  useEffect(() => {
+    if (state.state !== undefined && state.state !== "") {
+      editHandler();
+    }
+  }, [state.state]);
+
+  const [units, setUnits] = useState([]);
+  useEffect(() => {
+    getUnits();
+  }, [])
+  const getUnits = async () => {
+    const data = await unitService.getAllUnit();
+    setUnits(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+  };
+  const [colors, setColors] = useState([]);
   useEffect(() => {
     getColor();
   }, [])
@@ -183,19 +183,19 @@ function UnitCreateForm({ id, setUnitId }) {
     getUnits();
 
   };
-    return (
-        <>
-            {message?.msg && (
-                <Alert
-                    variant={message?.error ? 'danger' : 'success'}
-                    dismissible
-                    onClose={() => setMessage("")}
-                >
-                    {message?.msg}
-                </Alert>
-            )}
-            <div className='create-new-form'>
-            <Modal show={show} onHide={handleClose}>
+  return (
+    <>
+      {message?.msg && (
+        <Alert
+          variant={message?.error ? 'danger' : 'success'}
+          dismissible
+          onClose={() => setMessage("")}
+        >
+          {message?.msg}
+        </Alert>
+      )}
+      <div className='create-new-form'>
+        <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Add New Unit</Modal.Title>
           </Modal.Header>
@@ -263,24 +263,24 @@ function UnitCreateForm({ id, setUnitId }) {
           <Row>
             <Col>
               <Form.Group className="mb-3" controlId="formBasicUnit">
-                  <FormControl fullWidth>
+                <FormControl fullWidth>
                   <InputGroup className="">
-                      {/* <InputLabel id="unitNoLabel">Unit No.</InputLabel> */}
-                      <Form.Select
-                        labelId="unitNoLabel"
-                        id="unitNoSelect"
-                        value={unitNo}
-                        label="Age"
-                        onChange={handleChange}
-                      >
-                        {units.map((doc, index) => {
+                    {/* <InputLabel id="unitNoLabel">Unit No.</InputLabel> */}
+                    <Form.Select
+                      labelId="unitNoLabel"
+                      id="unitNoSelect"
+                      value={unitNo}
+                      label="Age"
+                      onChange={handleChange}
+                    >
+                      {units.map((doc, index) => {
                         return (
                           <option value={doc.newUnit}>{doc.newUnit}</option>
                         )
                       })
-                    }
-                      </Form.Select> 
-                      <Button onClick={handleShow2}> + </Button>
+                      }
+                    </Form.Select>
+                    <Button onClick={handleShow2}> + </Button>
                   </InputGroup>
                 </FormControl>
               </Form.Group>
@@ -297,12 +297,12 @@ function UnitCreateForm({ id, setUnitId }) {
                       label="Color"
                       onChange={colorChange}
                     >
-                    {colors.map((doc, index) => {
-                      return (
-                        <option value={doc.newColor}>{doc.newColor}</option>
-                      )
-                    })
-                  }
+                      {colors.map((doc, index) => {
+                        return (
+                          <option value={doc.newColor}>{doc.newColor}</option>
+                        )
+                      })
+                      }
                     </Form.Select>
                     <Button onClick={handleShow}> + </Button>
                   </InputGroup>
@@ -361,7 +361,7 @@ function UnitCreateForm({ id, setUnitId }) {
             </Col>
           </Row>
           <Row>
-              <h4 className='text-left mt-4'>Add Images</h4>
+            <h4 className='text-left mt-4'>Add Images</h4>
             <Col md="4">
               <div className='image-field mt-2'>
                 <img src={imgsrc ? imgsrc : ''} className="upload_photo_main" />
@@ -384,8 +384,8 @@ function UnitCreateForm({ id, setUnitId }) {
         </Form>
 
       </div>
-        </>
-    );
+    </>
+  );
 }
 
 export default UnitCreateForm

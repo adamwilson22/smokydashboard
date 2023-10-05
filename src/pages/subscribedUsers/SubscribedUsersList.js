@@ -79,12 +79,12 @@ function SubscribedUsersList({ }) { // getUnitId }) {
             <Navigation
                 originalList={subsPaymentListFiltered}
                 updatedList={(val) => setSearchList(val)}
-                searchKey={"username"}
+                searchKey={"userDetails.fullName"}
                 showSearh={true}
             />
             <Row className='full-height'>
                 <Col className='white-bg'>
-                    <Link className='back-btn' to="/home"><ArrowBackIcon /> Back to Home </Link>
+                    <Link className='back-btn' to="/home"><ArrowBackIcon /> Back to Dashboard </Link>
                     <Row>
                         <Col>
                             <div className='charts '>

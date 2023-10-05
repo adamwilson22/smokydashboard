@@ -14,12 +14,15 @@ import { AppImages } from '../services/AppImages';
 import { Button } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import { handleTags } from '../services/AppConstant';
+import CustomModal from './CustomModal';
 
 function ViewProducts() {
     const history = useHistory();
     const { state } = useLocation();
     const [productsList, setProductsList] = useState([]);
     const [searchList, setSearchList] = useState([]);
+    const [selectedProd, setSelectedProd] = useState(null)
+    const [showModal, setShowModal] = useState(false)
 
     useEffect(() => {
         getStoresProducts()
@@ -36,6 +39,15 @@ function ViewProducts() {
             console.log('Error: no products found')
         }
     };
+
+    const handleRemoveProd = async () => {
+        try {
+            await UnitDataService.deleteProduct(selectedProd.uid)
+            setShowModal(false)
+        } catch (error) {
+            AppLogger("error removing product", error)
+        }
+    }
 
     var finalList = []
     finalList = searchList.length != 0 ? searchList : productsList
@@ -69,6 +81,7 @@ function ViewProducts() {
                                                     <th>Tags</th>
                                                     <th>Description</th>
                                                     <th>Is Approved</th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -91,16 +104,27 @@ function ViewProducts() {
                                                                 <td>{doc.productDescription}</td>
                                                                 <td>{doc.isApproved}</td>
                                                                 {/* <td>{doc.setupdateDate ? doc.setupdateDate : '-'}</td> */}
-                                                                <td>
+                                                                <td className='flexColumn'>
                                                                     <Button
                                                                         variant=''
                                                                         className='edit'
-                                                                    // onClick={(e) => {
-                                                                    //     history.push('/update', { userId: doc.uid })
-                                                                    // }
-                                                                    // }
+                                                                        onClick={(e) => {
+                                                                            history.push('/update-product',
+                                                                                { productDetails: doc }
+                                                                            )
+                                                                        }}
                                                                     >
                                                                         Edit
+                                                                    </Button>
+                                                                    <Button
+                                                                        variant=''
+                                                                        className='edit'
+                                                                        onClick={(e) => {
+                                                                            setSelectedProd(doc)
+                                                                            setShowModal(true)
+                                                                        }}
+                                                                    >
+                                                                        Remove
                                                                     </Button>
                                                                 </td>
                                                             </tr>
@@ -121,6 +145,16 @@ function ViewProducts() {
                     </Row>
                 </Col>
             </Row>
+            {selectedProd != null &&
+                <CustomModal
+                    show={showModal}
+                    setShow={(val) => setShowModal(val)}
+                    title={`Remove Product`}
+                    desc={`Are you sure you want to remove ${selectedProd.productName}?`}
+                    btnText={`Yes`}
+                    onClickDone={() => handleRemoveProd()}
+                />
+            }
         </>
     );
 }

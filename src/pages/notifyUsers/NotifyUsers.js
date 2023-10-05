@@ -125,7 +125,7 @@ function NotifyUsers({ }) {
             ...base,
             height: 80,
             minHeight: 35,
-            overflowX: "scroll",
+            overflowX: "hidden",
         })
     };
 
@@ -143,9 +143,9 @@ function NotifyUsers({ }) {
             <Row className='full-height'>
 
                 <Col className='white-bg'>
-                    <Link className='back-btn' to="/home"><ArrowBackIcon /> Back to Home </Link>
+                    <Link className='back-btn' to="/home"><ArrowBackIcon /> Back to Dashboard </Link>
                     <div className="greet-text">
-                        <h2>Send Push Notifications to Users</h2>
+                        <h2>Send Push Notifications</h2>
 
                     </div>
                     <Row>

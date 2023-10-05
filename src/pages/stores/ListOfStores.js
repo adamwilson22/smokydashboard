@@ -3,8 +3,9 @@ import { Link, useHistory } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { AppLogger } from '../../services/AppLogger';
 import { AppImages } from '../../services/AppImages';
-import { handleDateString } from '../../services/AppConstant';
+import { handleDateString, showErrorToast } from '../../services/AppConstant';
 import UnitDataService from "../../services/unit.service"
+import firebaseServices from "../../services/unit.services"
 import Table from 'react-bootstrap/Table';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Sidebar from '../../components/sidebar/Sidebar';
@@ -12,11 +13,14 @@ import Navigation from '../../components/navbar/Navigation';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import '../../App.css';
+import CustomModal from '../../components/CustomModal';
 
 function ListOfStores({ }) { // getUnitId }) {
     const history = useHistory();
     const [storesList, setStoresList] = useState([]);
     const [searchList, setSearchList] = useState([]);
+    const [selectedStore, setSelectedStore] = useState(null)
+    const [showModal, setShowModal] = useState(false)
 
     useEffect(() => {
         getAllStores();
@@ -34,6 +38,17 @@ function ListOfStores({ }) { // getUnitId }) {
         // })
     };
 
+    const handleRemoveStore = async () => {
+        try {
+            await firebaseServices.deleteStore(selectedStore.id);
+            setShowModal(false)
+        } catch (error) {
+            AppLogger("Unable to remove store", error)
+            showErrorToast(error)
+        }
+
+    }
+
     var finalList = []
     finalList = searchList.length != 0 ? searchList : storesList
 
@@ -50,13 +65,13 @@ function ListOfStores({ }) { // getUnitId }) {
             />
             <Row className='full-height'>
                 <Col className='white-bg'>
-                    <Link className='back-btn' to="/home"><ArrowBackIcon /> Back to Home </Link>
+                    <Link className='back-btn' to="/home"><ArrowBackIcon /> Back to Dashboard </Link>
                     <Row>
                         <Col>
                             <div className='charts '>
                                 <>
                                     <div className='table-wrap'>
-                                        <h3 className='main-third'>List of All Stores</h3>
+                                        <h3 className='main-third'>Stores List</h3>
 
                                         <Table striped bordered hover responsive>
                                             <thead>
@@ -93,7 +108,7 @@ function ListOfStores({ }) { // getUnitId }) {
                                                                 {/* <td>{doc.isApproved}</td> */}
                                                                 <td>{handleDateString(doc.createdAt)}</td>
                                                                 {/* <td>{doc.modifiedAt}</td> */}
-                                                                <td>
+                                                                <td className='flexColumn'>
                                                                     <Button
                                                                         variant=''
                                                                         className='edit'
@@ -106,7 +121,16 @@ function ListOfStores({ }) { // getUnitId }) {
                                                                     >
                                                                         View Products
                                                                     </Button>
-
+                                                                    <Button
+                                                                        variant=''
+                                                                        className='edit'
+                                                                        onClick={(e) => {
+                                                                            setSelectedStore(doc)
+                                                                            setShowModal(true)
+                                                                        }}
+                                                                    >
+                                                                        Remove
+                                                                    </Button>
                                                                 </td>
                                                             </tr>
                                                         )
@@ -126,6 +150,16 @@ function ListOfStores({ }) { // getUnitId }) {
                     </Row>
                 </Col>
             </Row>
+            {selectedStore != null &&
+                <CustomModal
+                    show={showModal}
+                    setShow={(val) => setShowModal(val)}
+                    title={`Remove Store`}
+                    desc={`Are you sure you want to remove ${selectedStore.storeName}?`}
+                    btnText={`Yes`}
+                    onClickDone={() => handleRemoveStore()}
+                />
+            }
         </>
     );
 }

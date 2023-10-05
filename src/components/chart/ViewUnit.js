@@ -6,11 +6,15 @@ import Table from 'react-bootstrap/Table';
 import { useHistory, useLocation } from 'react-router-dom';
 import { AppLogger } from '../../services/AppLogger';
 import { AppImages } from '../../services/AppImages';
+import { showErrorToast } from '../../services/AppConstant';
+import CustomModal from '../CustomModal';
 
 function Home({ id, setUnitId }) {
   const history = useHistory();
   const { state } = useLocation();
   const [user, setUser] = useState(null);
+  const [showBlockModal, setShowBlockModal] = useState(false)
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
 
   useEffect(() => {
     // const test = UnitDataService.getSelectedUnit(state.state).then(r => console.log(r));
@@ -31,6 +35,28 @@ function Home({ id, setUnitId }) {
   //   }
   // };
 
+  const handleBlockUnBlockUser = async () => {
+    // AppLogger("user object", user)
+    try {
+      await UnitDataService.updateUser(user.uid, !user.status);
+      setUser({ ...user, status: !user.status })
+      setShowBlockModal(false)
+    } catch (error) {
+      AppLogger("error blocking user ", error)
+      showErrorToast(error)
+    }
+  }
+
+  const handleRemoveUser = async () => {
+    try {
+      await UnitDataService.deleteUser(user.uid);
+      setShowDeleteModal(false)
+    } catch (error) {
+      AppLogger("error deleting user ", error)
+      showErrorToast(error)
+    }
+  }
+
   return (
     <>
       <div className='table-wrap'>
@@ -48,6 +74,7 @@ function Home({ id, setUnitId }) {
               <th>Date of Birth</th>
               <th>Is Verified</th>
               <th>Is Reported</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -80,9 +107,20 @@ function Home({ id, setUnitId }) {
                     className='edit'
                     onClick={(e) => {
                       // history.push('/update', { userId: user.uid })
+                      setShowBlockModal(true)
                     }}
                   >
-                    Block
+                    {`${user.status ? "Block" : "UnBlock"}`}
+                  </Button>
+                  <Button
+                    variant=''
+                    className='edit'
+                    onClick={(e) => {
+                      // history.push('/update', { userId: user.uid })
+                      setShowDeleteModal(true)
+                    }}
+                  >
+                    Remove
                   </Button>
                 </td>
               </tr>
@@ -94,6 +132,30 @@ function Home({ id, setUnitId }) {
         {/* <div className='text-center'>
           <a href="#" className='text-dark'>View All</a>
         </div> */}
+        {user != null &&
+          <>
+            <CustomModal
+              show={showBlockModal}
+              setShow={(val) => setShowBlockModal(val)}
+              title={`${user.status ? "Block" : "UnBlock"} User`}
+              desc={`Are you sure you want to ${user.status ? "Block" : "UnBlock"} ${user.fullName}?`}
+              btnText={`Yes`}
+              onClickDone={() => handleBlockUnBlockUser()}
+            />
+
+            <CustomModal
+              show={showDeleteModal}
+              setShow={(val) => setShowDeleteModal(val)}
+              title={`Remove User`}
+              desc={`Are you sure you want to remove ${user.fullName}?`}
+              btnText={`Yes`}
+              onClickDone={() =>
+              // handleRemoveUser() // uncomment this after testing 
+              { }
+              }
+            />
+          </>
+        }
       </div>
 
     </>

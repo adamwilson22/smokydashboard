@@ -48,6 +48,31 @@ class UnitDataService {
         return getDocs(usersObj);
     }
 
+    updateUser = (id, userStatus) => {
+        const userDoc = doc(db, "user", id);
+        return updateDoc(userDoc, { status: userStatus });
+    };
+
+    deleteUser = (id) => {
+        const userDoc = doc(db, "user", id);
+        return deleteDoc(userDoc);
+    };
+
+    deleteStore = (id) => {
+        const storeDoc = doc(db, "stores", id);
+        return deleteDoc(storeDoc);
+    };
+
+    deleteProduct = (id) => {
+        const prod = doc(db, "products", id);
+        return deleteDoc(prod);
+    };
+
+    deleteEvent = (id) => {
+        const event = doc(db, "events", id);
+        return deleteDoc(event);
+    };
+
 }
 
 export default new UnitDataService();
