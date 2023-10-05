@@ -19,6 +19,7 @@ import SubscribedUsersList from './pages/subscribedUsers/SubscribedUsersList';
 import NotifyUsers from './pages/notifyUsers/NotifyUsers';
 import './App.css';
 import AllProducts from './pages/products/AllProducts';
+import EditProduct from './components/EditProduct';
 
 function App() {
   const [unitId, setUnitId] = useState("");
@@ -43,6 +44,7 @@ function App() {
             <Route component={List} path="/list" ></Route>
             <Route component={UnitCreate} path="/add" ></Route>
             <Route component={UnitUpdate} path="/update" ></Route>
+            <Route component={EditProduct} path="/update-product" ></Route>
             <Route component={Home} path="/home" ></Route>
             <Route component={AddNewUnit} path="/addunit" ></Route>
             <Route component={Login} path="/" ></Route>

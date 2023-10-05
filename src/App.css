@@ -903,3 +903,8 @@ a.back-btn {
 .white-bg.list-page .text-center {
   display:none;
 }
+
+.flexColumn{
+  display: flex;
+  flex-direction: column;
+}
