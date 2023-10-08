@@ -12,7 +12,7 @@ function Home({ finalArray = [], getUnitId }) {
 
   return (
     <>
-      <Link className='back-btn' to="/home"><ArrowBackIcon /> Back to Dashboard</Link>
+      <Link className='back-btn override' to="/home"><ArrowBackIcon /> Back to Dashboard</Link>
       <div className='table-wrap'>
         <h3 className='main-third'>List of All Users</h3>
         <Table striped bordered hover responsive>

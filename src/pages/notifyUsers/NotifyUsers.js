@@ -143,7 +143,7 @@ function NotifyUsers({ }) {
             <Row className='full-height'>
 
                 <Col className='white-bg'>
-                    <Link className='back-btn' to="/home"><ArrowBackIcon /> Back to Dashboard </Link>
+                    <Link className='back-btn override' to="/home"><ArrowBackIcon /> Back to Dashboard </Link>
                     <div className="greet-text">
                         <h2>Send Push Notifications</h2>
 

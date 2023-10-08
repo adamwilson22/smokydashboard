@@ -26,7 +26,7 @@ function UnitCreate() {
             />
             <Row className='full-height'>
                 <Col className='white-bg'>
-                    <Link className='back-btn' to={state.backToPath ?? ""}><ArrowBackIcon /> Back to list </Link>
+                    <Link className='back-btn override' to={state.backToPath ?? ""}><ArrowBackIcon /> Back to list </Link>
                     <Row>
                         <Col>
                             <div className='charts '>

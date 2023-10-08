@@ -24,6 +24,7 @@
     "react-apexcharts": "^1.4.0",
     "react-bootstrap": "^2.5.0",
     "react-circular-progressbar": "^2.1.0",
+    "react-datetime-picker": "^5.5.2",
     "react-dom": "^18.2.0",
     "react-google-button": "^0.7.2",
     "react-hot-toast": "^2.4.1",

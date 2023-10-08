@@ -24,7 +24,7 @@ function UnitCreate() {
             <Row className='full-height'>
 
                 <Col className='white-bg'>
-                    <Link className='back-btn' to="/list"><ArrowBackIcon /> Back to list </Link>
+                    <Link className='back-btn override' to="/list"><ArrowBackIcon /> Back to list </Link>
 
                     <div className="greet-text">
                         <h2>Add New Appliance</h2>

@@ -908,3 +908,102 @@ a.back-btn {
   display: flex;
   flex-direction: column;
 }
+
+.flexRow{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 46px;
+  height: 27px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(20px);
+  -ms-transform: translateX(20px);
+  transform: translateX(20px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.override{
+  display: flex !important;
+  justify-content: flex-start !important;
+  width: fit-content !important;
+}
+
+.label-styl{
+  display: flex;
+  margin-bottom: 4px;
+  font-size: large;
+  font-weight: 500;
+}
+
+.cus-btn{
+  margin-bottom: 9px;
+  margin-right: 9px;
+}
+
+.react-datetime-picker__wrapper {
+  border-color: #C1C1C1;
+  border-radius: 6px;
+  background-color: #f7f7f7;
+  margin-left: 8px;
+}
+.date-con{
+  display: flex;
+  flex-direction: "row";
+  align-items: center;
+  justify-content: space-between;
+}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom';
 import { AppImages } from '../../services/AppImages';
-import { handleTags } from '../../services/AppConstant';
+import { handleTags, showErrorToast, showSuccessToast } from '../../services/AppConstant';
 import { AppLogger } from '../../services/AppLogger';
 import { Button } from 'react-bootstrap';
 import CustomModal from '../../components/CustomModal';
@@ -21,6 +21,7 @@ function AllProducts({ }) {
     const [searchList, setSearchList] = useState([]);
     const [selectedProd, setSelectedProd] = useState(null)
     const [showModal, setShowModal] = useState(false)
+    const [showApproveModal, setShowApproveModal] = useState(false)
 
     useEffect(() => {
         getAllProducts();
@@ -29,13 +30,13 @@ function AllProducts({ }) {
 
     const getAllProducts = async () => {
         const data = await UnitDataService.getAllProducts();
-        // AppLogger("userslist", data)
         setStoresList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
 
-        // data.docs.map((doc) => {
-        //     AppLogger("doc.data()", doc.data())
-        //     AppLogger("doc.id", doc.id)
-        // })
+        AppLogger("all products list ", data)
+        data.docs.map((doc) => {
+            AppLogger("all products doc.data()", doc.data())
+            AppLogger("doc.id", doc.id)
+        })
     };
 
     const handleRemoveProd = async () => {
@@ -44,6 +45,34 @@ function AllProducts({ }) {
             setShowModal(false)
         } catch (error) {
             AppLogger("error removing product", error)
+        }
+    }
+
+    const handleApprove = async () => {
+        var prodArry = []
+
+        AppLogger("handleapprove", "")
+        try {
+            const body = {
+                isApproved: !selectedProd.isApproved,
+            }
+            await firebaseServices.updateProduct(selectedProd.id, body)
+            setShowApproveModal(false)
+            storesList.forEach((element) => {
+                if (element.id == selectedProd.id) {
+                    prodArry.push({
+                        ...element, isApproved: !selectedProd.isApproved
+                    })
+                } else {
+                    prodArry.push(element)
+                }
+            })
+
+            setStoresList(prodArry)
+            showSuccessToast(`Product ${!selectedProd.isApproved ? "Approved" : "Declined"} Successfully`)
+        } catch (error) {
+            AppLogger("error changing product status", error)
+            showErrorToast("Unable to update product status!")
         }
     }
 
@@ -63,7 +92,7 @@ function AllProducts({ }) {
             />
             <Row className='full-height'>
                 <Col className='white-bg'>
-                    <Link className='back-btn' to="/home"><ArrowBackIcon /> Back to Dashboard </Link>
+                    <Link className='back-btn override' to="/home"><ArrowBackIcon /> Back to Dashboard </Link>
                     <Row>
                         <Col>
                             <div className='charts '>
@@ -80,6 +109,7 @@ function AllProducts({ }) {
                                                     <th>Description</th>
                                                     <th>Price</th>
                                                     <th>Tags</th>
+                                                    <th>Approved</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -102,6 +132,21 @@ function AllProducts({ }) {
                                                                 <td>{doc.productDescription}</td>
                                                                 <td>${doc.productPrice}</td>
                                                                 <td>{handleTags(doc.productTags)}</td>
+                                                                <td>
+                                                                    <label class="switch">
+                                                                        <input type="checkbox"
+                                                                            // value={doc.isApproved}
+                                                                            checked={doc.isApproved}
+                                                                            onChange={(e) => {
+                                                                                // handleApprove(e.target.checked)
+                                                                                setShowApproveModal(true)
+                                                                                setSelectedProd(doc)
+                                                                            }}
+                                                                        />
+                                                                        <span class="slider round"></span>
+                                                                    </label>
+                                                                </td>
+
                                                                 {/* <td>{handleDateTime(doc.createdAt)}</td> */}
                                                                 <td className='flexColumn'>
                                                                     <Button
@@ -109,7 +154,7 @@ function AllProducts({ }) {
                                                                         className='edit'
                                                                         onClick={(e) => {
                                                                             history.push('/update-product',
-                                                                                { productDetails: doc }
+                                                                                { productDetails: doc, backTo: "/all-products", backToText: "Products" }
                                                                             )
                                                                         }}
                                                                     >
@@ -152,6 +197,16 @@ function AllProducts({ }) {
                     desc={`Are you sure you want to remove ${selectedProd.productName}?`}
                     btnText={`Yes`}
                     onClickDone={() => handleRemoveProd()}
+                />
+            }
+            {selectedProd != null &&
+                <CustomModal
+                    show={showApproveModal}
+                    setShow={(val) => setShowApproveModal(val)}
+                    title={`${selectedProd.isApproved ? "Decline" : "Arppove"} Product`}
+                    desc={`Are you sure you want to ${selectedProd.isApproved ? "decline" : "arppove"} ${selectedProd.productName}?`}
+                    btnText={`Yes`}
+                    onClickDone={() => handleApprove()}
                 />
             }
         </>

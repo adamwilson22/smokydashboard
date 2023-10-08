@@ -43,7 +43,8 @@ function SubscribedUsersList({ }) { // getUnitId }) {
             // AppLogger("typeof userDetails.docs", userDetails.docs)
             finalArray.push({
                 ...element,
-                userDetails: userDetails.docs[0].data()
+                userDetails: userDetails.docs[0].data(),
+                fullName: userDetails.docs[0].data().fullName
             })
 
             // AppLogger("finallarrray payment", finalArray)
@@ -79,12 +80,12 @@ function SubscribedUsersList({ }) { // getUnitId }) {
             <Navigation
                 originalList={subsPaymentListFiltered}
                 updatedList={(val) => setSearchList(val)}
-                searchKey={"userDetails.fullName"}
+                searchKey={"fullName"}
                 showSearh={true}
             />
             <Row className='full-height'>
                 <Col className='white-bg'>
-                    <Link className='back-btn' to="/home"><ArrowBackIcon /> Back to Dashboard </Link>
+                    <Link className='back-btn override' to="/home"><ArrowBackIcon /> Back to Dashboard </Link>
                     <Row>
                         <Col>
                             <div className='charts '>

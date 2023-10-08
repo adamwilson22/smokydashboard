@@ -53,6 +53,16 @@ class UnitDataService {
         return updateDoc(userDoc, { status: userStatus });
     };
 
+    updateProduct = (id, body) => {
+        const prodDoc = doc(db, "products", id);
+        return updateDoc(prodDoc, body);
+    };
+
+    updateEvent = (id, body) => {
+        const eventDoc = doc(db, "events", id);
+        return updateDoc(eventDoc, body);
+    };
+
     deleteUser = (id) => {
         const userDoc = doc(db, "user", id);
         return deleteDoc(userDoc);

@@ -40,7 +40,7 @@ function Home({ getUnitId }) {
   const history = useHistory();
   return (
     <>
-      <Link className='back-btn' to="/home"><ArrowBackIcon /> Back to Dashboard </Link>
+      <Link className='back-btn override' to="/home"><ArrowBackIcon /> Back to Dashboard </Link>
       <div className='table-wrap'>
         <h3 className='main-third'>Appliances List</h3>
 

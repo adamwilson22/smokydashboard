@@ -66,13 +66,20 @@ function ListOfEvents() {
             />
             <Row className='full-height'>
                 <Col className='white-bg'>
-                    <Link className='back-btn' to="/home"><ArrowBackIcon /> Back to Dashboard </Link>
+                    <Link className='back-btn override' to="/home"><ArrowBackIcon /> Back to Dashboard </Link>
                     <Row>
                         <Col>
                             <div className='charts '>
                                 <>
                                     <div className='table-wrap'>
-                                        <h3 className='main-third'>Events List</h3>
+                                        <div className='flexRow'>
+                                            <h3 className='main-third'>Events List</h3>
+                                            <Button variant="primary" className='cus-btn'
+                                                onClick={() => history.push('/update-event', { action: "Add", })}
+                                            >
+                                                Add
+                                            </Button>
+                                        </div>
                                         <Table striped bordered hover responsive>
                                             <thead>
                                                 <tr>
@@ -120,12 +127,11 @@ function ListOfEvents() {
                                                                         variant=''
                                                                         className='edit'
                                                                         onClick={(e) => {
-                                                                            history.push('/update',
-                                                                                { state: "" }
-                                                                                // { eventID: id }
-                                                                            )
-                                                                        }
-                                                                        }
+                                                                            history.push('/update-event', {
+                                                                                action: "Update",
+                                                                                eventDetails: item,
+                                                                            })
+                                                                        }}
                                                                     >
                                                                         Edit
                                                                     </Button>

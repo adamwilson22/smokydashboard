@@ -65,7 +65,7 @@ function ListOfStores({ }) { // getUnitId }) {
             />
             <Row className='full-height'>
                 <Col className='white-bg'>
-                    <Link className='back-btn' to="/home"><ArrowBackIcon /> Back to Dashboard </Link>
+                    <Link className='back-btn override' to="/home"><ArrowBackIcon /> Back to Dashboard </Link>
                     <Row>
                         <Col>
                             <div className='charts '>

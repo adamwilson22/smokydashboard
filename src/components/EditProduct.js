@@ -10,6 +10,9 @@ import Col from 'react-bootstrap/Col';
 import '../App.css';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import firebaseServices from "../services/unit.services"
+import { showErrorToast, showSuccessToast } from '../services/AppConstant';
+import { AppLogger } from '../services/AppLogger';
 
 function EditProduct() {
     const { state } = useLocation();
@@ -23,6 +26,7 @@ function EditProduct() {
 
     useEffect(() => {
         if (state.productDetails) {
+            // AppLogger("state.prod", state.productDetails)
             setProduct({
                 name: state.productDetails.productName,
                 desc: state.productDetails.productDescription,
@@ -32,9 +36,20 @@ function EditProduct() {
         }
     }, [state])
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-
+        try {
+            const body = {
+                productName: product.name,
+                productDescription: product.desc,
+                productPrice: product.price
+            }
+            await firebaseServices.updateProduct(state.productDetails.id, body)
+            showSuccessToast("Product Updated Successfully")
+        } catch (error) {
+            AppLogger("error removing product", error)
+            showErrorToast("Unable to update product")
+        }
     }
 
     return (
@@ -51,7 +66,7 @@ function EditProduct() {
             <Row className='full-height'>
 
                 <Col className='white-bg'>
-                    <Link className='back-btn' to="/all-products"><ArrowBackIcon /> Back to Products </Link>
+                    <Link className='back-btn override' to={state.backTo}><ArrowBackIcon /> Back to {`${state.backToText}`}</Link>
                     <div className="greet-text">
                         <h2>Update Product</h2>
                         {/* <p>Update Unit</p> */}
@@ -63,7 +78,9 @@ function EditProduct() {
                                     <Row>
                                         <Col>
                                             <Form.Group className="mb-3" controlId="formBasicModel">
+                                                <label className='label-styl'>Name</label>
                                                 <Form.Control
+                                                    required
                                                     type="text"
                                                     placeholder='Name'
                                                     fullWidth label="Name"
@@ -79,7 +96,9 @@ function EditProduct() {
                                     <Row>
                                         <Col>
                                             <Form.Group className="mb-3" controlId="formBasicSerial">
+                                                <label className='label-styl'>Description</label>
                                                 <Form.Control
+                                                    required
                                                     type="text"
                                                     placeholder='Description'
                                                     fullWidth
@@ -96,7 +115,9 @@ function EditProduct() {
                                     <Row>
                                         <Col>
                                             <Form.Group className="mb-3" controlId="formBasicpo">
+                                                <label className='label-styl'>Price</label>
                                                 <Form.Control
+                                                    required
                                                     type="text"
                                                     placeholder='Price'
                                                     fullWidth label="Price"
