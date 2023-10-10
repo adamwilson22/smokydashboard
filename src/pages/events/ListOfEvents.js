@@ -74,11 +74,13 @@ function ListOfEvents() {
                                     <div className='table-wrap'>
                                         <div className='flexRow'>
                                             <h3 className='main-third'>Events List</h3>
-                                            <Button variant="primary" className='cus-btn'
+                                            <div></div>
+                                            {/* uncomment after testing */}
+                                            {/* <Button variant="primary" className='cus-btn'
                                                 onClick={() => history.push('/update-event', { action: "Add", })}
                                             >
                                                 Add
-                                            </Button>
+                                            </Button> */}
                                         </div>
                                         <Table striped bordered hover responsive>
                                             <thead>

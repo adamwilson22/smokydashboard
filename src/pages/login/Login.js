@@ -14,8 +14,14 @@ import { showErrorToast, showSuccessToast } from '../../services/AppConstant';
 
 function BasicExample() {
     const history = useHistory()
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState(
+        "",
+        // "admin@smokebud.com",
+    );
+    const [password, setPassword] = useState(
+        "",
+        // "SmokeBud2023"
+    );
     const [error, setError] = useState("");
     const { logIn, user, logOut } = useUserAuth();
     const loginResp = JSON.parse(localStorage.getItem("USER"))
@@ -25,7 +31,7 @@ function BasicExample() {
         e.preventDefault()
         try {
             const response = await logIn(email, password)
-            // AppLogger("login response", response)
+            AppLogger("login response", response)
 
             const superAdmins = await UnitDataService.getSuperAdmins();
             superAdmins.docs.forEach((doc) => {
