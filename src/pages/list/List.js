@@ -18,6 +18,7 @@ function Home() {
                 <Sidebar />
             </div>
             <Navigation showSearh={true}
+                setSearchQuery={(val) => null}
             />
             <Row className='full-height'>
 

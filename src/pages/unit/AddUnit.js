@@ -19,6 +19,7 @@ function AddUnits() {
                 updatedList={() => { }}
                 searchKey={""}
                 showSearh={false}
+                setSearchQuery={(val) => null}
             />
             <Row className='full-height'>
 

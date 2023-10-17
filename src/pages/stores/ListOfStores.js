@@ -21,6 +21,7 @@ function ListOfStores({ }) { // getUnitId }) {
     const [searchList, setSearchList] = useState([]);
     const [selectedStore, setSelectedStore] = useState(null)
     const [showModal, setShowModal] = useState(false)
+    const [searchText, setSearchText] = useState("")
 
     useEffect(() => {
         getAllStores();
@@ -50,7 +51,7 @@ function ListOfStores({ }) { // getUnitId }) {
     }
 
     var finalList = []
-    finalList = searchList.length != 0 ? searchList : storesList
+    finalList = searchText ? searchList : storesList
 
     return (
         <>
@@ -62,6 +63,7 @@ function ListOfStores({ }) { // getUnitId }) {
                 updatedList={(val) => setSearchList(val)}
                 searchKey={"storeName"}
                 showSearh={true}
+                setSearchQuery={(val) => setSearchText(val)}
             />
             <Row className='full-height'>
                 <Col className='white-bg'>

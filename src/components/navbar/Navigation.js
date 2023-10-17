@@ -15,7 +15,7 @@ import search from '../../assets/search.png'
 import Dropdown from 'react-bootstrap/Dropdown';
 import './navbar.css';
 
-const Home = ({ originalList = [], updatedList = [], searchKey = "", showSearh = false }) => {
+const Home = ({ setSearchQuery, originalList = [], updatedList = [], searchKey = "", showSearh = false }) => {
   const history = useHistory();
   const { logOut, user } = useUserAuth();
   const loginResp = JSON.parse(localStorage.getItem("USER"))
@@ -46,6 +46,7 @@ const Home = ({ originalList = [], updatedList = [], searchKey = "", showSearh =
 
   const handleSearch = (text) => {
     AppLogger("text", text)
+    setSearchQuery(text)
     if (text) {
       updatedList(originalList.filter(element => element[searchKey] && (((element[searchKey]).toLowerCase()).replace(/\s/g, '')).includes((text.toLowerCase()).replace(/\s/g, ''))))
     } else {

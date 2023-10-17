@@ -18,6 +18,7 @@ function SubscribedUsersList({ }) { // getUnitId }) {
     const [subsPaymentList, setSubsPaymentList] = useState([]);
     const [subsPaymentListFiltered, setSubsPaymentListFiltered] = useState([]);
     const [searchList, setSearchList] = useState([]);
+    const [searchText, setSearchText] = useState("")
 
     useEffect(() => {
         getAllSubsPayments();
@@ -70,7 +71,7 @@ function SubscribedUsersList({ }) { // getUnitId }) {
 
 
     var finalList = []
-    finalList = searchList.length != 0 ? searchList : subsPaymentListFiltered ?? []
+    finalList = searchText ? searchList : subsPaymentListFiltered ?? []
 
     return (
         <>
@@ -82,6 +83,7 @@ function SubscribedUsersList({ }) { // getUnitId }) {
                 updatedList={(val) => setSearchList(val)}
                 searchKey={"fullName"}
                 showSearh={true}
+                setSearchQuery={(val) => setSearchText(val)}
             />
             <Row className='full-height'>
                 <Col className='white-bg'>

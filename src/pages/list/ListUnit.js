@@ -12,6 +12,7 @@ function Home() {
     const [unitId, setUnitId] = useState("");
     const [usersList, setUsersList] = useState([]);
     const [searchList, setSearchList] = useState([]);
+    const [searchText, setSearchText] = useState("")
 
     const getUnitIdHandler = (id) => {
         setUnitId(id);
@@ -39,7 +40,7 @@ function Home() {
     };
 
     var finalList = []
-    finalList = searchList.length != 0 ? searchList : usersList
+    finalList = searchText ? searchList : usersList
 
     return (
         <>
@@ -51,6 +52,7 @@ function Home() {
                 updatedList={(val) => setSearchList(val)}
                 searchKey={"fullName"}
                 showSearh={true}
+                setSearchQuery={(val) => setSearchText(val)}
             />
             <Row className='full-height'>
                 <Col className='white-bg'>

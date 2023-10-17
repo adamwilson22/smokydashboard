@@ -24,6 +24,7 @@ function ViewProducts() {
     const [selectedProd, setSelectedProd] = useState(null)
     const [showModal, setShowModal] = useState(false)
     const [showApproveModal, setShowApproveModal] = useState(false)
+    const [searchText, setSearchText] = useState("")
 
     useEffect(() => {
         getStoresProducts()
@@ -77,7 +78,7 @@ function ViewProducts() {
     }
 
     var finalList = []
-    finalList = searchList.length != 0 ? searchList : productsList
+    finalList = searchText ? searchList : productsList
 
     return (
         <>
@@ -89,6 +90,7 @@ function ViewProducts() {
                 updatedList={(val) => setSearchList(val)}
                 searchKey={"productName"}
                 showSearh={true}
+                setSearchQuery={(val) => setSearchText(val)}
             />
             <Row className='full-height'>
                 <Col className='white-bg'>

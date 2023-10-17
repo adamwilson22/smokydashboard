@@ -23,6 +23,7 @@ function UnitCreate() {
                 updatedList={() => { }}
                 searchKey={""}
                 showSearh={false}
+                setSearchQuery={(val) => null}
             />
             <Row className='full-height'>
                 <Col className='white-bg'>

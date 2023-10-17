@@ -21,6 +21,7 @@ function ListOfEvents() {
     const [searchList, setSearchList] = useState([]);
     const [selectedEvent, setSelectedEvent] = useState(null)
     const [showModal, setShowModal] = useState(false)
+    const [searchText, setSearchText] = useState("")
 
     useEffect(() => {
         getListOfEvents()
@@ -51,7 +52,7 @@ function ListOfEvents() {
     }
 
     var finalList = []
-    finalList = searchList.length != 0 ? searchList : eventsList
+    finalList = searchText ? searchList : eventsList
 
     return (
         <>
@@ -63,6 +64,7 @@ function ListOfEvents() {
                 updatedList={(val) => setSearchList(val)}
                 searchKey={"eventName"}
                 showSearh={true}
+                setSearchQuery={(val) => setSearchText(val)}
             />
             <Row className='full-height'>
                 <Col className='white-bg'>
