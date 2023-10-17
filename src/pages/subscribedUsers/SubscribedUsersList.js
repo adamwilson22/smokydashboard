@@ -21,7 +21,7 @@ function SubscribedUsersList({ }) { // getUnitId }) {
 
     useEffect(() => {
         getAllSubsPayments();
-        AppLogger("getAllSubsPayments", "called")
+        // AppLogger("getAllSubsPayments", "called")
     }, [])
 
     const getAllSubsPayments = async () => {

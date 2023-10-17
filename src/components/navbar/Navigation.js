@@ -45,9 +45,9 @@ const Home = ({ originalList = [], updatedList = [], searchKey = "", showSearh =
   };
 
   const handleSearch = (text) => {
-    // AppLogger("text", text)
-    if (text != "") {
-      updatedList(originalList.filter(element => (((element[searchKey]).toLowerCase()).replace(/\s/g, '')).includes((text.toLowerCase()).replace(/\s/g, ''))))
+    AppLogger("text", text)
+    if (text) {
+      updatedList(originalList.filter(element => element[searchKey] && (((element[searchKey]).toLowerCase()).replace(/\s/g, '')).includes((text.toLowerCase()).replace(/\s/g, ''))))
     } else {
       updatedList([])
     }
