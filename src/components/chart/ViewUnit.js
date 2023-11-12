@@ -149,10 +149,7 @@ function Home({ id, setUnitId }) {
               title={`Remove User`}
               desc={`Are you sure you want to remove ${user.fullName}?`}
               btnText={`Yes`}
-              onClickDone={() =>
-              // handleRemoveUser() // uncomment this after testing 
-              { }
-              }
+              onClickDone={() => handleRemoveUser()}
             />
           </>
         }

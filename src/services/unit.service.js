@@ -1,5 +1,5 @@
 import { db } from "../firebase-config";
-import { collection, getDocs, getDoc, addDoc, getCountFromServer } from "firebase/firestore";
+import { collection, getDocs, addDoc, getCountFromServer, orderBy, query } from "firebase/firestore";
 
 const unitCollection = collection(db, 'user');
 const eventsCollection = collection(db, 'events');
@@ -7,6 +7,7 @@ const storesCollection = collection(db, 'stores');
 const productsCollection = collection(db, 'products');
 const subpayCollection = collection(db, 'subscriptionPayments');
 const superAdminCollect = collection(db, 'superadmin');
+const chatsCollect = collection(db, 'conversations');
 
 class UnitDataService {
 
@@ -23,9 +24,21 @@ class UnitDataService {
     getAllStores = () => { // all stores
         return getDocs(storesCollection);
     }
+
     getAllProducts = () => { // all products
         return getDocs(productsCollection);
     }
+
+    getAllChatsFirebase = () => { // all chats
+        return getDocs(chatsCollect);
+    }
+
+    getSingleChatMessagesFire = (docid) => { // get all messages for a single chat
+        const msgCollRef = collection(db, "conversations", docid, "messages")
+        const msgQuery = query(msgCollRef, orderBy("createdAt"));
+        return getDocs(msgQuery);
+    }
+
     getAllSubsciptionsPayments = () => { // all 
         return getDocs(subpayCollection);
     }

@@ -63,7 +63,7 @@ function Home() {
                         </Col>
                     </Row>
                 </Col>
-            </Row >
+            </Row>
         </>
     );
 }

@@ -23,11 +23,11 @@ export const handleDateTime = (timeStamp) => {
     // AppLogger("timeStamp", timeStamp)
     // AppLogger("date", Moment(timeStamp.seconds * 1000).format("YYYY/MM/DD kk:mm A"))
 
-    return Moment(timeStamp.seconds * 1000).format("YYYY/MM/DD kk:mm A")
+    return Moment(timeStamp.seconds * 1000).format("YYYY/MM/DD hh:mm A")
 }
 
 export const handleDateString = (str = "") => {
-    return Moment(str).format("MMM D, YYYY kk:mm A")
+    return Moment(str).format("MMM D, YYYY hh:mm A")
 }
 
 export const AppConstant = {

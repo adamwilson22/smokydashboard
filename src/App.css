@@ -1007,3 +1007,11 @@ input:checked + .slider:before {
   align-items: center;
   justify-content: space-between;
 }
+
+.chat-name{
+  font-size: 20px;
+}
+
+.chat-msg{
+  font-size: 16px;
+}

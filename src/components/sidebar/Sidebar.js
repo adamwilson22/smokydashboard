@@ -8,6 +8,7 @@ import eventIco from '../../assets/8683108_calendar_care_medicine_events_schedul
 import subscIco from '../../assets/678140_feed_media_news_rss_social_icon.png';
 import usersIco from '../../assets/309041_users_group_people_icon.png';
 import notifyIco from '../../assets/9075827_notification_alert_bell_notice_alarm_icon.png';
+import chatsIco from "../../assets/chat-icon.png"
 
 class Sidebar extends Component {
     render() {
@@ -27,6 +28,7 @@ class Sidebar extends Component {
                         <Nav.Link href="/list-stores"><img src={storeIco} alt="Logo" />Stores</Nav.Link>
                         <Nav.Link href="/all-products"><img src={storeIco} alt="Logo" />Products</Nav.Link>
                         <Nav.Link href="/notify-users"><img src={notifyIco} alt="Logo" />Notify Users</Nav.Link>
+                        <Nav.Link href="/list-chats"><img src={chatsIco} alt="Logo" />Chats</Nav.Link>
 
                         {/* <Nav.Link href="/add"><img src={dashIco} alt="Logo" />Add New Appliance</Nav.Link> */}
                         {/* <Nav.Link href="/list"><img src={dashIco} alt="Logo" />List Appliances</Nav.Link> */}
