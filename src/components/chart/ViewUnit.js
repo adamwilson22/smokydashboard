@@ -72,8 +72,10 @@ function Home({ id, setUnitId }) {
               <th>Country</th>
               <th>City</th>
               <th>Date of Birth</th>
-              <th>Is Verified</th>
-              <th>Is Reported</th>
+              {/* 
+                <th>Is Verified</th>
+                <th>Is Reported</th>
+             */}
               <th>Action</th>
             </tr>
           </thead>
@@ -98,8 +100,10 @@ function Home({ id, setUnitId }) {
                 <td>{user.country}</td>
                 <td>{user.city}</td>
                 <td>{user.dateOfBirth}</td>
-                <td>{user.isVerified}</td>
-                <td>{user.isReported}</td>
+                {/*
+                  <td>{user.isReported}</td>
+                  <td>{user.isVerified}</td>
+                */}
                 {/* <td>{doc.setupdateDate ? doc.setupdateDate : '-'}</td> */}
                 <td>
                   <Button
@@ -112,7 +116,7 @@ function Home({ id, setUnitId }) {
                   >
                     {`${user.status ? "Block" : "UnBlock"}`}
                   </Button>
-                  <Button
+                  {/* <Button
                     variant=''
                     className='edit'
                     onClick={(e) => {
@@ -121,7 +125,7 @@ function Home({ id, setUnitId }) {
                     }}
                   >
                     Remove
-                  </Button>
+                  </Button> */}
                 </td>
               </tr>
               // )

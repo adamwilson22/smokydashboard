@@ -1,5 +1,5 @@
 import { db } from "../firebase-config";
-import { collection, getDocs, addDoc, getCountFromServer, orderBy, query } from "firebase/firestore";
+import { collection, getDocs, addDoc, getCountFromServer, orderBy, query, where } from "firebase/firestore";
 
 const unitCollection = collection(db, 'user');
 const eventsCollection = collection(db, 'events');
@@ -16,7 +16,8 @@ class UnitDataService {
         return addDoc(unitCollection, addNewUnit);
     }
     getAllUnit = () => { // all users
-        return getDocs(unitCollection);
+        const getUsers = query(unitCollection, where("isDeleted", "==", false));
+        return getDocs(getUsers);
     }
     getAllEvents = () => { // all events
         return getDocs(eventsCollection);

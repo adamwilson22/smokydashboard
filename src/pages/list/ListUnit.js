@@ -42,6 +42,8 @@ function Home() {
     var finalList = []
     finalList = searchText ? searchList : usersList
 
+    // AppLogger("searchList", searchList)
+
     return (
         <>
             <div className='side-wrp'>
