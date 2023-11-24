@@ -47,8 +47,8 @@ class UnitDataService {
         return getDocs(superAdminCollect);
     }
     getUserCount = async () => {
-        const snapshot = await getCountFromServer(unitCollection);
-        // console.log('user list count: ', snapshot.data().count);
+        const getUsers = query(unitCollection, where("isDeleted", "==", false));
+        const snapshot = await getCountFromServer(getUsers);
         return snapshot.data().count
     }
     getEventsCount = async () => {
