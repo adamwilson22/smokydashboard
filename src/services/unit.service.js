@@ -47,7 +47,7 @@ class UnitDataService {
         return getDocs(superAdminCollect);
     }
     getUserCount = async () => {
-        const getUsers = query(unitCollection, where("isDeleted", "==", false), where("country", "!=", ""));
+        const getUsers = query(unitCollection, where("country", "!=", ""), where("isDeleted", "==", false))
         const snapshot = await getCountFromServer(getUsers);
         return snapshot.data().count
     }
