@@ -23,6 +23,7 @@ import EditProduct from './components/EditProduct';
 import UpdateEvent from './components/UpdateEvent';
 import ListOfChats from './pages/chatList/ListOfChats';
 import ViewChat from './components/chat/ViewChat';
+import ListOfPosts from './pages/ListOfPosts/ListOfPosts';
 
 function App() {
   const [unitId, setUnitId] = useState("");
@@ -50,6 +51,7 @@ function App() {
             <Route component={EditProduct} path="/update-product" ></Route>
             <Route component={UpdateEvent} path="/update-event" ></Route>
             <Route component={ListOfChats} path="/list-chats" ></Route>
+            <Route component={ListOfPosts} path="/list-posts" ></Route>
             <Route component={ViewChat} path="/view-chat" ></Route>
             <Route component={Home} path="/home" ></Route>
             <Route component={AddNewUnit} path="/addunit" ></Route>
