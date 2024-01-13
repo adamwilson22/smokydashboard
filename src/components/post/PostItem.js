@@ -6,12 +6,14 @@ import GalleryModal from '../GalleryModal';
 import ReactImageGallery from 'react-image-gallery';
 import "../../App.css"
 import { get } from 'lodash';
+import CommentsModal from '../CommentsModal';
 
 
 export default function PostItem({ name, message, profilePhoto, messageTime, item }) {
     const [imagesList, setImagesList] = useState([1, 2, 3, 4, 5])
     const [showGallery, setShowGallery] = useState(false)
     const [showLikes, setShowLikes] = useState(false)
+    const [showComments, setShowComments] = useState(false)
 
     const imageStyl = {
         objectFit: "cover",
@@ -80,6 +82,10 @@ export default function PostItem({ name, message, profilePhoto, messageTime, ite
                         </div>
                         <div className='d-flex  '
                             style={{ cursor: "pointer" }}
+                            onClick={() => {
+                                setShowComments(true)
+
+                            }}
                         >
                             <img
                                 src={AppImages.comments}
@@ -103,6 +109,14 @@ export default function PostItem({ name, message, profilePhoto, messageTime, ite
                 // mediaArray={get(item, "media", [])}
                 title={"All Likes"}
             />
+            {get(item, "comments", []) &&
+                <CommentsModal
+                    show={showComments}
+                    setShow={setShowComments}
+                    commentsList={get(item, "comments", [])}
+                    title={"All Comments"}
+                />
+            }
         </li>
     )
 }

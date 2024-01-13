@@ -11,6 +11,7 @@ import FBServices from "../../services/unit.services"
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import "../../App.css"
+import { AppLogger } from '../../services/AppLogger';
 
 function ListOfPosts() {
     const [listOfPosts, setlistOfPosts] = useState([])
@@ -24,10 +25,10 @@ function ListOfPosts() {
         const data = await UnitDataService.getAllPostsFrFirebase();
         setlistOfPosts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
 
-        // data.docs.map((doc) => {
-        //     AppLogger("doc.data()", doc.data())
-        //     AppLogger("doc.id", doc.id)
-        // })
+        data.docs.map((doc) => {
+            AppLogger("doc.data()", doc.data())
+            AppLogger("doc.id", doc.id)
+        })
     };
 
     const handleUserDetails = () => {

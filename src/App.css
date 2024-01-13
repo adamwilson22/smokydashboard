@@ -1171,3 +1171,35 @@ input:checked + .slider:before {
   right: -3px;
   bottom: -5px;
 }
+
+/* Comments List Modal */
+
+.profile {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50px;
+  margin-right: 8px;
+}
+
+.comment-Cont {
+  background: green;
+  padding: 8px;
+  border-radius: 16px
+}
+
+.cment-likes {
+  padding: 12px;
+}
+
+.replies{
+  padding: 12px 0px;
+}
+
+.collapse-reply{
+  -webkit-transform:rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
