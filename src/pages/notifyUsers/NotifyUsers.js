@@ -31,6 +31,7 @@ function NotifyUsers({ }) {
         var dummyList = []
         const data = await FBServices.getNotificationUsers();
         data.docs.map((doc) => {
+            AppLogger("user details", doc.data())
             if (doc.data().fcmToken != "iOS Device")
                 dummyList.push({ value: doc.data().fcmToken, label: doc.data().fullName })
         })

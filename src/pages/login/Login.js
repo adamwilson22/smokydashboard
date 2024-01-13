@@ -6,7 +6,8 @@ import GoogleButton from 'react-google-button'
 import { Link } from 'react-router-dom';
 import { useUserAuth } from '../../Context/UserAuthContext';
 import { useHistory } from 'react-router-dom';
-import logo from '../../assets/logodark.svg';
+// import logo from '../../assets/logodark.svg';
+import logoPlaceHolder from "../../assets/logo-placeholder.png"
 import { AppLogger } from '../../services/AppLogger';
 import UnitDataService from "../../services/unit.service"
 import { showErrorToast, showSuccessToast } from '../../services/AppConstant';
@@ -15,12 +16,14 @@ import { showErrorToast, showSuccessToast } from '../../services/AppConstant';
 function BasicExample() {
     const history = useHistory()
     const [email, setEmail] = useState(
-        "",
+        // "",
         // "admin@smokebud.com",
+        "admin@outdoortrader.com"
     );
     const [password, setPassword] = useState(
-        "",
+        // "",
         // "SmokeBud2023"
+        "OutdoorTrader2024"
     );
     const [error, setError] = useState("");
     const { logIn, user, logOut } = useUserAuth();
@@ -35,7 +38,9 @@ function BasicExample() {
 
             const superAdmins = await UnitDataService.getSuperAdmins();
             superAdmins.docs.forEach((doc) => {
-                if (doc.id == response.user.uid) {
+                AppLogger("doc details", doc.data())
+                AppLogger("response.user.uid", response)
+                if (doc.data().id == response.user.email) {
                     isAdmin = true
                 }
             })
@@ -67,7 +72,7 @@ function BasicExample() {
                     <Col lg="5">
                         <div className='login-form'>
                             <div className='logo-wrp'>
-                                <img src={logo} alt="Logo" />
+                                <img src={logoPlaceHolder} alt="Logo" />
                                 {/* <h2>Smoke Bud</h2> */}
                             </div>
                             <p>Welcome back! Please login to your account.</p>

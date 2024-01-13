@@ -8,11 +8,11 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Chart from '../../components/chart/Chart';
 import UnitDataService from '../../services/unit.service';
-import storeIco from '../../assets/3018711_ecommerce_platform_shopify_applications_online_icon.png';
 import eventIco from '../../assets/8683108_calendar_care_medicine_events_schedule_icon.png';
-import subscIco from '../../assets/678140_feed_media_news_rss_social_icon.png';
 import usersIco from '../../assets/309041_users_group_people_icon.png';
-import prodIco from '../../assets/6843036_courier_deliver_delivery_package_product_icon.png';
+// import storeIco from '../../assets/3018711_ecommerce_platform_shopify_applications_online_icon.png';
+// import subscIco from '../../assets/678140_feed_media_news_rss_social_icon.png';
+// import prodIco from '../../assets/6843036_courier_deliver_delivery_package_product_icon.png';
 import '../../App.css';
 
 
@@ -20,11 +20,11 @@ function Home() {
     const { user } = useUserAuth();
 
     const [totalUsers, setTotalUsers] = useState(0)
-    const [totalProducts, setTotalProducts] = useState(0)
-    const [totalStores, setTotalStores] = useState(0)
+    // const [totalProducts, setTotalProducts] = useState(0)
+    // const [totalStores, setTotalStores] = useState(0)
     const [totalEvents, setTotalEvents] = useState(0)
-    const [totalSubscribeUsers, setTotalSubscribedUsers] = useState(0)
-    const loginResp = JSON.parse(localStorage.getItem("USER"))
+    // const [totalSubscribeUsers, setTotalSubscribedUsers] = useState(0)
+    // const loginResp = JSON.parse(localStorage.getItem("USER"))
 
     useEffect(() => {
         getDashboardData()
@@ -42,20 +42,20 @@ function Home() {
             setTotalUsers(usersData)
         }
 
-        const storesData = await UnitDataService.getStoresCount()
-        if (storesData) {
-            setTotalStores(storesData)
-        }
+        // const storesData = await UnitDataService.getStoresCount()
+        // if (storesData) {
+        //     setTotalStores(storesData)
+        // }
 
-        const productsData = await UnitDataService.getProductsCount()
-        if (productsData) {
-            setTotalProducts(productsData)
-        }
+        // const productsData = await UnitDataService.getProductsCount()
+        // if (productsData) {
+        //     setTotalProducts(productsData)
+        // }
 
-        const subPayData = await UnitDataService.getSubsPaymentCount()
-        if (subPayData) {
-            setTotalSubscribedUsers(subPayData)
-        }
+        // const subPayData = await UnitDataService.getSubsPaymentCount()
+        // if (subPayData) {
+        //     setTotalSubscribedUsers(subPayData)
+        // }
     };
 
     return (
@@ -77,7 +77,7 @@ function Home() {
                             Hello Admin
                             {/* {user != null ? user.displayName : "Admin"} */}
                         </h2>
-                        <p>SmokeBud Dashboard</p>
+                        <p> Dashboard</p>
                     </div>
                     <Row>
                         <Col xl='4' lg='6' className='mt-2'>
@@ -95,7 +95,7 @@ function Home() {
 
                             </div>
                         </Col>
-                        <Col xl='4' lg='6' className='mt-2'>
+                        {/* <Col xl='4' lg='6' className='mt-2'>
                             <div className='charts'>
                                 <Card className='flexcard'>
                                     <Card.Body>
@@ -109,8 +109,8 @@ function Home() {
                                 </Card>
 
                             </div>
-                        </Col>
-                        <Col xl='4' className='mt-2'>
+                        </Col> */}
+                        <Col xl='4' lg='6' className='mt-2'>
                             <div className='charts'>
                                 <Card className='flexcard'>
                                     <Card.Body>
@@ -126,14 +126,13 @@ function Home() {
                             </div>
                         </Col>
                     </Row>
-                    <Row>
+                    {/* <Row>
                         <Col xl='4' className='mt-2'>
                             <div className='charts'>
                                 <Card className='flexcard'>
                                     <Card.Body>
                                         <Chart
                                             title={'Total Stores'}
-                                            // subTitle={'Stores'}
                                             desc={totalStores}
                                         />
                                         <img src={storeIco} />
@@ -148,7 +147,6 @@ function Home() {
                                     <Card.Body>
                                         <Chart
                                             title={'Total Products'}
-                                            // subTitle={'Products'}
                                             desc={totalProducts}
                                         />
                                         <img src={prodIco} />
@@ -157,8 +155,7 @@ function Home() {
 
                             </div>
                         </Col>
-                        {/* Add more columns/Charts as needed */}
-                    </Row>
+                    </Row> */}
                     {/* <Row>
                         <Col lg="8" className='home-appliance-list'>
                             <DataTable />
