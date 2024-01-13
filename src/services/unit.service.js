@@ -8,6 +8,7 @@ const productsCollection = collection(db, 'products');
 const subpayCollection = collection(db, 'subscriptionPayments');
 const superAdminCollect = collection(db, 'superadmin');
 const chatsCollect = collection(db, 'conversations');
+const postsCollect = collection(db, 'posts');
 
 class UnitDataService {
 
@@ -29,6 +30,11 @@ class UnitDataService {
     getAllProducts = () => { // all products
         return getDocs(productsCollection);
     }
+
+    getAllPostsFrFirebase = () => { // all posts
+        return getDocs(postsCollect);
+    }
+
 
     getAllChatsFirebase = () => { // all chats
         return getDocs(chatsCollect);

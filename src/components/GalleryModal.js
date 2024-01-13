@@ -1,81 +1,83 @@
-import Button from 'react-bootstrap/Button';
+import React, { useState, useEffect } from 'react';
+import { get } from 'lodash';
 import Modal from 'react-bootstrap/Modal';
-import { AppImages } from '../services/AppImages';
 
-function GalleryModal({ title = "", desc = "", btnText = "", onClickDone, show = false, setShow }) {
+function GalleryModal({ show = false, setShow, mediaArray = [] }) {
+    const [selectedMedia, setSelectedMedia] = useState(null)
+
     const handleClose = () => {
         setShow(false);
     }
 
-    const mediaArray = [
-        {
-            id: 1,
-            type: "image",
-            imageLink: "https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8Y2Fyc3xlbnwwfHwwfHx8MA%3D%3D",
-        },
-        {
-            id: 2,
-            type: "image",
-            imageLink: "https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8Y2Fyc3xlbnwwfHwwfHx8MA%3D%3D",
-        },
-        {
-            id: 3,
-            type: "image",
-            imageLink: "https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8Y2Fyc3xlbnwwfHwwfHx8MA%3D%3D",
-        },
-        {
-            id: 4,
-            type: "video",
-            thumbnail: "https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8Y2Fyc3xlbnwwfHwwfHx8MA%3D%3D",
-            videoLink: "",
-        },
-        {
-            id: 5,
-            type: "image",
-            imageLink: "https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8Y2Fyc3xlbnwwfHwwfHx8MA%3D%3D",
-        },
-
-        {
-            id: 6,
-            type: "image",
-            imageLink: "https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8Y2Fyc3xlbnwwfHwwfHx8MA%3D%3D",
-        },
-
-    ]
+    useEffect(() => {
+        if (mediaArray.length > 0)
+            setSelectedMedia(mediaArray[0])
+    }, [mediaArray])
 
     return (
         <Modal
+            fullscreen={true}
             show={show}
             onHide={handleClose}
             backdrop="static"
             keyboard={false}
         >
             <Modal.Header closeButton>
-                <Modal.Title>{title}</Modal.Title>
             </Modal.Header>
             <Modal.Body >
-                <div className='d-flex '>
-                    <img
-                        src={AppImages.placeholder}
-                        style={{ width: "30px", height: '30px', objectFit: 'cover' }}
-                    />
-                    <p style={{ fontSize: "20px", marginLeft: "12px" }}>Name</p>
+                <div className='d-flex '
+                    style={{ backgroundColor: 'rgba(0, 0, 0, 0.33)', width: "100%", height: "100%" }}
+                >
+                    {/* item.mediaType == "video" ?
+                                    item.mediaThumbnail
+                                    : item.mediaURL */}
+                    {selectedMedia && get(selectedMedia, "mediaType", "") == "image" ?
+                        <img
+                            src={get(selectedMedia, "mediaURL", "")}
+                            style={{
+                                width: "100%", height: '100%', objectFit: 'contain',
+                            }}
+                        />
+                        :
+                        <iframe
+                            width="100%"
+                            height="100%"
+                            src={get(selectedMedia, "mediaThumbnail", "")}
+                            // src={"https://www.youtube.com/embed/4pSzhZ76GdM?autoplay=1&showinfo=0"}
+                            frameBorder="0"
+                            allowFullScreen
+                            title="ex"
+                        />
+                    }
                 </div>
-                <img
-                    src={AppImages.like}
-                    style={{
-                        width: "26px", height: '26px', objectFit: 'cover',
-                        marginLeft: "45px",
-                        marginTop: -12
-                    }}
-                />
             </Modal.Body>
-            {/* <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        No
-                    </Button>
-                    <Button variant="primary" onClick={() => onClickDone()}>{btnText}</Button>
-                </Modal.Footer> */}
+            <Modal.Footer>
+                <div style={{
+                    width: "100%", height: '150px',
+                    alignItems: 'center',
+                    display: 'flex',
+                    overflowX: 'scroll'
+                }}>
+                    {mediaArray.map((item, index) =>
+                        <img
+                            key={index}
+                            src={
+                                item.mediaType == "video" ?
+                                    item.mediaThumbnail
+                                    : item.mediaURL
+                            }
+                            style={{
+                                width: '130px', height: "130px",
+                                marginRight: "6px",
+                                marginLeft: "6px",
+                                cursor: "pointer",
+                                border: get(selectedMedia, "id", 0) == index ? "2.7px solid #FF7F7F" : "0px"
+                            }}
+                            onClick={() => setSelectedMedia({ ...item, id: index })}
+                        />
+                    )}
+                </div>
+            </Modal.Footer>
         </Modal>
 
     );

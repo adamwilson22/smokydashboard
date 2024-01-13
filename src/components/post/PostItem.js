@@ -1,15 +1,16 @@
 import React, { useState, useCallback } from 'react'
 import { AppImages } from '../../services/AppImages'
 import ImageViewer from 'react-simple-image-viewer';
-import "../../App.css"
 import LikesModal from '../LikesModal';
 import GalleryModal from '../GalleryModal';
 import ReactImageGallery from 'react-image-gallery';
+import "../../App.css"
+import { get } from 'lodash';
 
 
-export default function PostItem({ name, message, profilePhoto, messageTime }) {
+export default function PostItem({ name, message, profilePhoto, messageTime, item }) {
     const [imagesList, setImagesList] = useState([1, 2, 3, 4, 5])
-    const [imageViewer, setImageViewer] = useState(false)
+    const [showGallery, setShowGallery] = useState(false)
 
     const imageStyl = {
         objectFit: "cover",
@@ -17,70 +18,42 @@ export default function PostItem({ name, message, profilePhoto, messageTime }) {
         height: "50px",
     }
 
-    // src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9H5nwzfOqFlHqQTV3823zkJkzWVxkhntmMsw8K4gRoWn4H4TOYLUHen5-GJ5-eg2b_Qs&usqp=CAU"
-
-
-    const [currentImage, setCurrentImage] = useState(0);
-    const [isViewerOpen, setIsViewerOpen] = useState(false);
-    const images = [
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9H5nwzfOqFlHqQTV3823zkJkzWVxkhntmMsw8K4gRoWn4H4TOYLUHen5-GJ5-eg2b_Qs&usqp=CAU',
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9H5nwzfOqFlHqQTV3823zkJkzWVxkhntmMsw8K4gRoWn4H4TOYLUHen5-GJ5-eg2b_Qs&usqp=CAU',
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9H5nwzfOqFlHqQTV3823zkJkzWVxkhntmMsw8K4gRoWn4H4TOYLUHen5-GJ5-eg2b_Qs&usqp=CAU',
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9H5nwzfOqFlHqQTV3823zkJkzWVxkhntmMsw8K4gRoWn4H4TOYLUHen5-GJ5-eg2b_Qs&usqp=CAU',
-        'https://www.youtube.com/watch?v=6TbG2EJITQY',
-    ];
-
-    const openImageViewer = useCallback((index) => {
-        setCurrentImage(index);
-        setIsViewerOpen(true);
-    }, []);
-
-    const closeImageViewer = () => {
-        setCurrentImage(0);
-        setIsViewerOpen(false);
-    };
-
-
-
-    const renderVideo = (item) => {
-        return (
-            <div className="video-wrapper">
-                <iframe
-                    width="100%"
-                    height="480px"
-                    src={item.embedUrl}
-                    frameBorder="0"
-                    allowFullScreen
-                    title="ex"
-                />
-            </div>
-        );
-    };
-
-
-    const images2 = [
+    const mediaArray = [
         {
-            original: 'https://picsum.photos/id/1018/1000/600/',
-            thumbnail: 'https://picsum.photos/id/1018/250/150/',
+            id: 1,
+            mediaType: "image",
+            imageLink: "https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8Y2Fyc3xlbnwwfHwwfHx8MA%3D%3D",
         },
         {
-            original: 'https://picsum.photos/id/1015/1000/600/',
-            thumbnail: 'https://picsum.photos/id/1015/250/150/',
+            id: 2,
+            mediaType: "image",
+            imageLink: "https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8Y2Fyc3xlbnwwfHwwfHx8MA%3D%3D",
         },
         {
-            original: 'https://picsum.photos/id/1019/1000/600/',
-            thumbnail: 'https://picsum.photos/id/1019/250/150/',
+            id: 3,
+            mediaType: "image",
+            imageLink: "https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8Y2Fyc3xlbnwwfHwwfHx8MA%3D%3D",
         },
         {
-            embedUrl:
-                'https://www.youtube.com/embed/4pSzhZ76GdM?autoplay=1&showinfo=0',
-            original:
-                'https://raw.githubusercontent.com/xiaolin/react-image-gallery/master/static/4v.jpg',
-            thumbnail:
-                'https://raw.githubusercontent.com/xiaolin/react-image-gallery/master/static/4v.jpg',
-            renderItem: renderVideo(),
+            id: 4,
+            mediaType: "video",
+            imageLink: "https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8Y2Fyc3xlbnwwfHwwfHx8MA%3D%3D",
+            videoLink: "https://www.youtube.com/embed/4pSzhZ76GdM?autoplay=1&showinfo=0",
         },
-    ];
+        {
+            id: 5,
+            mediaType: "image",
+            imageLink: "https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8Y2Fyc3xlbnwwfHwwfHx8MA%3D%3D",
+        },
+
+        {
+            id: 6,
+            mediaType: "image",
+            imageLink: "https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8Y2Fyc3xlbnwwfHwwfHx8MA%3D%3D",
+        },
+
+    ]
+
 
     return (
         <li className="d-flex  mb-4">
@@ -97,20 +70,28 @@ export default function PostItem({ name, message, profilePhoto, messageTime }) {
                         {message}
                     </p>
                     <div className='d-flex flex-wrap justify-content-start mt-3  '>
-                        {imagesList.slice(0, 4).map((item, index) => {
+                        {get(item, "media", []).slice(0, 4).map((mediaIte, index) => {
                             return (
-                                <div onClick={() => {
-                                    setImageViewer(true)
-                                    console.log("hereee")
-                                }}
+                                <div
+                                    key={index}
                                     className='position-relative  post-cont'>
                                     <img
+                                        onClick={() => setShowGallery(true)}
+                                        style={{ cursor: "pointer" }}
                                         className='post-img'
-                                        src={AppImages.placeholder}
+                                        src={
+                                            mediaIte.mediaType == "video" ?
+                                                mediaIte.mediaThumbnail
+                                                : mediaIte.mediaURL
+                                        }
                                         alt='post-images'
                                     />
-                                    {(imagesList.length > 4 && index == 3) &&
-                                        <div className='plus-cont abs-cent-align'>
+                                    {(get(item, "media", []).length > 4 && index == 3) &&
+                                        <div
+                                            onClick={() => setShowGallery(true)}
+                                            style={{ cursor: "pointer" }}
+                                            className='plus-cont abs-cent-align'
+                                        >
                                             <img
                                                 className='plus-icon abs-cent-align'
                                                 src={AppImages.plusIcon}
@@ -121,16 +102,6 @@ export default function PostItem({ name, message, profilePhoto, messageTime }) {
                                 </div>
                             )
                         })}
-                        {/* {imageViewer &&
-                            <ImageViewer
-                                backgroundStyle={{ zIndex: "999" }}
-                                src={images}
-                                currentIndex={currentImage}
-                                disableScroll={false}
-                                closeOnClickOutside={true}
-                                onClose={closeImageViewer}
-                            />
-                        } */}
                     </div>
                     <div className='d-flex  '>
                         <div className='d-flex '
@@ -140,7 +111,7 @@ export default function PostItem({ name, message, profilePhoto, messageTime }) {
                                 src={AppImages.like}
                                 className='like-styl '
                             />
-                            <p className='like-sec-p '>Likes 21</p>
+                            <p className='like-sec-p '>Likes {get(item, "likes", []) ? get(item, "likes", []).length : 0}</p>
                         </div>
                         <div className='d-flex  '
                             style={{ cursor: "pointer" }}
@@ -149,28 +120,16 @@ export default function PostItem({ name, message, profilePhoto, messageTime }) {
                                 src={AppImages.comments}
                                 className='comment-styl '
                             />
-                            <p className='like-sec-p '>Comments 233</p>
+                            <p className='like-sec-p '>Comments {get(item, "comments", []) ? get(item, "comments", []).length : 0}</p>
                         </div>
                     </div>
 
                 </div>
             </div>
-            <LikesModal
-                setShow={() => { }}
-                // show={true}
-                title='Likes'
-            />
             <GalleryModal
-                show={true}
-                setShow={() => { }}
-            />
-
-            <ReactImageGallery
-                items={images2}
-                showIndex
-                //   onSlide={handleSlideChange}
-                //   showVideo={showVideo}
-                showPlayButton
+                show={showGallery}
+                setShow={setShowGallery}
+                mediaArray={get(item, "media", [])}
             />
         </li>
     )

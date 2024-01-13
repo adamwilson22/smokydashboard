@@ -1034,6 +1034,7 @@ input:checked + .slider:before {
 
 .post-img{
   width: 152px;
+  height: 152px;
   object-fit: cover;
   border-radius: 12px;
 }

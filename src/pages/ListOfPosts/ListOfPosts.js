@@ -1,22 +1,63 @@
 import React, { useState, useEffect } from 'react'
+import { AppImages } from '../../services/AppImages';
 import { Link } from 'react-router-dom';
-import { useHistory, useLocation } from 'react-router-dom';
-import { AppLogger } from '../../services/AppLogger';
-import { handleDateTime } from '../../services/AppConstant';
-import firebaseServices from "../../services/unit.service"
+import { get } from 'lodash';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-// import Navigation from '../navbar/Navigation';
 import Navigation from "../../components/navbar/Navigation"
 import Sidebar from '../../components/sidebar/Sidebar'
+import PostItem from '../../components/post/PostItem';
+import UnitDataService from "../../services/unit.service"
+import FBServices from "../../services/unit.services"
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import ChatItem from '../../components/chat/ChatItem';
 import "../../App.css"
-import { AppImages } from '../../services/AppImages';
-import PostItem from '../../components/post/PostItem';
-
 
 function ListOfPosts() {
+    const [listOfPosts, setlistOfPosts] = useState([])
+    const [filteredPosts, setFilteredPosts] = useState([])
+
+    useEffect(() => {
+        getAllPosts();
+    }, [])
+
+    const getAllPosts = async () => {
+        const data = await UnitDataService.getAllPostsFrFirebase();
+        setlistOfPosts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+
+        // data.docs.map((doc) => {
+        //     AppLogger("doc.data()", doc.data())
+        //     AppLogger("doc.id", doc.id)
+        // })
+    };
+
+    const handleUserDetails = () => {
+        var finalArray = []
+
+        listOfPosts.forEach(async (element) => {
+            const userDetails = await FBServices.getUserDetails(element.createdBy);
+            // AppLogger("userDetails", userDetails.docs[0].data())
+            // AppLogger("typeof userDetails.docs", userDetails.docs)
+            finalArray.push({
+                ...element,
+                userDetails: userDetails.docs[0].data(),
+                fullName: userDetails.docs[0].data().fullName,
+                profilePicture: userDetails.docs[0].data().profilePicture
+            })
+
+            // AppLogger("finallarrray payment", finalArray)
+            setFilteredPosts(...filteredPosts, finalArray)
+        })
+
+        // AppLogger("finallarrray", finalArray)
+        // setSubsPaymentListFiltered(finalArray)
+    }
+
+    useEffect(() => {
+        if (listOfPosts.length != 0) {
+            handleUserDetails()
+        }
+    }, [listOfPosts])
+
 
     return (
         <>
@@ -44,28 +85,17 @@ function ListOfPosts() {
                                     <div className="row">
                                         <div className="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                             <ul className="list-unstyled">
-
-                                                {/* <ChatItem
-                                                    type={"sender"}
-                                                    name={"lara croft"}
-                                                    message={`   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                                                                labore et dolore magna aliqua.`}
-                                                    profilePhoto={AppImages.placeholder}
-
-                                                />
-                                                <ChatItem
-                                                    type={"receiver"}
-                                                    name={"Brad pit"}
-                                                    message={`   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                                                                labore et dolore magna aliqua.`}
-                                                    profilePhoto={AppImages.placeholder}
-                                                /> */}
-                                                <PostItem
-                                                    name={"lara croft"}
-                                                    message={`   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                                                                labore et dolore magna aliqua.`}
-                                                    profilePhoto={AppImages.placeholder}
-                                                />
+                                                {filteredPosts &&
+                                                    filteredPosts.map((item) =>
+                                                        <PostItem
+                                                            key={get(item, "postId", "")}
+                                                            item={item}
+                                                            name={get(item, "fullName", "")}
+                                                            message={get(item, "caption", "")}
+                                                            profilePhoto={get(item, "profilePicture", AppImages.placeholder)}
+                                                        />
+                                                    )
+                                                }
                                             </ul>
                                         </div>
                                     </div>
