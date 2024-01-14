@@ -18,43 +18,6 @@ export default function PostItem({ name, message, profilePhoto, messageTime, ite
         height: "50px",
     }
 
-    const mediaArray = [
-        {
-            id: 1,
-            mediaType: "image",
-            imageLink: "https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8Y2Fyc3xlbnwwfHwwfHx8MA%3D%3D",
-        },
-        {
-            id: 2,
-            mediaType: "image",
-            imageLink: "https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8Y2Fyc3xlbnwwfHwwfHx8MA%3D%3D",
-        },
-        {
-            id: 3,
-            mediaType: "image",
-            imageLink: "https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8Y2Fyc3xlbnwwfHwwfHx8MA%3D%3D",
-        },
-        {
-            id: 4,
-            mediaType: "video",
-            imageLink: "https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8Y2Fyc3xlbnwwfHwwfHx8MA%3D%3D",
-            videoLink: "https://www.youtube.com/embed/4pSzhZ76GdM?autoplay=1&showinfo=0",
-        },
-        {
-            id: 5,
-            mediaType: "image",
-            imageLink: "https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8Y2Fyc3xlbnwwfHwwfHx8MA%3D%3D",
-        },
-
-        {
-            id: 6,
-            mediaType: "image",
-            imageLink: "https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8Y2Fyc3xlbnwwfHwwfHx8MA%3D%3D",
-        },
-
-    ]
-
-
     return (
         <li className="d-flex  mb-4">
             <img style={imageStyl}

@@ -43,6 +43,7 @@ function GalleryModal({ show = false, setShow, mediaArray = [] }) {
                             width="100%"
                             height="100%"
                             src={get(selectedMedia, "mediaThumbnail", "")}
+                            // src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
                             // src={"https://www.youtube.com/embed/4pSzhZ76GdM?autoplay=1&showinfo=0"}
                             frameBorder="0"
                             allowFullScreen

@@ -85,7 +85,7 @@ function ListOfPosts() {
                                     <div className="row">
                                         <div className="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                             <ul className="list-unstyled">
-                                                {filteredPosts &&
+                                                {filteredPosts.length > 0 ?
                                                     filteredPosts.map((item) =>
                                                         <PostItem
                                                             key={get(item, "postId", "")}
@@ -95,6 +95,10 @@ function ListOfPosts() {
                                                             profilePhoto={get(item, "profilePicture", AppImages.placeholder)}
                                                         />
                                                     )
+                                                    :
+                                                    <div>
+                                                        <h4>No Posts Found</h4>
+                                                    </div>
                                                 }
                                             </ul>
                                         </div>
