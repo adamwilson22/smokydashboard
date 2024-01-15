@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { get } from 'lodash';
 import Modal from 'react-bootstrap/Modal';
+import ReactPlayer from 'react-player';
 
 function GalleryModal({ show = false, setShow, mediaArray = [] }) {
     const [selectedMedia, setSelectedMedia] = useState(null)
@@ -24,41 +25,40 @@ function GalleryModal({ show = false, setShow, mediaArray = [] }) {
         >
             <Modal.Header closeButton>
             </Modal.Header>
-            <Modal.Body >
-                <div className='d-flex '
-                    style={{ backgroundColor: 'rgba(0, 0, 0, 0.33)', width: "100%", height: "100%" }}
+            <Modal.Body className='p-1 ' style={{ backgroundColor: "rgba(0, 0, 0, 1)" }}>
+                <div className='d-flex w-100 h-100  '
+                    style={{ backgroundColor: 'rgba(0, 0, 0, 0.75)' }}
                 >
-                    {/* item.mediaType == "video" ?
-                                    item.mediaThumbnail
-                                    : item.mediaURL */}
                     {selectedMedia && get(selectedMedia, "mediaType", "") == "image" ?
                         <img
                             src={get(selectedMedia, "mediaURL", "")}
-                            style={{
-                                width: "100%", height: '100%', objectFit: 'contain',
-                            }}
+                            className='w-100 h-100 object-fit-contain '
                         />
                         :
-                        <iframe
+                        <ReactPlayer
+                            url={get(selectedMedia, "mediaURL", "")}
+                            width='100%'
+                            height='100%'
+                            playing={true}
+                            controls={true}
+                            volume={1}
+                            progressInterval={5000}
+                            pip={true}
+                        />
+                    }
+                    {/* <iframe
                             width="100%"
                             height="100%"
-                            src={get(selectedMedia, "mediaThumbnail", "")}
-                            // src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-                            // src={"https://www.youtube.com/embed/4pSzhZ76GdM?autoplay=1&showinfo=0"}
+                            src={get(selectedMedia, "mediaURL", "")}
+                            // src="https://firebasestorage.googleapis.com/v0/b/outdoor-trader-8acf0.appspot.com/o/posts%2FFish-x1iE1oztSZhNRykVxDjzPWvEJwT2%2F1705325574266?alt=media&token=fa77fb56-32e1-41df-8aa9-088d9303acd5"
                             frameBorder="0"
                             allowFullScreen
                             title="ex"
-                        />
-                    }
+                        /> */}
                 </div>
             </Modal.Body>
-            <Modal.Footer>
-                <div style={{
-                    width: "100%", height: '150px',
-                    alignItems: 'center',
-                    display: 'flex',
-                    overflowX: 'scroll'
-                }}>
+            <Modal.Footer className='p-0'>
+                <div className='gallery-list'>
                     {mediaArray.map((item, index) =>
                         <img
                             key={index}
@@ -67,11 +67,8 @@ function GalleryModal({ show = false, setShow, mediaArray = [] }) {
                                     item.mediaThumbnail
                                     : item.mediaURL
                             }
+                            className='gallery-item'
                             style={{
-                                width: '130px', height: "130px",
-                                marginRight: "6px",
-                                marginLeft: "6px",
-                                cursor: "pointer",
                                 border: get(selectedMedia, "id", 0) == index ? "2.7px solid #FF7F7F" : "0px"
                             }}
                             onClick={() => setSelectedMedia({ ...item, id: index })}

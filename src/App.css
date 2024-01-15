@@ -1117,3 +1117,23 @@ input:checked + .slider:before {
 .like-sec-p{
   font-size: 18px;
 }
+
+
+/* gallery styles */
+
+.gallery-list{
+  width: 100%;
+  height: 150px;
+  align-items: center;
+  display: flex;
+  overflow-x: scroll;
+}
+
+.gallery-item{
+  object-fit: cover;
+  width: 130px;
+  height: 130px;
+  margin-right: 6px;
+  margin-left: 6px;
+  cursor: pointer;
+}
