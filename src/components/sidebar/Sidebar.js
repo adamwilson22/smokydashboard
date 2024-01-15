@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Nav from 'react-bootstrap/Nav';
 import '../../App.css';
-import logo from '../../assets/logosmok.svg';
+import logo from '../../assets/logo2.png';
 import dashIco from '../../assets/9055226_bxs_dashboard_icon.png';
 import storeIco from '../../assets/3018711_ecommerce_platform_shopify_applications_online_icon.png';
 import eventIco from '../../assets/8683108_calendar_care_medicine_events_schedule_icon.png';
