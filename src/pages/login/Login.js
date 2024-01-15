@@ -7,7 +7,8 @@ import { Link } from 'react-router-dom';
 import { useUserAuth } from '../../Context/UserAuthContext';
 import { useHistory } from 'react-router-dom';
 // import logo from '../../assets/logodark.svg';
-import logoPlaceHolder from "../../assets/logo-placeholder.png"
+import logo from "../../assets/logo2.png"
+import logo2 from "../../assets/deer.png"
 import { AppLogger } from '../../services/AppLogger';
 import UnitDataService from "../../services/unit.service"
 import { showErrorToast, showSuccessToast } from '../../services/AppConstant';
@@ -66,13 +67,16 @@ function BasicExample() {
 
     return (
         <div className="loginbg">
+            <div className='leftlogo'>
+                <img src={logo} alt="Logo" />
+            </div>
             <Container>
                 <Row>
                     <Col></Col>
                     <Col lg="5">
                         <div className='login-form'>
                             <div className='logo-wrp'>
-                                <img src={logoPlaceHolder} alt="Logo" />
+                                <img src={logo2} alt="Logo" />
                                 {/* <h2>Smoke Bud</h2> */}
                             </div>
                             <p>Welcome back! Please login to your account.</p>

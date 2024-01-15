@@ -7,8 +7,8 @@ body {
 }
 
 :root {
-  --bs-link-color: #91cc3f;
-    --bs-link-hover-color: #7cb927;
+  --bs-link-color: #1D1D1D;
+    --bs-link-hover-color: #0e0e0e;
 }
 
 .App-logo {
@@ -33,11 +33,11 @@ p {
   color: #ddd
 }
 .form-control:focus {
-  border-color: #91cc3f;
+  border-color: #0e0e0e;
 }
 .form-check-input:checked {
-  background-color: #91cc3f;
-  border-color: #91cc3f;
+  background-color: #0e0e0e;
+  border-color: #0e0e0e;
 }
 .btn {
   padding: 10px 30px;
@@ -49,7 +49,7 @@ p {
   border: 1px solid #00BF78;
 }
 .custom-navigation {
-  background: linear-gradient(287deg, #0c0c0c, #3e5c1f);
+  background: linear-gradient(287deg, #0c0c0c, #000000);
   padding: 8px 30px;
   position: fixed;
   top: 0;
@@ -67,16 +67,16 @@ p {
   background-color: #f7f7f7;
 }
 .form-select:focus,.form-control:focus {
-  border-color: #91cc3f;
+  border-color: #000;
   outline: 0;
   box-shadow: none;
 }
 .custom-navigation form {
-  background: #8cc63e47;
+  background: #ffffff57;
   border-radius: 4px;
   overflow: hidden;
   backdrop-filter: blur(10px);
-  border: 1px solid #8cc63e;
+  border: 1px solid #000;
 }
 
 .custom-navigation form input {
@@ -86,23 +86,23 @@ p {
 }
 
 .btn-primary {
-  background-color: #91CC3F;;
+  background-color: #1D1D1D;;
 }
 .btn-primary {
   --bs-btn-color: #fff;
-  --bs-btn-bg: #8CC63E;
-  --bs-btn-border-color: #8CC63E;
+  --bs-btn-bg: #1D1D1D;
+  --bs-btn-border-color: #1D1D1D;
   --bs-btn-hover-color: #fff;
-  --bs-btn-hover-bg: #89ca34;
-  --bs-btn-hover-border-color: #89ca34;
+  --bs-btn-hover-bg: #050505;
+  --bs-btn-hover-border-color: #050505;
   --bs-btn-focus-shadow-rgb: 49,132,253;
   --bs-btn-active-color: #fff;
-  --bs-btn-active-bg: #89ca34;
-  --bs-btn-active-border-color: #89ca34;
+  --bs-btn-active-bg: #050505;
+  --bs-btn-active-border-color: #050505;
   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
   --bs-btn-disabled-color: #fff;
-  --bs-btn-disabled-bg: #8CC63E;
-  --bs-btn-disabled-border-color: #8CC63E;
+  --bs-btn-disabled-bg: #252525;
+  --bs-btn-disabled-border-color: #252525;
 }
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
@@ -158,8 +158,8 @@ p {
 }
 
 .side-wrp {
-  background: #428009;
-  background-image: url(./assets/sidebg.png);
+  /* background: #428009; */
+  background-image: url(./assets/sidebg_tg6zkz.webp);
   background-size: cover;
   background-repeat: no-repeat;
   position: fixed;
@@ -178,24 +178,25 @@ p {
 
 .side-wrp a {
   margin: 6px 0;
-  color: #ffffff;
-  background: #8cc63e69;
-  backdrop-filter: blur(10px);
-  border: 1px solid #8cc63e;
-  padding: 12px 20px;
+  color: #000;
+  background: linear-gradient(96deg, rgba(255, 255, 255, 0.712), #909293b7);
+  box-shadow: inset 0px 3px 6px #ECECEC;
+  border: none;
+  padding: 8px 16px;
   text-align: left;
   border-radius: 6px;
+  font-weight: 600;
 }
 /* .side-wrp a.active, */
 .side-wrp a:hover {
-  background: #8cc63e;
-  color: #fff;
+  background: linear-gradient(96deg, white, #909293);
+  color: #000;
 }
 .side-nav a img {
   width: 20px;
   margin-right: 12px;
   vertical-align: sub;
-  filter: invert(1);
+  /* filter: invert(1); */
 }
 .side-wrp .logo-wrp .logo {
   width: 140px;
@@ -572,9 +573,10 @@ img.upload_photo_main {
 
 .login-form input {
   border-radius: 6px;
-  border: 1px solid #DEDEDE;
+  border: 2px solid rgba(0, 0, 0, 0.541);
   font-size: 16px;
   color: #878787;
+  background-color: #fff;
   padding: 10px 20px;
   box-shadow: none !important;
 }
@@ -616,22 +618,53 @@ label.form-check-label {
 }
 
 
-.loginbg:before {
+/* .loginbg:before {
   content: '';
-  background-image: url(../src/assets/leaf.jpg);
+  background-image: url(../src/assets/sebastian.png);
   background-size: cover;
+  background-position: center;
   background-repeat: no-repeat;
   position: fixed;
   left: 0;
   top: 0;
   bottom: 0;
   width: 50%;
+} */
+.leftlogo {
+  background-image: url(../src/assets/sebastian_lexwgp.webp);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.leftlogo:before {
+  content: '';
+  left: 0;
+  top: 0;
+  bottom: 0;
+  position: fixed;
+  right: 0;
+  background: linear-gradient(335deg, black, #222222);
+  opacity: .6;
+  width: 50%;
+  z-index: -1;
 }
 
+.leftlogo img {
+  width: 300px;
+}
 .loginbg {
   display: flex;
   align-items: center;
   height: 100vh;
+  /* background-color: #F2F6FC; */
 }
 
 .loginbg {
@@ -809,6 +842,11 @@ label.form-check-label {
       margin-left: 0;
   }
 }
+@media (max-width: 991px) {
+  .leftlogo{
+    display: none;
+  }
+}
 @media (max-width: 767px) {
   .input-group .btn {
       padding: 6px 14px;
@@ -886,9 +924,7 @@ table.table-striped>tbody>tr td:nth-child(1) {
   .custom-navigation .nav .dropdown .btn:after {
       font-size: 14px;
   }
-  .loginbg:before{
-    display: none;
-  }
+  
 }
 a.back-btn {
   text-align: left;
