@@ -25,7 +25,7 @@ class Sidebar extends Component {
                         {/* <Nav.Link href="/addunit"><img src={dashIco} alt="Logo" />Add New Unit</Nav.Link> */}
                         <Nav.Link href="/list-users"><img src={usersIco} alt="Logo" />Users</Nav.Link>
                         {/* <Nav.Link href="/list-subscription-payments"><img src={subscIco} alt="Logo" />Subscribed Users</Nav.Link> */}
-                        <Nav.Link href="/list-events"><img src={eventIco} alt="Logo" />Events</Nav.Link>
+                        <Nav.Link href="/list-events"><img src={eventIco} alt="Logo" />Hunts</Nav.Link>
                         {/* <Nav.Link href="/list-stores"><img src={storeIco} alt="Logo" />Stores</Nav.Link> */}
                         {/* <Nav.Link href="/all-products"><img src={storeIco} alt="Logo" />Products</Nav.Link> */}
                         <Nav.Link href="/notify-users"><img src={notifyIco} alt="Logo" />Notify Users</Nav.Link>

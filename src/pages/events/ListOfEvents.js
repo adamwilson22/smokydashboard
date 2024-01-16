@@ -75,7 +75,7 @@ function ListOfEvents() {
                                 <>
                                     <div className='table-wrap'>
                                         <div className='flexRow'>
-                                            <h3 className='main-third'>Events List</h3>
+                                            <h3 className='main-third'>Hunt List</h3>
                                             <div></div>
                                             {/* uncomment after testing */}
                                             {/* <Button variant="primary" className='cus-btn'

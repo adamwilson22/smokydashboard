@@ -115,7 +115,7 @@ function Home() {
                                 <Card className='flexcard'>
                                     <Card.Body>
                                         <Chart
-                                            title={'Total Events'}
+                                            title={'Total Hunts'}
                                             // subTitle={'Events'}
                                             desc={totalEvents}
                                         />

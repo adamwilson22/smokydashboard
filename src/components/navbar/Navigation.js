@@ -9,7 +9,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Admin from '../../assets/logo.jpeg'
+import Admin from '../../assets/logo2.png'
 import Toggle from '../../assets/toggle.png'
 import search from '../../assets/search.png'
 import Dropdown from 'react-bootstrap/Dropdown';

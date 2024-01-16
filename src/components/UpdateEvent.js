@@ -123,7 +123,7 @@ function UpdateEvent() {
             <Row className='full-height'>
 
                 <Col className='white-bg'>
-                    <Link className='back-btn override' to="/list-events"><ArrowBackIcon />  Back to Events</Link>
+                    <Link className='back-btn override' to="/list-events"><ArrowBackIcon />  Back to Hunts</Link>
                     <div className="greet-text">
                         <h2>{`${state.action} Event`}</h2>
                     </div>
