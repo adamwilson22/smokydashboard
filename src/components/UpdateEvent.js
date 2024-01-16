@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-import { showErrorToast, showSuccessToast } from '../services/AppConstant';
+import { showErrorToast, showSuccessToast, showToast } from '../services/AppConstant';
 import { AppLogger } from '../services/AppLogger';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import firebaseServices from "../services/unit.services"
 import Navigation from '../components/navbar/Navigation'
 import Sidebar from '../components/sidebar/Sidebar'
-import DateTimePicker from 'react-datetime-picker';
+// import DateTimePicker from 'react-datetime-picker';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import moment from 'moment';
 import '../App.css'
-import 'react-datetime-picker/dist/DateTimePicker.css';
+// import 'react-datetime-picker/dist/DateTimePicker.css';
 import 'react-calendar/dist/Calendar.css';
 import 'react-clock/dist/Clock.css';
 
@@ -40,6 +40,8 @@ function UpdateEvent() {
                 address: state.eventDetails.eventAddress,
                 // image: state.eventDetails.productImages[0]
             })
+            setEndDateTime(state.eventDetails.eventEndDate)
+            setStartDateTime(state.eventDetails.eventStartDate)
         }
     }, [state])
 
@@ -55,17 +57,23 @@ function UpdateEvent() {
     }
 
     const handleUpdateEvent = async () => {
-        try {
-            const body = {
-                eventName: event.name,
-                eventDescription: event.desc,
-                eventAddress: event.address
+        if (moment(endDateTime).isSameOrAfter(startDateTime)) {
+            try {
+                const body = {
+                    eventName: event.name,
+                    eventDescription: event.desc,
+                    eventAddress: event.address,
+                    eventEndDate: moment(endDateTime).format('MMM DD, YYYY'),
+                    eventStartDate: moment(startDateTime).format('MMM DD, YYYY'),
+                }
+                await firebaseServices.updateEvent(state.eventDetails.eventId, body)
+                showSuccessToast("Event Updated Successfully")
+            } catch (error) {
+                AppLogger("error removing event", error)
+                showErrorToast("Unable to update event")
             }
-            await firebaseServices.updateEvent(state.eventDetails.eventId, body)
-            showSuccessToast("Event Updated Successfully")
-        } catch (error) {
-            AppLogger("error removing event", error)
-            showErrorToast("Unable to update event")
+        } else {
+            showToast("End date can't be less than start date")
         }
     }
 
@@ -99,14 +107,6 @@ function UpdateEvent() {
             userId: "",
         }
     }
-
-    // useEffect(() => {
-    //     AppLogger("startDateTime", startDateTime)
-    // }, [startDateTime])
-
-    // useEffect(() => {
-    //     AppLogger("endDateTime", endDateTime)
-    // }, [endDateTime])
 
     return (
         <>
@@ -178,22 +178,30 @@ function UpdateEvent() {
                                     </Row>
                                     <Row>
                                         <Col>
-                                            <Form.Group className="mb-3 date-con" controlId="formBasicpo">
-                                                <label className='label-styl'>Start Date/Time</label>
-                                                <DateTimePicker
-                                                    onChange={(val) => setStartDateTime(val)}
-                                                    value={startDateTime}
+                                            <Form.Group className="mb-3 " controlId="formBasicpo">
+                                                <label className='label-styl'>Start Date</label>
+                                                <input
+                                                    required
+                                                    className='date-picker-styl'
+                                                    type='date'
+                                                    onChange={(e) => {
+                                                        setStartDateTime(e.target.value)
+                                                    }}
+                                                    value={moment(startDateTime).format('YYYY-MM-DD')}
                                                 />
                                             </Form.Group>
                                         </Col>
                                     </Row>
                                     <Row>
                                         <Col>
-                                            <Form.Group className="mb-3 date-con" controlId="formBasicpo">
-                                                <label className='label-styl'>End Date/Time</label>
-                                                <DateTimePicker
-                                                    onChange={(val) => setEndDateTime(val)}
-                                                    value={endDateTime}
+                                            <Form.Group className="mb-3 " controlId="formBasicpo">
+                                                <label className='label-styl'>End Date</label>
+                                                <input
+                                                    required
+                                                    className='date-picker-styl'
+                                                    type='date'
+                                                    onChange={(e) => { setEndDateTime(e.target.value) }}
+                                                    value={moment(endDateTime).format('YYYY-MM-DD')}
                                                 />
                                             </Form.Group>
                                         </Col>

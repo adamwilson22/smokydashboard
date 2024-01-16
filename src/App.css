@@ -1037,12 +1037,12 @@ input:checked + .slider:before {
   background-color: #f7f7f7;
   margin-left: 8px;
 }
-.date-con{
+/* .date-con{
   display: flex;
   flex-direction: "row";
   align-items: center;
   justify-content: space-between;
-}
+} */
 
 .chat-name{
   font-size: 20px;
@@ -1136,4 +1136,11 @@ input:checked + .slider:before {
   margin-right: 6px;
   margin-left: 6px;
   cursor: pointer;
+}
+
+.date-picker-styl{
+  width: 100%;
+  height: 42px;
+  border-radius: 6px;
+  border: 1px solid #C1C1C1;
 }

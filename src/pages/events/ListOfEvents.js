@@ -93,8 +93,8 @@ function ListOfEvents() {
                                                     <th>Type</th>
                                                     <th>Description</th>
                                                     <th>Address</th>
-                                                    <th>Start Date/Time</th>
-                                                    <th>End Date/Time</th>
+                                                    <th>Start Date</th>
+                                                    <th>End Date</th>
                                                     {/* <th>Is Posted</th> */}
                                                     <th>Created At</th>
                                                     <th>Modified At</th>
@@ -120,8 +120,8 @@ function ListOfEvents() {
                                                                 <td>{item.eventType}</td>
                                                                 <td>{item.eventDescription}</td>
                                                                 <td>{item.eventAddress}</td>
-                                                                <td>{`${item.eventStartDate}/${item.eventStartTime}`}</td>
-                                                                <td>{`${item.eventEndDate}/${item.eventEndTime}`}</td>
+                                                                <td>{`${item.eventStartDate}`}</td>
+                                                                <td>{`${item.eventEndDate}`}</td>
                                                                 {/* <td>{item.isPosted}</td> */}
                                                                 <td>{handleDateString(item.createdAt)}</td>
                                                                 <td>{handleDateString(item.modifiedAt)}</td>
