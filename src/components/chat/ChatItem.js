@@ -13,7 +13,7 @@ export default function ChatItem({ type = "", name, message, profilePhoto, messa
             <li className="d-flex  mb-4">
                 <img style={imageStyl}
                     src={profilePhoto} alt="avatar"
-                    className="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="60" />
+                    className="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="50" />
                 <div className="card w-100 ">
                     <div className="card-header d-flex justify-content-between p-3">
                         <p className="fw-bold mb-0 chat-name">{name}</p>

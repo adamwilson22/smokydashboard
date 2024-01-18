@@ -1098,16 +1098,16 @@ input:checked + .slider:before {
 }
 
 .like-styl{
-  width: 20px;
-  height: 20px;
+  width: 14px;
+  height: 14px;
   object-fit: cover;
   margin-right: 8px;
   margin-top: 2px;
 }
 
 .comment-styl{
-  width: 22px;
-  height: 22px;
+  width: 16px;
+  height: 16px;
   margin-right: 8px;
   margin-top: 4px;
   margin-left: 12px;
@@ -1115,7 +1115,8 @@ input:checked + .slider:before {
 }
 
 .like-sec-p{
-  font-size: 18px;
+  font-size: 14px;
+  margin-bottom: 0;
 }
 
 
