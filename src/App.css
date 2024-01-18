@@ -1145,3 +1145,29 @@ input:checked + .slider:before {
   border-radius: 6px;
   border: 1px solid #C1C1C1;
 }
+
+/*  likes list styles */
+
+.profile-pic {
+  width: 53px;
+  height: 53px;
+  object-fit: cover;
+  border-radius: 50px;
+}
+
+.username {
+  font-size: 20px;
+  margin-left: 12px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.liked-icon-styl {
+  width: 24px;
+  height: 24px;
+  object-fit: cover;
+  right: -3px;
+  bottom: -5px;
+}

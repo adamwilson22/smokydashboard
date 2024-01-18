@@ -11,6 +11,7 @@ import { get } from 'lodash';
 export default function PostItem({ name, message, profilePhoto, messageTime, item }) {
     const [imagesList, setImagesList] = useState([1, 2, 3, 4, 5])
     const [showGallery, setShowGallery] = useState(false)
+    const [showLikes, setShowLikes] = useState(false)
 
     const imageStyl = {
         objectFit: "cover",
@@ -69,6 +70,7 @@ export default function PostItem({ name, message, profilePhoto, messageTime, ite
                     <div className='d-flex  '>
                         <div className='d-flex '
                             style={{ cursor: "pointer" }}
+                            onClick={() => setShowLikes(true)}
                         >
                             <img
                                 src={AppImages.like}
@@ -93,6 +95,13 @@ export default function PostItem({ name, message, profilePhoto, messageTime, ite
                 show={showGallery}
                 setShow={setShowGallery}
                 mediaArray={get(item, "media", [])}
+            />
+
+            <LikesModal
+                show={showLikes}
+                setShow={setShowLikes}
+                // mediaArray={get(item, "media", [])}
+                title={"All Likes"}
             />
         </li>
     )
