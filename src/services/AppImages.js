@@ -4,5 +4,7 @@ export const AppImages = {
     like: require("../assets/like.png"),
     comments: require("../assets/comments.png"),
     likedIcon: require("../assets/liked-icon.png"),
-    upArrowIcon: require("../assets/up-arrow-icon.png")
+    upArrowIcon: require("../assets/up-arrow-icon.png"),
+    heartIcon: require("../assets/heart-icon.png"),
+    replyIcon: require("../assets/reply-icon.png")
 }

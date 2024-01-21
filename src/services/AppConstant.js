@@ -19,15 +19,21 @@ export const handleTags = (arrayString = []) => {
     return finalStr
 }
 
-export const handleDateTime = (timeStamp) => {
+export const DateFormats = {
+    dateFormatTimeStamp: "YYYY/MM/DD hh:mm A",
+    dateFormatString: "MMM D, YYYY hh:mm A",
+}
+
+
+export const handleDateTime = (timeStamp, format = DateFormats.dateFormatTimeStamp) => {
     // AppLogger("timeStamp", timeStamp)
     // AppLogger("date", Moment(timeStamp.seconds * 1000).format("YYYY/MM/DD kk:mm A"))
 
-    return Moment(timeStamp.seconds * 1000).format("YYYY/MM/DD hh:mm A")
+    return Moment(timeStamp.seconds * 1000).format(format)
 }
 
 export const handleDateString = (str = "") => {
-    return Moment(str).format("MMM D, YYYY hh:mm A")
+    return Moment(str).format(DateFormats.dateFormatString)
 }
 
 export const AppConstant = {

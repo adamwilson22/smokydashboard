@@ -44,7 +44,7 @@ function NotifyUsers({ }) {
     //         const userDetails = await FBServices.getUserDetails(element.userId);
     //         finalArray.push({
     //             ...element,
-    //             username: userDetails.docs[0].data().fullName
+    //             usernamee: userDetails.docs[0].data().fullName
     //         })
     //         setSubsPaymentListFiltered(...subsPaymentListFiltered, finalArray)
     //     })

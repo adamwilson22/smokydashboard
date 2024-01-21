@@ -26,7 +26,7 @@ function GalleryModal({ show = false, setShow, mediaArray = [] }) {
             <Modal.Header closeButton>
             </Modal.Header>
             <Modal.Body className='p-1 ' style={{ backgroundColor: "rgba(0, 0, 0, 1)" }}>
-                <div className='d-flex w-100 h-100  '
+                <div className='d-flex w-100 h-100 cus-scrol '
                     style={{ backgroundColor: 'rgba(0, 0, 0, 0.75)' }}
                 >
                     {selectedMedia && get(selectedMedia, "mediaType", "") == "image" ?
@@ -58,7 +58,7 @@ function GalleryModal({ show = false, setShow, mediaArray = [] }) {
                 </div>
             </Modal.Body>
             <Modal.Footer className='p-0'>
-                <div className='gallery-list'>
+                <div className='gallery-list cus-scrol'>
                     {mediaArray.map((item, index) =>
                         <img
                             key={index}

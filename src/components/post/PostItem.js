@@ -1,24 +1,80 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useEffect } from 'react'
 import { AppImages } from '../../services/AppImages'
-import ImageViewer from 'react-simple-image-viewer';
+import { AppLogger } from '../../services/AppLogger';
+import { get } from 'lodash';
 import LikesModal from '../LikesModal';
 import GalleryModal from '../GalleryModal';
-import ReactImageGallery from 'react-image-gallery';
-import "../../App.css"
-import { get } from 'lodash';
 import CommentsModal from '../CommentsModal';
+import "../../App.css"
 
-
-export default function PostItem({ name, message, profilePhoto, messageTime, item }) {
-    const [imagesList, setImagesList] = useState([1, 2, 3, 4, 5])
+export default function PostItem({ name, message, profilePhoto, messageTime, item, AllUsers = [] }) {
     const [showGallery, setShowGallery] = useState(false)
     const [showLikes, setShowLikes] = useState(false)
     const [showComments, setShowComments] = useState(false)
+    const [likesArray, setLikesArray] = useState(get(item, "likes", []))
+    const [commentsArray, setCommentsArray] = useState(get(item, "comments", []))
 
     const imageStyl = {
         objectFit: "cover",
         width: "60px",
         height: "50px",
+    }
+
+    useEffect(() => {
+        handleUsersDetailsForComments()
+        handleUserDetailsForLikes()
+    }, [])
+
+    const handleUsersDetailsForComments = () => {
+        var comments = []
+
+        if (Array.isArray(commentsArray)) {
+            commentsArray.forEach((item) => {
+                var repliesArr = []
+                const userDetails = AllUsers.find((usrItem) => get(usrItem, "id", "") == get(item, "commentBy", ""))
+
+                if (Array.isArray(item.replies)) {
+                    item.replies.forEach((replyItem) => {
+                        const getUser = AllUsers.find((usrItem) => get(usrItem, "id", "") == get(replyItem, "replyBy", ""))
+                        repliesArr.push({
+                            ...replyItem,
+                            profilePicture: get(getUser, "profilePicture", ""),
+                            fullName: get(getUser, "fullName", ""),
+                        })
+
+                    })
+                }
+
+                comments.push({
+                    ...item,
+                    replies: repliesArr,
+                    showAllReplies: false,
+                    profilePicture: get(userDetails, "profilePicture", AppImages.placeholder),
+                    fullName: get(userDetails, "fullName", ""),
+                })
+            })
+
+            setCommentsArray(comments)
+            // AppLogger("Final comments array", comments)
+        }
+    }
+
+    const handleUserDetailsForLikes = () => {
+        var finalArray = []
+
+        if (Array.isArray(item.likes)) {
+            item.likes.forEach((element) => {
+                const getUser = AllUsers.find((usrItem) => get(usrItem, "id", "") == get(element, "likedBy", ""))
+                finalArray.push({
+                    ...element,
+                    profilePicture: get(getUser, "profilePicture", ""),
+                    fullName: get(getUser, "fullName", "")
+                })
+            })
+
+            setLikesArray(finalArray)
+            // AppLogger("final likes array", finalArray)
+        }
     }
 
     return (
@@ -84,12 +140,11 @@ export default function PostItem({ name, message, profilePhoto, messageTime, ite
                             style={{ cursor: "pointer" }}
                             onClick={() => {
                                 setShowComments(true)
-
                             }}
                         >
                             <img
                                 src={AppImages.comments}
-                                className='comment-styl '
+                                className='like-styl comment-styl '
                             />
                             <p className='like-sec-p '>Comments {get(item, "comments", []) ? get(item, "comments", []).length : 0}</p>
                         </div>
@@ -102,18 +157,20 @@ export default function PostItem({ name, message, profilePhoto, messageTime, ite
                 setShow={setShowGallery}
                 mediaArray={get(item, "media", [])}
             />
-
-            <LikesModal
-                show={showLikes}
-                setShow={setShowLikes}
-                // mediaArray={get(item, "media", [])}
-                title={"All Likes"}
-            />
+            {get(item, "likes", []) &&
+                <LikesModal
+                    show={showLikes}
+                    setShow={setShowLikes}
+                    likesList={likesArray}
+                    title={"All Likes"}
+                />
+            }
             {get(item, "comments", []) &&
                 <CommentsModal
                     show={showComments}
                     setShow={setShowComments}
-                    commentsList={get(item, "comments", [])}
+                    commentsList={commentsArray}
+                    setCommentsArray={(list) => setCommentsArray(list)}
                     title={"All Comments"}
                 />
             }

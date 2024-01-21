@@ -1098,20 +1098,14 @@ input:checked + .slider:before {
 }
 
 .like-styl{
-  width: 14px;
-  height: 14px;
-  object-fit: cover;
+  width: 23px;
+  height: 23px;
+  object-fit: contain;
   margin-right: 8px;
-  margin-top: 2px;
 }
 
 .comment-styl{
-  width: 16px;
-  height: 16px;
-  margin-right: 8px;
-  margin-top: 4px;
   margin-left: 12px;
-  object-fit: cover;
 }
 
 .like-sec-p{
@@ -1149,14 +1143,14 @@ input:checked + .slider:before {
 /*  likes list styles */
 
 .profile-pic {
-  width: 53px;
-  height: 53px;
+  width: 39px;
+  height: 39px;
   object-fit: cover;
   border-radius: 50px;
 }
 
 .username {
-  font-size: 20px;
+  font-size: 16px;
   margin-left: 12px;
   overflow: hidden;
   display: -webkit-box;
@@ -1165,8 +1159,8 @@ input:checked + .slider:before {
 }
 
 .liked-icon-styl {
-  width: 24px;
-  height: 24px;
+  width: 18px;
+  height: 18px;
   object-fit: cover;
   right: -3px;
   bottom: -5px;
@@ -1175,25 +1169,37 @@ input:checked + .slider:before {
 /* Comments List Modal */
 
 .profile {
-  width: 50px;
-  height: 50px;
+  width: 38px;
+  height: 38px;
   object-fit: cover;
   border-radius: 50px;
   margin-right: 8px;
 }
 
 .comment-Cont {
-  background: green;
+  /* background: #667080; */
+  /* opacity: 20%; */
+  background-color: rgb(102, 112, 128, 0.2);
   padding: 8px;
-  border-radius: 16px
+  border-radius: 15px
 }
 
 .cment-likes {
-  padding: 12px;
+  padding: 8px;
 }
 
 .replies{
-  padding: 12px 0px;
+  padding: 8px 0px;
+}
+
+.all-replies {
+  margin: 3px;
+  font-size: 14px;
+}
+
+.line {
+  width: 47px;
+  border: 1px solid rgb(112, 112, 112);
 }
 
 .collapse-reply{
@@ -1202,4 +1208,58 @@ input:checked + .slider:before {
   -ms-transform: rotate(180deg);
   -o-transform: rotate(180deg);
   transform: rotate(180deg);
+}
+
+/* button pressed affect */
+.btn { 
+  border-radius: 5px; 
+  cursor: pointer; 
+  outline: none; 
+  transition: 0.2s all; 
+} 
+/* Adding transformation when the button is active */ 
+
+.btn:active { 
+  transform: scale(0.98); 
+  /* Scaling button to 0.98 to its original size */ 
+  box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24); 
+  /* Lowering the shadow */ 
+}
+
+.comment-desc {
+  font-size: 14px;
+}
+
+.comment-time {
+ font-size: 10px;
+ margin-top: 4px;
+}
+
+.icon-styl {
+ width: 15px;
+ height: 15px;
+ object-fit: contain;
+ margin-right: 4px;
+}
+
+/* custom scrollbar styles */
+/* width */
+.cus-scrol::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+/* Track */
+.cus-scrol::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+.cus-scrol::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+.cus-scrol::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }

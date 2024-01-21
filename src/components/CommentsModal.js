@@ -1,11 +1,19 @@
 import Modal from 'react-bootstrap/Modal';
 import { AppImages } from '../services/AppImages';
+import { handleDateString } from '../services/AppConstant';
+import { AppLogger } from '../services/AppLogger';
 import { get } from 'lodash';
 import CommentItem from './CommentItem';
 
-function CommentsModal({ title = "", show = false, setShow, commentsList, likesList = [23, 4, 234, 21, 34, 12, 34, 12, 34, 12, 342] }) {
+function CommentsModal({ title = "", show = false, setShow, commentsList = [], setCommentsArray }) {
     const handleClose = () => {
         setShow(false);
+    }
+
+    const handleShowAllRepliesFrComment = (index, value, key) => {
+        var finalArray = [...commentsList]
+        finalArray[index][key] = !value
+        setCommentsArray([...finalArray])
     }
 
     return (
@@ -19,33 +27,52 @@ function CommentsModal({ title = "", show = false, setShow, commentsList, likesL
             <Modal.Header closeButton>
                 <Modal.Title>{title}</Modal.Title>
             </Modal.Header>
-            <Modal.Body className='overflow-x-scroll ' style={{ height: "350px" }}>
+            <Modal.Body className='overflow-y-scroll overflow-x-hidden cus-scrol mb-1' style={{ height: "350px" }}>
                 {commentsList.length > 0 &&
-                    commentsList.map(() =>
-                        <>
+                    commentsList.map((item, index) =>
+                        <div key={index}>
                             <CommentItem
-                                showReplies={true}
-                                replies={[23, 32, 4, 234, 23, 42, 34, 234, 23, 423, 423, 4]}
+                                name={get(item, "fullName", "")}
+                                profilePic={get(item, "profilePicture", "")}
+                                desc={get(item, "comment", "")}
+                                createdAt={handleDateString(get(item, "createdAt", ""))}
+                                likes={item.likes ?? []}
+                                replies={item.replies ?? []}
                             />
-                            <div style={{ marginLeft: "56px" }}>
-                                <div>
-                                    <span style={{ margin: "3px" }}>All Replies</span>
-                                    <img src={AppImages.upArrowIcon} style={{ width: "10px", height: "10px" }} />
+                            {get(item, "replies", []) && get(item, "replies", []).length > 0 &&
+                                <div style={{ marginLeft: "9px", marginBottom: "12px" }}>
+                                    <div className='d-flex align-items-center  ' >
+                                        <div className='line' />
+                                        <div
+                                            className='btn p-0'
+                                            onClick={() => handleShowAllRepliesFrComment(index, get(item, "showAllReplies", false), "showAllReplies")}
+                                        >
+                                            <span className='all-replies '> All Replies</span>
+                                            <img
+                                                className={`${!get(item, "showAllReplies", false) && "collapse-reply"}`}
+                                                src={AppImages.upArrowIcon} style={{ width: "14px", height: "14px" }}
+                                            />
+                                        </div>
+                                    </div>
+                                    {get(item, "showAllReplies", false) && get(item, "replies", []).map((replyItem, replyIndex) =>
+                                        <CommentItem
+                                            customStyles={{ marginLeft: "30px" }}
+                                            key={replyIndex}
+                                            className="mb-0 mt-2 "
+                                            name={get(replyItem, "fullName", "")}
+                                            profilePic={get(replyItem, "profilePicture", "")}
+                                            desc={get(replyItem, "reply", "")}
+                                            createdAt={handleDateString(get(replyItem, "createdAt", ""))}
+                                            likes={replyItem.likes ?? []}
+                                            showReplies={false}
+                                        />
+                                    )}
                                 </div>
-                                {[12, 3, 12, 3, 12, , 31, 23].map((replyItem) =>
-                                    <CommentItem className="mb-0 mt-2 " />
-                                )}
-                            </div>
-                        </>
+                            }
+                        </div>
                     )
                 }
             </Modal.Body>
-            {/* <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        No
-                    </Button>
-                    <Button variant="primary" onClick={() => onClickDone()}>{btnText}</Button>
-                </Modal.Footer> */}
         </Modal>
     );
 }

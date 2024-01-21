@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { AppImages } from '../../services/AppImages';
 import { Link } from 'react-router-dom';
 import { get } from 'lodash';
+import { AppLogger } from '../../services/AppLogger';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Navigation from "../../components/navbar/Navigation"
 import Sidebar from '../../components/sidebar/Sidebar'
@@ -11,25 +12,26 @@ import FBServices from "../../services/unit.services"
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import "../../App.css"
-import { AppLogger } from '../../services/AppLogger';
 
 function ListOfPosts() {
     const [listOfPosts, setlistOfPosts] = useState([])
     const [filteredPosts, setFilteredPosts] = useState([])
+    const [AllUsers, setAllUsers] = useState([])
 
     useEffect(() => {
         getAllPosts();
+        getAllUsers()
     }, [])
 
     const getAllPosts = async () => {
         const data = await UnitDataService.getAllPostsFrFirebase();
         setlistOfPosts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-
-        data.docs.map((doc) => {
-            AppLogger("doc.data()", doc.data())
-            AppLogger("doc.id", doc.id)
-        })
     };
+
+    const getAllUsers = async () => {
+        const data = await UnitDataService.getAllUnit();
+        setAllUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+    }
 
     const handleUserDetails = () => {
         var finalArray = []
@@ -48,9 +50,6 @@ function ListOfPosts() {
             // AppLogger("finallarrray payment", finalArray)
             setFilteredPosts(...filteredPosts, finalArray)
         })
-
-        // AppLogger("finallarrray", finalArray)
-        // setSubsPaymentListFiltered(finalArray)
     }
 
     useEffect(() => {
@@ -58,7 +57,6 @@ function ListOfPosts() {
             handleUserDetails()
         }
     }, [listOfPosts])
-
 
     return (
         <>
@@ -94,6 +92,7 @@ function ListOfPosts() {
                                                             name={get(item, "fullName", "")}
                                                             message={get(item, "caption", "")}
                                                             profilePhoto={get(item, "profilePicture", AppImages.placeholder)}
+                                                            AllUsers={AllUsers}
                                                         />
                                                     )
                                                     :

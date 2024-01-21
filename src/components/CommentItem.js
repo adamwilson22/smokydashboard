@@ -4,32 +4,50 @@ import { AppImages } from '../services/AppImages'
 export default function CommentItem({
     className = "",
     name = "",
+    profilePic = AppImages.placeholder,
     desc = "",
-    showReplies = false,
+    createdAt = "",
+    showReplies = true,
     likes = [],
     replies = [],
-    onClickLikes,
-    onClickComments
+    customStyles = {},
 }) {
     return (
-        <div className={`d-flex mb-2 ${className}`}>
-            <img
-                className='profile '
-                src={AppImages.placeholder}
-            />
-            <div className='d-flex flex-column  '>
-                <div className='comment-Cont '>
-                    <span className='username' style={{ marginLeft: "0px" }}>
-                        Name
-                    </span>
-                    <span>
-                        Description a particular comment
-                    </span>
+        <div style={customStyles}>
+            <div className={`d-flex ${className}  comment-Cont `}>
+                <img
+                    className='profile '
+                    src={profilePic}
+                />
+                <div className='d-flex flex-column '>
+                    <div className='d-flex flex-column  '>
+                        <span className='username' style={{ marginLeft: "0px" }}>
+                            {name}
+                        </span>
+                        <span className='comment-desc '>
+                            {desc}
+                        </span>
+                        <span className='comment-time '>
+                            {createdAt}
+                        </span>
+                    </div>
                 </div>
-                <div className='d-flex ' style={{ cursor: "pointer" }} >
-                    <p className='like-sec-p cment-likes'>Likes 12</p>
-                    {showReplies && <p className='like-sec-p replies'>Replies {replies.length}</p>}
-                </div>
+            </div>
+            <div className='d-flex ' >
+                <p className='like-sec-p cment-likes '>
+                    <img
+                        src={AppImages.heartIcon}
+                        className='icon-styl '
+                    />
+                    Likes {likes.length}
+                </p>
+                {showReplies && <p className='like-sec-p replies '>
+                    <img
+                        src={AppImages.replyIcon}
+                        className='icon-styl '
+                    />
+                    Replies {replies.length}
+                </p>}
             </div>
         </div>
     )
