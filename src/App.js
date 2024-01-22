@@ -1,32 +1,26 @@
-import React, { useState } from 'react';
+import React, { } from 'react';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
 import { UserAuthContextProvider } from './Context/UserAuthContext';
 import { Toaster } from 'react-hot-toast';
 import Home from './pages/home/Home'
-import UnitSearch from './components/UnitSearch'
-import UnitCreate from './pages/unit/UnitCreate'
-import UnitUpdate from './pages/unit/UnitUpdate'
 import Login from './pages/login/Login'
-import Signup from './pages/login/Signup'
-import AddNewUnit from './pages/unit/AddUnit'
-import List from './pages/list/List'
-import UnitsList from './pages/list/ListUnit'
-import ViewUnit from './pages/unit/ViewUnit'
+import ListOfUsers from './pages/list/ListOfUsers'
+import ViewUser from './pages/unit/ViewUser'
 import ListOfEvents from './pages/events/ListOfEvents';
 import ListOfStores from './pages/stores/ListOfStores';
 import ViewProducts from './components/ViewProducts';
 import SubscribedUsersList from './pages/subscribedUsers/SubscribedUsersList';
 import NotifyUsers from './pages/notifyUsers/NotifyUsers';
-import './App.css';
 import AllProducts from './pages/products/AllProducts';
 import EditProduct from './components/EditProduct';
 import UpdateEvent from './components/UpdateEvent';
 import ListOfChats from './pages/chatList/ListOfChats';
 import ViewChat from './components/chat/ViewChat';
 import ListOfPosts from './pages/ListOfPosts/ListOfPosts';
+import AppRoutes from './services/AppRoutes';
+import './App.css';
 
 function App() {
-  const [unitId, setUnitId] = useState("");
   return (
     <div className="App">
       <Router>
@@ -36,26 +30,26 @@ function App() {
         />
         <UserAuthContextProvider>
           <Switch>
-            <Route component={UnitSearch} path="/unitsearch" ></Route>
-            <Route component={ViewUnit} path="/view-user" ></Route>
-            <Route component={ViewProducts} path="/view-products" ></Route>
-            <Route component={UnitsList} path="/list-users" ></Route>
-            <Route component={ListOfEvents} path="/list-events" ></Route>
-            <Route component={ListOfStores} path="/list-stores" ></Route>
-            <Route component={AllProducts} path="/all-products" ></Route>
-            <Route component={SubscribedUsersList} path="/list-subscription-payments" ></Route>
-            <Route component={NotifyUsers} path="/notify-users" ></Route>
-            <Route component={List} path="/list" ></Route>
-            <Route component={UnitCreate} path="/add" ></Route>
-            <Route component={UnitUpdate} path="/update" ></Route>
-            <Route component={EditProduct} path="/update-product" ></Route>
-            <Route component={UpdateEvent} path="/update-event" ></Route>
-            <Route component={ListOfChats} path="/list-chats" ></Route>
-            <Route component={ListOfPosts} path="/list-posts" ></Route>
-            <Route component={ViewChat} path="/view-chat" ></Route>
-            <Route component={Home} path="/home" ></Route>
-            <Route component={AddNewUnit} path="/addunit" ></Route>
-            <Route component={Login} path="/" ></Route>
+            {/* <Route component={UnitSearch} path="/unitsearch" ></Route> */}
+            {/* <Route component={List} path="/list" ></Route> */}
+            {/* <Route component={UnitCreate} path="/add" ></Route> */}
+            {/* <Route component={UnitUpdate} path="/update" ></Route> */}
+            {/* <Route component={AddNewUnit} path="/addunit" ></Route> */}
+            <Route component={ViewUser} path={AppRoutes.viewUser} ></Route>
+            <Route component={ViewProducts} path={AppRoutes.viewProducts} ></Route>
+            <Route component={ListOfUsers} path={AppRoutes.listUsers} ></Route>
+            <Route component={ListOfEvents} path={AppRoutes.listEvents} ></Route>
+            <Route component={ListOfStores} path={AppRoutes.listStores} ></Route>
+            <Route component={AllProducts} path={AppRoutes.allProducts} ></Route>
+            <Route component={SubscribedUsersList} path={AppRoutes.listSubsPay} ></Route>
+            <Route component={NotifyUsers} path={AppRoutes.notifyUsers} ></Route>
+            <Route component={EditProduct} path={AppRoutes.updateProduct} ></Route>
+            <Route component={UpdateEvent} path={AppRoutes.updateEvent} ></Route>
+            <Route component={ListOfChats} path={AppRoutes.listChats} ></Route>
+            <Route component={ListOfPosts} path={AppRoutes.listPosts} ></Route>
+            <Route component={ViewChat} path={AppRoutes.viewChat} ></Route>
+            <Route component={Home} path={AppRoutes.home} ></Route>
+            <Route component={Login} path={AppRoutes.login} ></Route>
           </Switch>
         </UserAuthContextProvider>
       </Router>

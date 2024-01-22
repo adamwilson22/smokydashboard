@@ -7,11 +7,11 @@ import { Button } from 'react-bootstrap';
 import { handleTags, showSuccessToast } from '../services/AppConstant';
 import UnitDataService from "../services/unit.services"
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import AppRoutes from '../services/AppRoutes';
 import Navigation from './navbar/Navigation'
+import Table from 'react-bootstrap/Table';
 import Sidebar from './sidebar/Sidebar'
 import CustomModal from './CustomModal';
-import Table from 'react-bootstrap/Table';
-import ListUnit from './chart/ViewUnit';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import "../App.css"
@@ -94,7 +94,7 @@ function ViewProducts() {
             />
             <Row className='full-height'>
                 <Col className='white-bg'>
-                    <Link className='back-btn override' to="/list-stores"><ArrowBackIcon /> Back to Stores list </Link>
+                    <Link className='back-btn override' to={AppRoutes.listStores}><ArrowBackIcon /> Back to Stores list </Link>
                     <Row>
                         <Col>
                             <div className='charts '>
@@ -149,9 +149,9 @@ function ViewProducts() {
                                                                         variant=''
                                                                         className='edit'
                                                                         onClick={(e) => {
-                                                                            history.push('/update-product',
+                                                                            history.push(AppRoutes.updateProduct,
                                                                                 {
-                                                                                    productDetails: doc, backTo: "/list-stores",
+                                                                                    productDetails: doc, backTo: AppRoutes.listStores,
                                                                                     backToText: "Stores"
                                                                                 }
                                                                             )

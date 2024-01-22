@@ -1,17 +1,16 @@
-import React, { useState } from 'react'
+import React, { } from 'react'
+import { useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Navigation from '../../components/navbar/Navigation'
-import Sidebar from '../../components/sidebar/Sidebar'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ListUnit from '../../components/chart/ViewUnit';
+import Sidebar from '../../components/sidebar/Sidebar'
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import '../../App.css';
-import { Link } from 'react-router-dom';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { useLocation } from 'react-router-dom';
 
-function UnitCreate() {
+function ViewUser() {
     const { state } = useLocation();
-    const [unitNo, setunitNo] = useState("");
 
     return (
         <>
@@ -31,7 +30,7 @@ function UnitCreate() {
                     <Row>
                         <Col>
                             <div className='charts '>
-                                <ListUnit id={unitNo} setunitNo={setunitNo} />
+                                <ListUnit />
                             </div>
                         </Col>
                     </Row>
@@ -41,4 +40,4 @@ function UnitCreate() {
     );
 }
 
-export default UnitCreate
+export default ViewUser

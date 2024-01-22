@@ -8,19 +8,14 @@ import DataTable from "../../components/chart/ListUnit";
 import UnitDataService from "../../services/unit.service"
 import '../../App.css';
 
-function Home() {
-    const [unitId, setUnitId] = useState("");
+function ListOfUsers() {
     const [usersList, setUsersList] = useState([]);
     const [searchList, setSearchList] = useState([]);
     const [searchText, setSearchText] = useState("")
 
-    const getUnitIdHandler = (id) => {
-        setUnitId(id);
-    }
-
     useEffect(() => {
         getAllUsers();
-        AppLogger("getAllUsers", "called")
+        // AppLogger("getAllUsers", "called")
     }, [])
 
     const getAllUsers = async () => {
@@ -32,17 +27,10 @@ function Home() {
             }
         })
         setUsersList(userDummyArray)
-
-        // data.docs.map((doc) => {
-        // AppLogger("doc.data()", doc.data())
-        // AppLogger("doc.id", doc.id)
-        // })
     };
 
     var finalList = []
     finalList = searchText ? searchList : usersList
-
-    // AppLogger("searchList", searchList)
 
     return (
         <>
@@ -60,8 +48,7 @@ function Home() {
                 <Col className='white-bg'>
                     <Row>
                         <Col>
-                            <DataTable finalArray={finalList} getUnitId={getUnitIdHandler} />
-
+                            <DataTable finalArray={finalList} />
                         </Col>
                     </Row>
                 </Col>
@@ -70,4 +57,4 @@ function Home() {
     );
 }
 
-export default Home
+export default ListOfUsers

@@ -12,6 +12,7 @@ import FBServices from "../../services/unit.services"
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import "../../App.css"
+import AppRoutes from '../../services/AppRoutes';
 
 function ListOfPosts() {
     const [listOfPosts, setlistOfPosts] = useState([])
@@ -73,7 +74,7 @@ function ListOfPosts() {
             <Row className='full-height'>
                 <Col className='white-bg '>
                     <div style={{ alignItems: "center", display: "flex", flexDirection: "row", justifyContent: "space-between", }}>
-                        <Link className='back-btn override' to="/list-chats"><ArrowBackIcon /> Back to Home </Link>
+                        <Link className='back-btn override' to={AppRoutes.listChats}><ArrowBackIcon /> Back to Home </Link>
                         <h2><strong>{"Posts posted by user"}</strong></h2>
                         <div />
                     </div>

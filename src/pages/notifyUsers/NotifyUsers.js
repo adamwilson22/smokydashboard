@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useHistory } from 'react-router-dom';
+import { Link, } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { AppLogger } from '../../services/AppLogger';
 import { default as ReactSelect } from "react-select";
 import { AppConstant, showErrorToast, showSuccessToast } from '../../services/AppConstant';
-import FBServices from "../../services/unit.services"
+import Navigation from '../../components/navbar/Navigation';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Sidebar from '../../components/sidebar/Sidebar';
-import Navigation from '../../components/navbar/Navigation';
+import FBServices from "../../services/unit.services"
+import AppRoutes from '../../services/AppRoutes';
+import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
 import '../../App.css';
 
 function NotifyUsers({ }) {
-    const history = useHistory();
     const [listOfUsers, setListOfUsers] = useState([]);
     const [notifyBody, setNotifyBody] = useState({
         title: "",
@@ -145,7 +145,7 @@ function NotifyUsers({ }) {
             <Row className='full-height'>
 
                 <Col className='white-bg'>
-                    <Link className='back-btn override' to="/home"><ArrowBackIcon /> Back to Dashboard </Link>
+                    <Link className='back-btn override' to={AppRoutes.home}><ArrowBackIcon /> Back to Dashboard </Link>
                     <div className="greet-text">
                         <h2>Send Push Notifications</h2>
 

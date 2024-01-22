@@ -3,17 +3,18 @@ import { Link, useHistory } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { AppLogger } from '../../services/AppLogger';
 import { handleDateTime } from '../../services/AppConstant';
-import UnitDataService from "../../services/unit.service"
-import FBServices from "../../services/unit.services"
-import Table from 'react-bootstrap/Table';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import Sidebar from '../../components/sidebar/Sidebar';
 import Navigation from '../../components/navbar/Navigation';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import UnitDataService from "../../services/unit.service"
+import Sidebar from '../../components/sidebar/Sidebar';
+import FBServices from "../../services/unit.services"
+import AppRoutes from '../../services/AppRoutes';
+import Table from 'react-bootstrap/Table';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import '../../App.css';
 
-function SubscribedUsersList({ }) { // getUnitId }) {
+function SubscribedUsersList({ }) {
     const history = useHistory();
     const [subsPaymentList, setSubsPaymentList] = useState([]);
     const [subsPaymentListFiltered, setSubsPaymentListFiltered] = useState([]);
@@ -28,11 +29,6 @@ function SubscribedUsersList({ }) { // getUnitId }) {
     const getAllSubsPayments = async () => {
         const data = await UnitDataService.getAllSubsciptionsPayments();
         setSubsPaymentList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-
-        // data.docs.map((doc) => {
-        //     AppLogger("doc.data()", doc.data())
-        //     AppLogger("doc.id", doc.id)
-        // })
     };
 
     const handleUserName = () => {
@@ -40,8 +36,6 @@ function SubscribedUsersList({ }) { // getUnitId }) {
 
         subsPaymentList.forEach(async (element) => {
             const userDetails = await FBServices.getUserDetails(element.userId);
-            // AppLogger("userDetails", userDetails.docs[0].data())
-            // AppLogger("typeof userDetails.docs", userDetails.docs)
             finalArray.push({
                 ...element,
                 userDetails: userDetails.docs[0].data(),
@@ -51,17 +45,7 @@ function SubscribedUsersList({ }) { // getUnitId }) {
             // AppLogger("finallarrray payment", finalArray)
             setSubsPaymentListFiltered(...subsPaymentListFiltered, finalArray)
         })
-
-        // AppLogger("finallarrray", finalArray)
-        // setSubsPaymentListFiltered(finalArray)
     }
-
-
-    // useEffect(() => {
-    // console.log('====================================');
-    // console.log("subsPaymentListFiltered", subsPaymentListFiltered);
-    // console.log('====================================');
-    // }, [subsPaymentListFiltered])
 
     useEffect(() => {
         if (subsPaymentList.length != 0) {
@@ -87,7 +71,7 @@ function SubscribedUsersList({ }) { // getUnitId }) {
             />
             <Row className='full-height'>
                 <Col className='white-bg'>
-                    <Link className='back-btn override' to="/home"><ArrowBackIcon /> Back to Dashboard </Link>
+                    <Link className='back-btn override' to={AppRoutes.home}><ArrowBackIcon /> Back to Dashboard </Link>
                     <Row>
                         <Col>
                             <div className='charts '>
@@ -130,9 +114,9 @@ function SubscribedUsersList({ }) { // getUnitId }) {
                                                                         className='edit'
                                                                         onClick={(e) => {
                                                                             // getUnitId(doc.id)
-                                                                            history.push('/view-user', {
+                                                                            history.push(AppRoutes.viewUser, {
                                                                                 selectedUser: doc.userDetails,
-                                                                                backToPath: "/list-subscription-payments"
+                                                                                backToPath: AppRoutes.listSubsPay
                                                                             });
                                                                         }}
                                                                     >

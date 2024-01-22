@@ -7,6 +7,7 @@ import Col from 'react-bootstrap/Col';
 import '../../App.css';
 import { Link } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import AppRoutes from '../../services/AppRoutes';
 
 function AddUnits() {
     return (
@@ -24,7 +25,7 @@ function AddUnits() {
             <Row className='full-height'>
 
                 <Col className='white-bg'>
-                    <Link className='back-btn override' to="/list-users"><ArrowBackIcon /> Back to List </Link>
+                    <Link className='back-btn override' to={AppRoutes.listUsers}><ArrowBackIcon /> Back to List </Link>
                     <div className="greet-text">
                         <h2>Add New Unit</h2>
                         <p>Update Unit</p>

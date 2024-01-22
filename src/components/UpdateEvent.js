@@ -17,6 +17,7 @@ import '../App.css'
 // import 'react-datetime-picker/dist/DateTimePicker.css';
 import 'react-calendar/dist/Calendar.css';
 import 'react-clock/dist/Clock.css';
+import AppRoutes from '../services/AppRoutes';
 
 function UpdateEvent() {
     const { state } = useLocation();
@@ -123,7 +124,7 @@ function UpdateEvent() {
             <Row className='full-height'>
 
                 <Col className='white-bg'>
-                    <Link className='back-btn override' to="/list-events"><ArrowBackIcon />  Back to Hunts</Link>
+                    <Link className='back-btn override' to={AppRoutes.listEvents}><ArrowBackIcon />  Back to Hunts</Link>
                     <div className="greet-text">
                         <h2>{`${state.action} Event`}</h2>
                     </div>

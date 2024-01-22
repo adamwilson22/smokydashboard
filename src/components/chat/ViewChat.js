@@ -11,6 +11,7 @@ import Col from 'react-bootstrap/Col';
 import ChatItem from './ChatItem';
 import "../../App.css"
 import { handleDateTime } from '../../services/AppConstant';
+import AppRoutes from '../../services/AppRoutes';
 
 
 function ViewChat() {
@@ -84,7 +85,7 @@ function ViewChat() {
             <Row className='full-height'>
                 <Col className='white-bg '>
                     <div style={{ alignItems: "center", display: "flex", flexDirection: "row", justifyContent: "space-between", }}>
-                        <Link className='back-btn override' to="/list-chats"><ArrowBackIcon /> Back to Chats list </Link>
+                        <Link className='back-btn override' to={AppRoutes.listChats}><ArrowBackIcon /> Back to Chats list </Link>
                         <h2><strong>{state.chatTitle}</strong></h2>
                         <div />
                     </div>

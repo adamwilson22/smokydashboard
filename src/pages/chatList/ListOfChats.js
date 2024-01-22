@@ -11,6 +11,7 @@ import Navigation from '../../components/navbar/Navigation'
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Table from 'react-bootstrap/Table';
+import AppRoutes from '../../services/AppRoutes';
 
 export default function ListOfChats() {
 
@@ -114,7 +115,7 @@ export default function ListOfChats() {
             />
             <Row className='full-height'>
                 <Col className='white-bg'>
-                    <Link className='back-btn override' to="/home"><ArrowBackIcon /> Back to Dashboard </Link>
+                    <Link className='back-btn override' to={AppRoutes.home}><ArrowBackIcon /> Back to Dashboard </Link>
                     <Row>
                         <Col>
                             <div className='table-wrap'>
@@ -144,7 +145,7 @@ export default function ListOfChats() {
                                                                 variant=''
                                                                 className='edit'
                                                                 onClick={(e) => {
-                                                                    history.push('/view-chat',
+                                                                    history.push(AppRoutes.viewChat,
                                                                         { chatItem: doc, chatTitle: doc.chatName }
                                                                     )
                                                                 }}

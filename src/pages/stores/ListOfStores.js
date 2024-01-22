@@ -4,18 +4,19 @@ import { Button } from 'react-bootstrap';
 import { AppLogger } from '../../services/AppLogger';
 import { AppImages } from '../../services/AppImages';
 import { handleDateString, showErrorToast } from '../../services/AppConstant';
-import UnitDataService from "../../services/unit.service"
 import firebaseServices from "../../services/unit.services"
-import Table from 'react-bootstrap/Table';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import Sidebar from '../../components/sidebar/Sidebar';
 import Navigation from '../../components/navbar/Navigation';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import UnitDataService from "../../services/unit.service"
+import Sidebar from '../../components/sidebar/Sidebar';
+import CustomModal from '../../components/CustomModal';
+import AppRoutes from '../../services/AppRoutes';
+import Table from 'react-bootstrap/Table';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import '../../App.css';
-import CustomModal from '../../components/CustomModal';
 
-function ListOfStores({ }) { // getUnitId }) {
+function ListOfStores({ }) {
     const history = useHistory();
     const [storesList, setStoresList] = useState([]);
     const [searchList, setSearchList] = useState([]);
@@ -32,11 +33,6 @@ function ListOfStores({ }) { // getUnitId }) {
         const data = await UnitDataService.getAllStores();
         // AppLogger("userslist", data)
         setStoresList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-
-        // data.docs.map((doc) => {
-        //     AppLogger("doc.data()", doc.data())
-        //     AppLogger("doc.id", doc.id)
-        // })
     };
 
     const handleRemoveStore = async () => {
@@ -67,7 +63,7 @@ function ListOfStores({ }) { // getUnitId }) {
             />
             <Row className='full-height'>
                 <Col className='white-bg'>
-                    <Link className='back-btn override' to="/home"><ArrowBackIcon /> Back to Dashboard </Link>
+                    <Link className='back-btn override' to={AppRoutes.home}><ArrowBackIcon /> Back to Dashboard </Link>
                     <Row>
                         <Col>
                             <div className='charts '>
@@ -116,7 +112,7 @@ function ListOfStores({ }) { // getUnitId }) {
                                                                         className='edit'
                                                                         onClick={(e) => {
                                                                             // getUnitId(doc.id)
-                                                                            history.push('/view-products',
+                                                                            history.push(AppRoutes.viewProducts,
                                                                                 { storeId: doc.storeId, storeName: doc.storeName }
                                                                             )
                                                                         }}

@@ -9,11 +9,12 @@ import firebaseServices from "../../services/unit.services"
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Navigation from "../../components/navbar/Navigation"
 import Sidebar from "../../components/sidebar/Sidebar";
+import CustomModal from '../../components/CustomModal';
+import AppRoutes from '../../services/AppRoutes';
+import Table from 'react-bootstrap/Table';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Table from 'react-bootstrap/Table';
 import '../../App.css';
-import CustomModal from '../../components/CustomModal';
 
 function ListOfEvents() {
     const history = useHistory();
@@ -25,7 +26,7 @@ function ListOfEvents() {
 
     useEffect(() => {
         getListOfEvents()
-        AppLogger("getListOfEvents", "called")
+        // AppLogger("getListOfEvents", "called")
     }, [])
 
     const getListOfEvents = async () => {
@@ -68,7 +69,7 @@ function ListOfEvents() {
             />
             <Row className='full-height'>
                 <Col className='white-bg'>
-                    <Link className='back-btn override' to="/home"><ArrowBackIcon /> Back to Dashboard </Link>
+                    <Link className='back-btn override' to={AppRoutes.home}><ArrowBackIcon /> Back to Dashboard </Link>
                     <Row>
                         <Col>
                             <div className='charts '>
@@ -131,7 +132,7 @@ function ListOfEvents() {
                                                                         variant=''
                                                                         className='edit'
                                                                         onClick={(e) => {
-                                                                            history.push('/update-event', {
+                                                                            history.push(AppRoutes.updateEvent, {
                                                                                 action: "Update",
                                                                                 eventDetails: item,
                                                                             })

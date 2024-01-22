@@ -1,42 +1,26 @@
 import React, { useEffect, useState } from 'react'
-import '../../App.css';
-import UnitDataService from "../../services/unit.services"
-import { Button } from 'react-bootstrap';
-import Table from 'react-bootstrap/Table';
-import { useHistory, useLocation } from 'react-router-dom';
+import { showErrorToast } from '../../services/AppConstant';
+import { useLocation } from 'react-router-dom';
 import { AppLogger } from '../../services/AppLogger';
 import { AppImages } from '../../services/AppImages';
-import { showErrorToast } from '../../services/AppConstant';
+import { Button } from 'react-bootstrap';
+import UnitDataService from "../../services/unit.services"
+import Table from 'react-bootstrap/Table';
 import CustomModal from '../CustomModal';
+import '../../App.css';
 
-function Home({ id, setUnitId }) {
-  const history = useHistory();
+function Home({ }) {
   const { state } = useLocation();
   const [user, setUser] = useState(null);
   const [showBlockModal, setShowBlockModal] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
 
   useEffect(() => {
-    // const test = UnitDataService.getSelectedUnit(state.state).then(r => console.log(r));
-    //  getUnits();
-    // console.log("state selectedUser =>", state.selectedUser)
     setUser(state.selectedUser)
   }, [])
 
-  // useEffect(() => {
-  //   AppLogger("user", user)
-  // }, [user])
-  // const getUnits = async () => {
-  //   const data = await UnitDataService.getSelectedUnit(state.state);
-  //   if (!data.empty)
-  //     setUnits(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-  //   else {
-  //     console.log('error')
-  //   }
-  // };
 
   const handleBlockUnBlockUser = async () => {
-    // AppLogger("user object", user)
     try {
       await UnitDataService.updateUser(user.uid, !user.status);
       setUser({ ...user, status: !user.status })

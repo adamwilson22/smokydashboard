@@ -6,6 +6,7 @@ import { Button, Form } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import { Link, useHistory } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import AppRoutes from '../../services/AppRoutes';
 
 
 function Home({ getUnitId }) {
@@ -40,7 +41,7 @@ function Home({ getUnitId }) {
   const history = useHistory();
   return (
     <>
-      <Link className='back-btn override' to="/home"><ArrowBackIcon /> Back to Dashboard </Link>
+      <Link className='back-btn override' to={AppRoutes.home}><ArrowBackIcon /> Back to Dashboard </Link>
       <div className='table-wrap'>
         <h3 className='main-third'>Appliances List</h3>
 

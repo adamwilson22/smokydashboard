@@ -14,6 +14,7 @@ import Toggle from '../../assets/toggle.png'
 import search from '../../assets/search.png'
 import Dropdown from 'react-bootstrap/Dropdown';
 import './navbar.css';
+import AppRoutes from '../../services/AppRoutes';
 
 const Home = ({ setSearchQuery, originalList = [], updatedList = [], searchKey = "", showSearh = false }) => {
   const history = useHistory();
@@ -23,7 +24,7 @@ const Home = ({ setSearchQuery, originalList = [], updatedList = [], searchKey =
   useEffect(() => {
     // AppLogger("loginResp ", loginResp)
     if (loginResp == null) {
-      history.push("/")
+      history.push(AppRoutes.login)
     }
   }, [loginResp])
 
@@ -33,7 +34,7 @@ const Home = ({ setSearchQuery, originalList = [], updatedList = [], searchKey =
       // console.log('Hello From Logout')
       localStorage.setItem("USER", JSON.stringify(null))
       showSuccessToast("Logged Out Sucessfully")
-      history.push("/");
+      history.push(AppRoutes.login);
     } catch (error) {
       console.log(error.message);
     }

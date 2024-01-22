@@ -1,10 +1,8 @@
-import { AppLogger } from "./AppLogger"
 import toast from 'react-hot-toast';
 import Moment from 'moment';
 
 
 export const handleTags = (arrayString = []) => {
-    // AppLogger("arrayString", arrayString)
     var finalStr = ""
     arrayString.forEach((element, index) => {
         if (arrayString.length != 1
@@ -26,9 +24,6 @@ export const DateFormats = {
 
 
 export const handleDateTime = (timeStamp, format = DateFormats.dateFormatTimeStamp) => {
-    // AppLogger("timeStamp", timeStamp)
-    // AppLogger("date", Moment(timeStamp.seconds * 1000).format("YYYY/MM/DD kk:mm A"))
-
     return Moment(timeStamp.seconds * 1000).format(format)
 }
 

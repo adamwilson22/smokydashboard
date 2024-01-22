@@ -6,13 +6,14 @@ import Table from 'react-bootstrap/Table';
 import { format, parseISO } from 'date-fns'; // Import format and parseISO functions
 import '../../App.css';
 import { AppImages } from '../../services/AppImages';
+import AppRoutes from '../../services/AppRoutes';
 
-function Home({ finalArray = [], getUnitId }) {
+function Home({ finalArray = [] }) {
   const history = useHistory();
 
   return (
     <>
-      <Link className='back-btn override' to="/home"><ArrowBackIcon /> Back to Dashboard</Link>
+      <Link className='back-btn override' to={AppRoutes.home}><ArrowBackIcon /> Back to Dashboard</Link>
       <div className='table-wrap'>
         <h3 className='main-third'>List of All Users</h3>
         <Table striped bordered hover responsive>
@@ -66,7 +67,7 @@ function Home({ finalArray = [], getUnitId }) {
                         className='edit'
                         onClick={(e) => {
                           // getUnitId(doc.id)
-                          history.push('/view-user', { selectedUser: doc });
+                          history.push(AppRoutes.viewUser, { selectedUser: doc });
                         }}
                       >
                         View

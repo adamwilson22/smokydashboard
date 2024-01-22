@@ -7,10 +7,11 @@ import { Button } from 'react-bootstrap';
 import CustomModal from '../../components/CustomModal';
 import UnitDataService from "../../services/unit.service"
 import firebaseServices from "../../services/unit.services"
-import Table from 'react-bootstrap/Table';
+import Navigation from '../../components/navbar/Navigation';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Sidebar from '../../components/sidebar/Sidebar';
-import Navigation from '../../components/navbar/Navigation';
+import AppRoutes from '../../services/AppRoutes';
+import Table from 'react-bootstrap/Table';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import '../../App.css';
@@ -94,7 +95,7 @@ function AllProducts({ }) {
             />
             <Row className='full-height'>
                 <Col className='white-bg'>
-                    <Link className='back-btn override' to="/home"><ArrowBackIcon /> Back to Dashboard </Link>
+                    <Link className='back-btn override' to={AppRoutes.home}><ArrowBackIcon /> Back to Dashboard </Link>
                     <Row>
                         <Col>
                             <div className='charts '>
@@ -155,8 +156,8 @@ function AllProducts({ }) {
                                                                         variant=''
                                                                         className='edit'
                                                                         onClick={(e) => {
-                                                                            history.push('/update-product',
-                                                                                { productDetails: doc, backTo: "/all-products", backToText: "Products" }
+                                                                            history.push(AppRoutes.updateProduct,
+                                                                                { productDetails: doc, backTo: AppRoutes.allProducts, backToText: "Products" }
                                                                             )
                                                                         }}
                                                                     >

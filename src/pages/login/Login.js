@@ -12,6 +12,7 @@ import logo2 from "../../assets/deer.png"
 import { AppLogger } from '../../services/AppLogger';
 import UnitDataService from "../../services/unit.service"
 import { showErrorToast, showSuccessToast } from '../../services/AppConstant';
+import AppRoutes from '../../services/AppRoutes';
 
 
 function BasicExample() {
@@ -48,7 +49,7 @@ function BasicExample() {
             if (isAdmin) {
                 // showSuccessToast("Super Admin")
                 localStorage.setItem("USER", JSON.stringify(response.user))
-                history.push("/home");
+                history.push(AppRoutes.home);
             } else {
                 await logOut();
                 showErrorToast("Invalid Credentials")
@@ -61,7 +62,7 @@ function BasicExample() {
 
     useEffect(() => {
         if (loginResp != null) {
-            history.push("/home")
+            history.push(AppRoutes.home)
         }
     }, [loginResp])
 
