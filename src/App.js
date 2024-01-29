@@ -19,6 +19,7 @@ import ViewChat from './components/chat/ViewChat';
 import ListOfPosts from './pages/ListOfPosts/ListOfPosts';
 import AppRoutes from './services/AppRoutes';
 import './App.css';
+import HelpAndFeedback from './pages/HelpAndFeedback/HelpAndFeedback';
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
             <Route component={UpdateEvent} path={AppRoutes.updateEvent} ></Route>
             <Route component={ListOfChats} path={AppRoutes.listChats} ></Route>
             <Route component={ListOfPosts} path={AppRoutes.listPosts} ></Route>
+            <Route component={HelpAndFeedback} path={AppRoutes.helpAndFeedback} ></Route>
             <Route component={ViewChat} path={AppRoutes.viewChat} ></Route>
             <Route component={Home} path={AppRoutes.home} ></Route>
             <Route component={Login} path={AppRoutes.login} ></Route>

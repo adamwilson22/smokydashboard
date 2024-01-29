@@ -9,6 +9,7 @@ const subpayCollection = collection(db, 'subscriptionPayments');
 const superAdminCollect = collection(db, 'superadmin');
 const chatsCollect = collection(db, 'conversations');
 const postsCollect = collection(db, 'posts');
+const feedbackColl = collection(db, 'feedbacks');
 
 class UnitDataService {
 
@@ -35,6 +36,9 @@ class UnitDataService {
         return getDocs(postsCollect);
     }
 
+    getAllFeedbacks = () => { // all feedbacks
+        return getDocs(feedbackColl);
+    }
 
     getAllChatsFirebase = () => { // all chats
         return getDocs(chatsCollect);

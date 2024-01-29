@@ -14,6 +14,7 @@ const AppRoutes = {
     viewChat: "/view-chat",
     home: "/home",
     login: "/",
+    helpAndFeedback: "/help-and-feedback",
 
 
 }

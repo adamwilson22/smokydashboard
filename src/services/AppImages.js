@@ -6,5 +6,9 @@ export const AppImages = {
     likedIcon: require("../assets/liked-icon.png"),
     upArrowIcon: require("../assets/up-arrow-icon.png"),
     heartIcon: require("../assets/heart-icon.png"),
-    replyIcon: require("../assets/reply-icon.png")
+    replyIcon: require("../assets/reply-icon.png"),
+    helpAndFeedback: require("../assets/help-and-feedback.png"),
+    threeDotsMenu: require("../assets/three-dots.png"),
+    reportIcon: require("../assets/red-exclamation-mark.png"),
+
 }

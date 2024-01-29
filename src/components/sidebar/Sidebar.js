@@ -10,6 +10,7 @@ import subscIco from '../../assets/678140_feed_media_news_rss_social_icon.png';
 import usersIco from '../../assets/309041_users_group_people_icon.png';
 import notifyIco from '../../assets/9075827_notification_alert_bell_notice_alarm_icon.png';
 import chatsIco from "../../assets/chat-icon.png"
+import HelpAndFeedbackIco from "../../assets/help-and-feedback.png";
 import AppRoutes from '../../services/AppRoutes';
 
 class Sidebar extends Component {
@@ -32,6 +33,7 @@ class Sidebar extends Component {
                         <Nav.Link href={AppRoutes.notifyUsers}><img src={notifyIco} alt="Logo" />Notify Users</Nav.Link>
                         <Nav.Link href={AppRoutes.listChats}><img src={chatsIco} alt="Logo" />Chats</Nav.Link>
                         <Nav.Link href={AppRoutes.listPosts}><img src={chatsIco} alt="Logo" />Posts</Nav.Link>
+                        <Nav.Link href={AppRoutes.helpAndFeedback}><img src={HelpAndFeedbackIco} alt="Logo" />Help & Feedback</Nav.Link>
 
                         {/* <Nav.Link href="/add"><img src={dashIco} alt="Logo" />Add New Appliance</Nav.Link> */}
                         {/* <Nav.Link href="/list"><img src={dashIco} alt="Logo" />List Appliances</Nav.Link> */}

@@ -6,13 +6,17 @@ import LikesModal from '../LikesModal';
 import GalleryModal from '../GalleryModal';
 import CommentsModal from '../CommentsModal';
 import "../../App.css"
+import FeedbackItem from './FeedbackItem';
+import ReportedUsersModal from '../ReportedUsersModal';
 
 export default function PostItem({ name, message, profilePhoto, messageTime, item, AllUsers = [] }) {
     const [showGallery, setShowGallery] = useState(false)
     const [showLikes, setShowLikes] = useState(false)
     const [showComments, setShowComments] = useState(false)
+    const [showReportedUsers, setShowReportedUsers] = useState(false)
     const [likesArray, setLikesArray] = useState(get(item, "likes", []))
     const [commentsArray, setCommentsArray] = useState(get(item, "comments", []))
+    const [reportedUSers, setReportedUsers] = useState(get(item, "reportedUserIds", []))
 
     const imageStyl = {
         objectFit: "cover",
@@ -79,7 +83,25 @@ export default function PostItem({ name, message, profilePhoto, messageTime, ite
 
     return (
         <li className="d-flex  mb-4">
-            <img style={imageStyl}
+            <FeedbackItem
+                key={get(item, "id", 0)}
+                profilePhoto={profilePhoto}
+                name={name}
+                messageTime={messageTime}
+                message={message}
+                mediaArray={get(item, "media", [])}
+                onMediaClick={() => setShowGallery(true)}
+                showLikes
+                onLikesClick={() => setShowLikes(true)}
+                likesArray={get(item, "likes", []) ? get(item, "likes", []) : []}
+                showComments
+                onCommentsClick={() => setShowComments(true)}
+                commentsArray={get(item, "comments", []) ? get(item, "comments", []) : []}
+                showReportedUsers={get(item, "reportedUserIds", []).length > 0}
+                onReportedUsersClick={() => { setShowReportedUsers(true) }}
+                reportedUsers={get(item, "reportedUserIds", [])}
+            />
+            {/* <img style={imageStyl}
                 src={profilePhoto} alt="avatar"
                 className="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="60" />
             <div className="card w-100 ">
@@ -88,7 +110,7 @@ export default function PostItem({ name, message, profilePhoto, messageTime, ite
                     <p className="text-muted small mb-0 "><i className="far fa-clock"></i> {messageTime}</p>
                 </div>
                 <div className="card-body d-flex flex-column justify-content-start  ">
-                    <p className="mb-0 text-start  chat-msg">
+                    <p className="mb-0 text-start chat-msg">
                         {message}
                     </p>
                     <div className='d-flex flex-wrap justify-content-start mt-3  '>
@@ -151,7 +173,7 @@ export default function PostItem({ name, message, profilePhoto, messageTime, ite
                     </div>
 
                 </div>
-            </div>
+            </div> */}
             <GalleryModal
                 show={showGallery}
                 setShow={setShowGallery}
@@ -172,6 +194,16 @@ export default function PostItem({ name, message, profilePhoto, messageTime, ite
                     commentsList={commentsArray}
                     setCommentsArray={(list) => setCommentsArray(list)}
                     title={"All Comments"}
+                />
+            }
+            {get(item, "reportedUserIds", []) &&
+                <ReportedUsersModal
+                    show={showReportedUsers}
+                    setShow={setShowReportedUsers}
+                    reportedUsersList={reportedUSers}
+                    setReportedUsersList={(list) => setReportedUsers(list)}
+                    title={"Reported Post Contributors"}
+                    AllUsers={AllUsers}
                 />
             }
         </li>

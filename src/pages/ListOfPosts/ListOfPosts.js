@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { AppImages } from '../../services/AppImages';
 import { Link } from 'react-router-dom';
-import { get } from 'lodash';
+import { filter, get } from 'lodash';
 import { AppLogger } from '../../services/AppLogger';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Navigation from "../../components/navbar/Navigation"
@@ -14,10 +14,30 @@ import Col from 'react-bootstrap/Col';
 import "../../App.css"
 import AppRoutes from '../../services/AppRoutes';
 
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+
 function ListOfPosts() {
+    const PostType = {
+        allPosts: "all_posts",
+        reportedPosts: "reported_posts"
+    }
+
     const [listOfPosts, setlistOfPosts] = useState([])
     const [filteredPosts, setFilteredPosts] = useState([])
     const [AllUsers, setAllUsers] = useState([])
+    const [showReported, setShowReported] = useState(PostType.allPosts);
+
+    const handleChange = (event, newValue) => {
+        setShowReported(newValue);
+        // if (newValue == PostType.allPosts) {
+        //     AppLogger("allposts result", filteredPosts.filter((item) => item.reportedUserIds.length == 0))
+        // } else {
+        //     AppLogger("reported posts result", filteredPosts.filter((item) => item.reportedUserIds.length > 0))
+        // }
+    };
 
     useEffect(() => {
         getAllPosts();
@@ -27,6 +47,10 @@ function ListOfPosts() {
     const getAllPosts = async () => {
         const data = await UnitDataService.getAllPostsFrFirebase();
         setlistOfPosts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+
+        data.docs.map((doc) =>
+            AppLogger("post item", doc.data())
+        )
     };
 
     const getAllUsers = async () => {
@@ -73,9 +97,21 @@ function ListOfPosts() {
             />
             <Row className='full-height'>
                 <Col className='white-bg '>
-                    <div style={{ alignItems: "center", display: "flex", flexDirection: "row", justifyContent: "space-between", }}>
-                        <Link className='back-btn override' to={AppRoutes.listChats}><ArrowBackIcon /> Back to Home </Link>
-                        <h2><strong>{"Posts posted by user"}</strong></h2>
+                    <div style={{ alignItems: "center", display: "flex", flexDirection: "column", }}>
+                        {/* <Link className='back-btn override' to={AppRoutes.listChats}><ArrowBackIcon /> Back to Home </Link> */}
+                        <h3><strong>{"Posts posted by user"}</strong></h3>
+                        <Box sx={{ width: "100%" }}>
+                            <Tabs
+                                value={showReported}
+                                onChange={handleChange}
+                                textColor="inherit"
+                                indicatorColor="primary"
+                                aria-label="secondary tabs example"
+                            >
+                                <Tab value={PostType.allPosts} label="All Posts" />
+                                <Tab value={PostType.reportedPosts} label="Reported Posts" />
+                            </Tabs>
+                        </Box>
                         <div />
                     </div>
                     <Row>
@@ -86,16 +122,22 @@ function ListOfPosts() {
                                         <div className="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                             <ul className="list-unstyled">
                                                 {filteredPosts.length > 0 ?
-                                                    filteredPosts.map((item) =>
-                                                        <PostItem
-                                                            key={get(item, "postId", "")}
-                                                            item={item}
-                                                            name={get(item, "fullName", "")}
-                                                            message={get(item, "caption", "")}
-                                                            profilePhoto={get(item, "profilePicture", AppImages.placeholder)}
-                                                            AllUsers={AllUsers}
-                                                        />
-                                                    )
+                                                    filteredPosts
+                                                        .filter((item) =>
+                                                            showReported == PostType.allPosts ?
+                                                                item.reportedUserIds.length == 0
+                                                                : item.reportedUserIds.length > 0
+                                                        )
+                                                        .map((item) =>
+                                                            <PostItem
+                                                                key={get(item, "postId", "")}
+                                                                item={item}
+                                                                name={get(item, "fullName", "")}
+                                                                message={get(item, "caption", "")}
+                                                                profilePhoto={get(item, "profilePicture", AppImages.placeholder)}
+                                                                AllUsers={AllUsers}
+                                                            />
+                                                        )
                                                     :
                                                     <div>
                                                         <h4>No Posts Found</h4>

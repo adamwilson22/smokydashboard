@@ -8,6 +8,7 @@ export default function CommentItem({
     desc = "",
     createdAt = "",
     showReplies = true,
+    showLikes = true,
     likes = [],
     replies = [],
     customStyles = {},
@@ -34,13 +35,13 @@ export default function CommentItem({
                 </div>
             </div>
             <div className='d-flex ' >
-                <p className='like-sec-p cment-likes '>
+                {showLikes && <p className='like-sec-p cment-likes '>
                     <img
                         src={AppImages.heartIcon}
                         className='icon-styl '
                     />
                     Likes {likes.length}
-                </p>
+                </p>}
                 {showReplies && <p className='like-sec-p replies '>
                     <img
                         src={AppImages.replyIcon}
