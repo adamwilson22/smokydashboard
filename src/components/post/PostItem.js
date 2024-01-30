@@ -8,12 +8,16 @@ import CommentsModal from '../CommentsModal';
 import "../../App.css"
 import FeedbackItem from './FeedbackItem';
 import ReportedUsersModal from '../ReportedUsersModal';
+import CustomModal from '../CustomModal';
+import FirebaseServices from "../../services/unit.services"
 
 export default function PostItem({ name, message, profilePhoto, messageTime, item, AllUsers = [] }) {
     const [showGallery, setShowGallery] = useState(false)
+    const [selectedGalleryItem, setSelectedGalleryItem] = useState(0)
     const [showLikes, setShowLikes] = useState(false)
     const [showComments, setShowComments] = useState(false)
     const [showReportedUsers, setShowReportedUsers] = useState(false)
+    const [showPostDelete, setShowPostDelete] = useState(false)
     const [likesArray, setLikesArray] = useState(get(item, "likes", []))
     const [commentsArray, setCommentsArray] = useState(get(item, "comments", []))
     const [reportedUSers, setReportedUsers] = useState(get(item, "reportedUserIds", []))
@@ -27,6 +31,8 @@ export default function PostItem({ name, message, profilePhoto, messageTime, ite
     useEffect(() => {
         handleUsersDetailsForComments()
         handleUserDetailsForLikes()
+
+        AppLogger("post item", item)
     }, [])
 
     const handleUsersDetailsForComments = () => {
@@ -81,6 +87,15 @@ export default function PostItem({ name, message, profilePhoto, messageTime, ite
         }
     }
 
+    const handleRemovePost = async () => {
+        try {
+            await FirebaseServices.deletePost(get(item, "postId", ""))
+            setShowPostDelete(false)
+        } catch (error) {
+            AppLogger("error removing product", error)
+        }
+    }
+
     return (
         <li className="d-flex  mb-4">
             <FeedbackItem
@@ -90,7 +105,10 @@ export default function PostItem({ name, message, profilePhoto, messageTime, ite
                 messageTime={messageTime}
                 message={message}
                 mediaArray={get(item, "media", [])}
-                onMediaClick={() => setShowGallery(true)}
+                onMediaClick={(index) => {
+                    setShowGallery(true)
+                    setSelectedGalleryItem(index)
+                }}
                 showLikes
                 onLikesClick={() => setShowLikes(true)}
                 likesArray={get(item, "likes", []) ? get(item, "likes", []) : []}
@@ -100,84 +118,13 @@ export default function PostItem({ name, message, profilePhoto, messageTime, ite
                 showReportedUsers={get(item, "reportedUserIds", []).length > 0}
                 onReportedUsersClick={() => { setShowReportedUsers(true) }}
                 reportedUsers={get(item, "reportedUserIds", [])}
+                onOptionClick={() => { setShowPostDelete(true) }}
             />
-            {/* <img style={imageStyl}
-                src={profilePhoto} alt="avatar"
-                className="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="60" />
-            <div className="card w-100 ">
-                <div className="card-header d-flex justify-content-between p-2">
-                    <p style={{ marginLeft: "8px" }} className="fw-bold mb-0 chat-name">{name}</p>
-                    <p className="text-muted small mb-0 "><i className="far fa-clock"></i> {messageTime}</p>
-                </div>
-                <div className="card-body d-flex flex-column justify-content-start  ">
-                    <p className="mb-0 text-start chat-msg">
-                        {message}
-                    </p>
-                    <div className='d-flex flex-wrap justify-content-start mt-3  '>
-                        {get(item, "media", []).slice(0, 4).map((mediaIte, index) => {
-                            return (
-                                <div
-                                    key={index}
-                                    className='position-relative  post-cont'>
-                                    <img
-                                        onClick={() => setShowGallery(true)}
-                                        style={{ cursor: "pointer" }}
-                                        className='post-img'
-                                        src={
-                                            mediaIte.mediaType == "video" ?
-                                                mediaIte.mediaThumbnail
-                                                : mediaIte.mediaURL
-                                        }
-                                        alt='post-images'
-                                    />
-                                    {(get(item, "media", []).length > 4 && index == 3) &&
-                                        <div
-                                            onClick={() => setShowGallery(true)}
-                                            style={{ cursor: "pointer" }}
-                                            className='plus-cont abs-cent-align'
-                                        >
-                                            <img
-                                                className='plus-icon abs-cent-align'
-                                                src={AppImages.plusIcon}
-                                                alt='post-images'
-                                            />
-                                        </div>
-                                    }
-                                </div>
-                            )
-                        })}
-                    </div>
-                    <div className='d-flex  '>
-                        <div className='d-flex '
-                            style={{ cursor: "pointer" }}
-                            onClick={() => setShowLikes(true)}
-                        >
-                            <img
-                                src={AppImages.like}
-                                className='like-styl '
-                            />
-                            <p className='like-sec-p '>Likes {get(item, "likes", []) ? get(item, "likes", []).length : 0}</p>
-                        </div>
-                        <div className='d-flex  '
-                            style={{ cursor: "pointer" }}
-                            onClick={() => {
-                                setShowComments(true)
-                            }}
-                        >
-                            <img
-                                src={AppImages.comments}
-                                className='like-styl comment-styl '
-                            />
-                            <p className='like-sec-p '>Comments {get(item, "comments", []) ? get(item, "comments", []).length : 0}</p>
-                        </div>
-                    </div>
-
-                </div>
-            </div> */}
             <GalleryModal
                 show={showGallery}
                 setShow={setShowGallery}
                 mediaArray={get(item, "media", [])}
+                selectedItem={selectedGalleryItem}
             />
             {get(item, "likes", []) &&
                 <LikesModal
@@ -206,6 +153,14 @@ export default function PostItem({ name, message, profilePhoto, messageTime, ite
                     AllUsers={AllUsers}
                 />
             }
+            <CustomModal
+                show={showPostDelete}
+                setShow={(val) => setShowPostDelete(val)}
+                title={`Remove Post`}
+                desc={`Are you sure you want to remove this post?`}
+                btnText={`Yes`}
+                onClickDone={() => handleRemovePost()}
+            />
         </li>
     )
 }

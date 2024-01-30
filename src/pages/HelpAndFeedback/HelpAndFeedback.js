@@ -111,6 +111,7 @@ function HelpAndFeedback() {
                                                             showComments={false}
                                                             mediaArray={get(item, "feedbackImagesURLs", [])}
                                                             onMediaClick={() => { }}
+                                                            showReportedUsers={false}
                                                         />
                                                     )
                                                     :

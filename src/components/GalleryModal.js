@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { get } from 'lodash';
 import Modal from 'react-bootstrap/Modal';
 import ReactPlayer from 'react-player';
+import { AppImages } from '../services/AppImages';
+import { AppLogger } from '../services/AppLogger';
 
-function GalleryModal({ show = false, setShow, mediaArray = [] }) {
+function GalleryModal({ show = false, setShow, mediaArray = [], selectedItem = 0 }) {
     const [selectedMedia, setSelectedMedia] = useState(null)
 
     const handleClose = () => {
@@ -12,8 +14,8 @@ function GalleryModal({ show = false, setShow, mediaArray = [] }) {
 
     useEffect(() => {
         if (mediaArray.length > 0)
-            setSelectedMedia(mediaArray[0])
-    }, [mediaArray])
+            setSelectedMedia({ ...mediaArray[selectedItem], id: selectedItem })
+    }, [mediaArray, selectedItem])
 
     return (
         <Modal
@@ -60,19 +62,35 @@ function GalleryModal({ show = false, setShow, mediaArray = [] }) {
             <Modal.Footer className='p-0'>
                 <div className='gallery-list cus-scrol'>
                     {mediaArray.map((item, index) =>
-                        <img
-                            key={index}
-                            src={
-                                item.mediaType == "video" ?
-                                    item.mediaThumbnail
-                                    : item.mediaURL
-                            }
-                            className='gallery-item'
-                            style={{
-                                border: get(selectedMedia, "id", 0) == index ? "2.7px solid #FF7F7F" : "0px"
-                            }}
+                        <div className='position-relative '
                             onClick={() => setSelectedMedia({ ...item, id: index })}
-                        />
+                        >
+                            <img
+                                key={index}
+                                src={
+                                    item.mediaType == "video" ?
+                                        item.mediaThumbnail
+                                        : item.mediaURL
+                                }
+                                className='gallery-item'
+                                style={{
+                                    border: get(selectedMedia, "id", 0) == index ? "2.7px solid #FF7F7F" : "0px"
+                                }}
+
+                            />
+                            {item.mediaType == "video" &&
+                                <div
+                                    style={{ cursor: "pointer", backgroundColor: "transparent" }}
+                                    className='plus-cont abs-cent-align'
+                                >
+                                    <img
+                                        className='plus-icon abs-cent-align play-icon'
+                                        src={AppImages.playIcon}
+                                        alt='post-images'
+                                    />
+                                </div>
+                            }
+                        </div>
                     )}
                 </div>
             </Modal.Footer>

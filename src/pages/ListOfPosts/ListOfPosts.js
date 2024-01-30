@@ -18,6 +18,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import { DateFormats, handleDateTime } from '../../services/AppConstant';
 
 function ListOfPosts() {
     const PostType = {
@@ -48,9 +49,9 @@ function ListOfPosts() {
         const data = await UnitDataService.getAllPostsFrFirebase();
         setlistOfPosts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
 
-        data.docs.map((doc) =>
-            AppLogger("post item", doc.data())
-        )
+        // data.docs.map((doc) =>
+        //     AppLogger("post item", doc.data())
+        // )
     };
 
     const getAllUsers = async () => {
@@ -136,6 +137,7 @@ function ListOfPosts() {
                                                                 message={get(item, "caption", "")}
                                                                 profilePhoto={get(item, "profilePicture", AppImages.placeholder)}
                                                                 AllUsers={AllUsers}
+                                                                messageTime={handleDateTime(get(item, "createdAt", ""), DateFormats.dateFormatString)}
                                                             />
                                                         )
                                                     :

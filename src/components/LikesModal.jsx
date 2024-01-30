@@ -29,7 +29,7 @@ function LikesModal({ title = "", show = false, setShow, likesList = [23, 4, 213
                                     src={get(item, "profilePicture", AppImages.placeholder)}
                                 />
                                 <img
-                                    src={AppImages.likedIcon}
+                                    src={AppImages.emojis[get(item, "likeId", "like1")]}
                                     className='position-absolute liked-icon-styl '
                                 />
                             </div>

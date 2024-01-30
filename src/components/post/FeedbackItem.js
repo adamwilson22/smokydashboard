@@ -19,8 +19,7 @@ export default function FeedbackItem({
     showReportedUsers = true,
     reportedUsers = [],
     onReportedUsersClick,
-
-
+    onOptionClick,
 }) {
 
     const imageStyl = {
@@ -38,8 +37,13 @@ export default function FeedbackItem({
             />
             <div className="card w-100 ">
                 <div className="card-header d-flex justify-content-between p-2">
-                    <p style={{ marginLeft: "8px" }} className="fw-bold mb-0 chat-name">{name}</p>
-                    <p className="text-muted small mb-0 "><i className="far fa-clock"></i> {messageTime}</p>
+                    <div className='d-flex flex-column' style={{ alignItems: "start" }}>
+                        <p style={{ marginLeft: "8px" }} className="fw-bold mb-0 chat-name">{name}</p>
+                        <p style={{ marginLeft: "8px" }} className="text-muted small mb-0 "><i className="far fa-clock"></i> {messageTime}</p>
+                    </div>
+                    <div className='btn dots-cont' onClick={() => onOptionClick()}>
+                        <img src={AppImages.threeDotsMenu} className='dots-img' />
+                    </div>
                 </div>
                 <div className="card-body d-flex flex-column justify-content-start  ">
                     <p className="mb-0 text-start chat-msg">
@@ -52,9 +56,10 @@ export default function FeedbackItem({
                                 return (
                                     <div
                                         key={index}
-                                        className='position-relative  post-cont'>
+                                        className='position-relative  post-cont'
+                                        onClick={() => onMediaClick(index)}
+                                    >
                                         <img
-                                            onClick={() => onMediaClick()}
                                             style={{ cursor: "pointer" }}
                                             className='post-img'
                                             src={
@@ -66,9 +71,20 @@ export default function FeedbackItem({
                                             }
                                             alt='post-images'
                                         />
+                                        {mediaIte.mediaType == "video" &&
+                                            <div
+                                                style={{ cursor: "pointer", }}
+                                                className='plus-cont abs-cent-align'
+                                            >
+                                                <img
+                                                    className='plus-icon abs-cent-align play-icon'
+                                                    src={AppImages.playIcon}
+                                                    alt='post-images'
+                                                />
+                                            </div>
+                                        }
                                         {(mediaArray.length > 4 && index == 3) &&
                                             <div
-                                                onClick={() => onMediaClick()}
                                                 style={{ cursor: "pointer" }}
                                                 className='plus-cont abs-cent-align'
                                             >

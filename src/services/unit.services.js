@@ -83,6 +83,11 @@ class UnitDataService {
         return deleteDoc(event);
     };
 
+    deletePost = (id) => {
+        const post = doc(db, "posts", id);
+        return deleteDoc(post);
+    };
+
 }
 
 export default new UnitDataService();

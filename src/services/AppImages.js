@@ -10,5 +10,16 @@ export const AppImages = {
     helpAndFeedback: require("../assets/help-and-feedback.png"),
     threeDotsMenu: require("../assets/three-dots.png"),
     reportIcon: require("../assets/red-exclamation-mark.png"),
-
+    playIcon: require("../assets/play-button.png"),
+    emojis: {
+        Angry: require("../assets/emojis/angry.png"),
+        Fav: require("../assets/emojis/fav.png"),
+        Happy: require("../assets/emojis/happy.png"),
+        InLove: require("../assets/emojis/fav.png"),
+        Like: require("../assets/emojis/like1.png"),
+        Mad: require("../assets/emojis/mad.png"),
+        Sad: require("../assets/emojis/sad.png"),
+        Smile: require("../assets/emojis/smile.png"),
+        Surprised: require("../assets/emojis/surprised.png"),
+    },
 }
