@@ -1,7 +1,7 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-function CustomModal({ title = "", desc = "", btnText = "", onClickDone, show = false, setShow }) {
+function CustomModal({ title = "", desc = "", btnText = "", onClickDone, show = false, setShow, centered = false }) {
     const handleClose = () => {
         setShow(false);
     }
@@ -13,6 +13,7 @@ function CustomModal({ title = "", desc = "", btnText = "", onClickDone, show = 
                 onHide={handleClose}
                 backdrop="static"
                 keyboard={false}
+                centered={centered}
             >
                 <Modal.Header closeButton>
                     <Modal.Title>{title}</Modal.Title>

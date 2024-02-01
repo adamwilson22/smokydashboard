@@ -1077,8 +1077,12 @@ input:checked + .slider:before {
 
 .dots-img{
   width: 5px;
-    height: 20px;
-    object-fit: contain
+  height: 20px;
+  object-fit: contain
+}
+
+.dots-img2{
+  width: 4px !important;
 }
 
 .dots-cont{
@@ -1087,6 +1091,15 @@ input:checked + .slider:before {
   padding-top: 0px;
   padding-bottom: 0px;
   cursor: pointer;
+  border-radius: 50px !important; 
+}
+
+.rotate-dots{
+  -webkit-transform:rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transform: rotate(90deg);
 }
 
 .plus-cont{

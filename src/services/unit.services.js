@@ -53,6 +53,11 @@ class UnitDataService {
         return updateDoc(userDoc, { status: userStatus });
     };
 
+    updatePostFirebase = (id, comments) => {
+        const postItem = doc(db, "posts", id);
+        return updateDoc(postItem, { comments: comments });
+    };
+
     updateProduct = (id, body) => {
         const prodDoc = doc(db, "products", id);
         return updateDoc(prodDoc, body);

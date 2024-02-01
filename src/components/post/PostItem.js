@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { AppImages } from '../../services/AppImages'
 import { AppLogger } from '../../services/AppLogger';
-import { get } from 'lodash';
+import { get, update } from 'lodash';
 import LikesModal from '../LikesModal';
 import GalleryModal from '../GalleryModal';
 import CommentsModal from '../CommentsModal';
@@ -10,6 +10,8 @@ import FeedbackItem from './FeedbackItem';
 import ReportedUsersModal from '../ReportedUsersModal';
 import CustomModal from '../CustomModal';
 import FirebaseServices from "../../services/unit.services"
+import UnitServices from '../../services/unit.services';
+import { showErrorToast, showSuccessToast } from '../../services/AppConstant';
 
 export default function PostItem({ name, message, profilePhoto, messageTime, item, AllUsers = [] }) {
     const [showGallery, setShowGallery] = useState(false)
@@ -21,6 +23,12 @@ export default function PostItem({ name, message, profilePhoto, messageTime, ite
     const [likesArray, setLikesArray] = useState(get(item, "likes", []))
     const [commentsArray, setCommentsArray] = useState(get(item, "comments", []))
     const [reportedUSers, setReportedUsers] = useState(get(item, "reportedUserIds", []))
+    const [deleteModal, setDeleteModal] = useState({
+        type: "",
+        commentIndex: 0,
+        replyIndex: 0,
+        show: false,
+    })
 
     const imageStyl = {
         objectFit: "cover",
@@ -96,6 +104,31 @@ export default function PostItem({ name, message, profilePhoto, messageTime, ite
         }
     }
 
+    const updatePost = async (commentsArray) => {
+        setDeleteModal({ ...deleteModal, show: false })
+        try {
+            await UnitServices.updatePostFirebase(get(item, "postId", ""), commentsArray);
+
+            showSuccessToast(`${deleteModal.type} deleted successfully`)
+            setCommentsArray([...commentsArray])
+        } catch (error) {
+            AppLogger("error blocking user ", error)
+            showErrorToast(error)
+        }
+    }
+
+    const handleDeleteComment = () => {
+        var arrayList = commentsArray.filter((it, i) => i != deleteModal.commentIndex)
+        updatePost(arrayList)
+    }
+
+    const handleDeleteReply = () => {
+        var finalComments = [...commentsArray]
+        var finalReplies = finalComments[deleteModal.commentIndex]["replies"].filter((it, i) => i != deleteModal.replyIndex)
+        finalComments[deleteModal.commentIndex]["replies"] = finalReplies
+        updatePost(finalComments)
+    }
+
     return (
         <li className="d-flex  mb-4">
             <FeedbackItem
@@ -141,6 +174,22 @@ export default function PostItem({ name, message, profilePhoto, messageTime, ite
                     commentsList={commentsArray}
                     setCommentsArray={(list) => setCommentsArray(list)}
                     title={"All Comments"}
+                    deleteCommentFunc={(commentIndex) => {
+                        setDeleteModal({
+                            type: "Comment",
+                            commentIndex: commentIndex,
+                            replyIndex: 0,
+                            show: true,
+                        })
+                    }}
+                    deleteReplyFunc={(comIndex, repIndex) => {
+                        setDeleteModal({
+                            type: "Reply",
+                            commentIndex: comIndex,
+                            replyIndex: repIndex,
+                            show: true
+                        })
+                    }}
                 />
             }
             {get(item, "reportedUserIds", []) &&
@@ -160,6 +209,15 @@ export default function PostItem({ name, message, profilePhoto, messageTime, ite
                 desc={`Are you sure you want to remove this post?`}
                 btnText={`Yes`}
                 onClickDone={() => handleRemovePost()}
+            />
+            <CustomModal
+                show={deleteModal.show}
+                setShow={(val) => setDeleteModal({ ...deleteModal, show: val })}
+                title={`Remove ${deleteModal.type}`}
+                desc={`Are you sure you want to remove this ${deleteModal.type}?`}
+                btnText={`Yes`}
+                onClickDone={() => deleteModal.type == "Comment" ? handleDeleteComment() : handleDeleteReply()}
+                centered={true}
             />
         </li>
     )

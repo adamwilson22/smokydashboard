@@ -12,6 +12,7 @@ export default function CommentItem({
     likes = [],
     replies = [],
     customStyles = {},
+    onOptionClick,
 }) {
     return (
         <div style={customStyles}>
@@ -20,8 +21,8 @@ export default function CommentItem({
                     className='profile '
                     src={profilePic}
                 />
-                <div className='d-flex flex-column '>
-                    <div className='d-flex flex-column  '>
+                <div className='d-flex justify-content-between align-items-center w-100'>
+                    <div className='d-flex flex-column '>
                         <span className='username' style={{ marginLeft: "0px" }}>
                             {name}
                         </span>
@@ -31,6 +32,9 @@ export default function CommentItem({
                         <span className='comment-time '>
                             {createdAt}
                         </span>
+                    </div>
+                    <div className='btn dots-cont' onClick={() => onOptionClick()} >
+                        <img src={AppImages.threeDotsMenu} className='dots-img2 rotate-dots' />
                     </div>
                 </div>
             </div>

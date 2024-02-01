@@ -5,7 +5,7 @@ import { AppLogger } from '../services/AppLogger';
 import { get } from 'lodash';
 import CommentItem from './CommentItem';
 
-function CommentsModal({ title = "", show = false, setShow, commentsList = [], setCommentsArray }) {
+function CommentsModal({ title = "", show = false, setShow, commentsList = [], setCommentsArray, deleteCommentFunc, deleteReplyFunc }) {
     const handleClose = () => {
         setShow(false);
     }
@@ -38,6 +38,7 @@ function CommentsModal({ title = "", show = false, setShow, commentsList = [], s
                                 createdAt={handleDateString(get(item, "createdAt", ""))}
                                 likes={item.likes ?? []}
                                 replies={item.replies ?? []}
+                                onOptionClick={() => deleteCommentFunc(index)}
                             />
                             {get(item, "replies", []) && get(item, "replies", []).length > 0 &&
                                 <div style={{ marginLeft: "9px", marginBottom: "12px" }}>
@@ -65,6 +66,7 @@ function CommentsModal({ title = "", show = false, setShow, commentsList = [], s
                                             createdAt={handleDateString(get(replyItem, "createdAt", ""))}
                                             likes={replyItem.likes ?? []}
                                             showReplies={false}
+                                            onOptionClick={() => deleteReplyFunc(index, replyIndex)}
                                         />
                                     )}
                                 </div>
