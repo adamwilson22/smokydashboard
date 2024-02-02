@@ -13,9 +13,11 @@ function CustomModal({ title = "", desc = "", btnText = "", onClickDone, show = 
                 onHide={handleClose}
                 backdrop="static"
                 keyboard={false}
-                centered={centered}
+                centered
             >
-                <Modal.Header closeButton>
+                <Modal.Header
+                // closeButton
+                >
                     <Modal.Title>{title}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>

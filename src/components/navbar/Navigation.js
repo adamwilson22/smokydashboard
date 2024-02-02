@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useUserAuth } from '../../Context/UserAuthContext';
 import { AppLogger } from '../../services/AppLogger';
@@ -15,9 +15,12 @@ import search from '../../assets/search.png'
 import Dropdown from 'react-bootstrap/Dropdown';
 import './navbar.css';
 import AppRoutes from '../../services/AppRoutes';
+import { AppImages } from '../../services/AppImages';
+import { get } from 'lodash';
 
-const Home = ({ setSearchQuery, originalList = [], updatedList = [], searchKey = "", showSearh = false }) => {
+const Home = ({ setSearchQuery, originalList = [], updatedList = [], searchKey = "", showSearh = false, searchKeyEmail = "" }) => {
   const history = useHistory();
+  const inputRef = useRef(null)
   const { logOut, user } = useUserAuth();
   const loginResp = JSON.parse(localStorage.getItem("USER"))
 
@@ -46,10 +49,22 @@ const Home = ({ setSearchQuery, originalList = [], updatedList = [], searchKey =
   };
 
   const handleSearch = (text) => {
-    AppLogger("text", text)
+    // AppLogger("text", text)
     setSearchQuery(text)
     if (text) {
-      updatedList(originalList.filter(element => element[searchKey] && (((element[searchKey]).toLowerCase()).replace(/\s/g, '')).includes((text.toLowerCase()).replace(/\s/g, ''))))
+      if (searchKeyEmail != "") {
+        updatedList(
+          originalList.filter(element =>
+            element[searchKey] &&
+            (((((element[searchKey]).toLowerCase()).replace(/\s/g, '')).includes((text.toLowerCase()).replace(/\s/g, ''))) ||
+              element[searchKeyEmail].replace(/\s/g, '').includes(text.replace(/\s/g, ''))
+            )))
+      } else {
+        updatedList(
+          originalList.filter(element =>
+            element[searchKey] &&
+            (((element[searchKey]).toLowerCase()).replace(/\s/g, '')).includes((text.toLowerCase()).replace(/\s/g, ''))))
+      }
     } else {
       updatedList([])
     }
@@ -70,12 +85,24 @@ const Home = ({ setSearchQuery, originalList = [], updatedList = [], searchKey =
             {showSearh &&
               <Form className="d-flex">
                 <Form.Control
+                  ref={inputRef}
                   type="search"
                   placeholder="Search here..."
-                  className="me-2"
+                  className="me-2 px-1"
                   aria-label="Search"
                   onChange={(e) => handleSearch(e.target.value)}
                 />
+                {get(inputRef.current, "value", "") != "" &&
+                  <Button
+                    onClick={() => {
+                      setSearchQuery("")
+                      inputRef.current.value = ""
+                    }}
+                    className='search-btn p-0 ' variant="outline-success"
+                  >
+                    <img src={AppImages.close} alt="Logo" />
+                  </Button>
+                }
                 <Button className='search-btn' variant="outline-success"><img src={search} alt="Logo" /></Button>
               </Form>
             }
@@ -87,7 +114,7 @@ const Home = ({ setSearchQuery, originalList = [], updatedList = [], searchKey =
                 </Dropdown.Menu>
               </Dropdown> */}
               <Dropdown>
-                <Dropdown.Toggle variant="" id="dropdown-basic"><img src={Admin} height={40} width={40} alt="Logo" />{user != null ? user.displayName : "Admin"}</Dropdown.Toggle>
+                <Dropdown.Toggle variant="" id="dropdown-basic"><img className='object-fit-cover  ' src={Admin} height={40} width={40} alt="Logo" />{user != null ? user.displayName : "Admin"}</Dropdown.Toggle>
                 <Dropdown.Menu align="end">
                   <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
                 </Dropdown.Menu>

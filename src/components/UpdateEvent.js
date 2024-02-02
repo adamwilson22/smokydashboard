@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { showErrorToast, showSuccessToast, showToast } from '../services/AppConstant';
 import { AppLogger } from '../services/AppLogger';
+import { useHistory } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import firebaseServices from "../services/unit.services"
 import Navigation from '../components/navbar/Navigation'
@@ -20,8 +21,8 @@ import 'react-clock/dist/Clock.css';
 import AppRoutes from '../services/AppRoutes';
 
 function UpdateEvent() {
+    const history = useHistory()
     const { state } = useLocation();
-
     const [event, setEvent] = useState({
         // image: null,
         name: "",
@@ -68,10 +69,11 @@ function UpdateEvent() {
                     eventStartDate: moment(startDateTime).format('MMM DD, YYYY'),
                 }
                 await firebaseServices.updateEvent(state.eventDetails.eventId, body)
-                showSuccessToast("Event Updated Successfully")
+                showSuccessToast("Hunt Updated Successfully")
+                history.push(AppRoutes.listEvents);
             } catch (error) {
                 AppLogger("error removing event", error)
-                showErrorToast("Unable to update event")
+                showErrorToast("Unable to update hunt")
             }
         } else {
             showToast("End date can't be less than start date")
@@ -126,7 +128,7 @@ function UpdateEvent() {
                 <Col className='white-bg'>
                     <Link className='back-btn override' to={AppRoutes.listEvents}><ArrowBackIcon />  Back to Hunts</Link>
                     <div className="greet-text">
-                        <h2>{`${state.action} Event`}</h2>
+                        <h2>{`${state.action} Hunt`}</h2>
                     </div>
                     <Row>
                         <Col>

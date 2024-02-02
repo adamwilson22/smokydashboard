@@ -18,9 +18,9 @@ function ReportedUsersModal({ title = "", show = false, setShow, reportedUsersLi
     // }
 
     useEffect(() => {
-        AppLogger("here", "1")
+        // AppLogger("here", "1")
         if (reportedUsersList.length > 0 && show) {
-            AppLogger("here", "2")
+            // AppLogger("here", "2")
             handleUserDetailsForPosts()
         }
     }, [show])
@@ -65,6 +65,8 @@ function ReportedUsersModal({ title = "", show = false, setShow, reportedUsersLi
                                 createdAt={handleDateTime(get(item, "createdAt", ""), DateFormats.dateFormatString)}
                                 showReplies={false}
                                 showLikes={false}
+                                onOptionClick={() => { }}
+                                showOptions={false}
                             />
                         </div>
                     )

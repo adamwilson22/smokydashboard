@@ -93,6 +93,11 @@ class UnitDataService {
         return deleteDoc(post);
     };
 
+    deleteFeedback = (id) => {
+        const post = doc(db, "feedbacks", id);
+        return deleteDoc(post);
+    };
+
 }
 
 export default new UnitDataService();

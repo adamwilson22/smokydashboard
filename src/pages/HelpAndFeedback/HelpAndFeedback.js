@@ -14,12 +14,23 @@ import Col from 'react-bootstrap/Col';
 import "../../App.css"
 import AppRoutes from '../../services/AppRoutes';
 import ChatItem from '../../components/chat/ChatItem';
-import { handleDateTime } from '../../services/AppConstant';
+import { handleDateTime, showErrorToast, showSuccessToast } from '../../services/AppConstant';
 import FeedbackItem from '../../components/post/FeedbackItem';
+import GalleryModal from '../../components/GalleryModal';
+import CustomModal from '../../components/CustomModal';
+import unitService from '../../services/unit.service';
+import unitServices from '../../services/unit.services';
 
 function HelpAndFeedback() {
     const [feedbacksList, setFeedbacksList] = useState([])
     const [filteredFeedbacks, setFilteredFeedbacks] = useState([])
+    const [showGallery, setShowGallery] = useState(false)
+    const [selectedGalleryItem, setSelectedGalleryItem] = useState({
+        index: 0,
+        list: [],
+    })
+    const [showDeleteFeedback, setShowDeleteFeedback] = useState(false)
+    const [selectedFeed, setSelectedFeed] = useState(null)
 
     useEffect(() => {
         getFeedbacksList()
@@ -28,7 +39,6 @@ function HelpAndFeedback() {
     const getFeedbacksList = async () => {
         const data = await UnitDataService.getAllFeedbacks();
         setFeedbacksList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-
 
         data.docs.map((doc) => {
             AppLogger("Feedback item", doc.data())
@@ -58,10 +68,16 @@ function HelpAndFeedback() {
     }, [feedbacksList])
 
 
-    useEffect(() => {
-        AppLogger("Filtered Feedbacks", filteredFeedbacks)
-    }, [filteredFeedbacks])
-
+    const handleDeleteFeedbback = async () => {
+        try {
+            await unitServices.deleteFeedback(get(selectedFeed, "id", ""))
+            setShowDeleteFeedback(false)
+            showSuccessToast("Feedback deleted successfully")
+        } catch (error) {
+            AppLogger("error removing feedback", error)
+            showErrorToast("Unable to delete feedback")
+        }
+    }
 
     return (
         <>
@@ -110,8 +126,18 @@ function HelpAndFeedback() {
                                                             showLikes={false}
                                                             showComments={false}
                                                             mediaArray={get(item, "feedbackImagesURLs", [])}
-                                                            onMediaClick={() => { }}
+                                                            onMediaClick={(i) => {
+                                                                // setShowGallery(true)
+                                                                // setSelectedGalleryItem({
+                                                                //     index: i,
+                                                                //     list: get(item, "feedbackImagesURLs", []),
+                                                                // })
+                                                            }}
                                                             showReportedUsers={false}
+                                                            onOptionClick={() => {
+                                                                setShowDeleteFeedback(true)
+                                                                setSelectedFeed(item)
+                                                            }}
                                                         />
                                                     )
                                                     :
@@ -128,6 +154,20 @@ function HelpAndFeedback() {
                     </Col>
                 </Row>
             </Row>
+            {/* <GalleryModal
+                show={showGallery}
+                setShow={setShowGallery}
+                mediaArray={selectedGalleryItem.list}
+                selectedItem={selectedGalleryItem.index}
+            /> */}
+            <CustomModal
+                show={showDeleteFeedback}
+                setShow={(val) => setShowDeleteFeedback(val)}
+                title={`Remove Feedback`}
+                desc={`Are you sure you want to remove this feedback?`}
+                btnText={`Yes`}
+                onClickDone={() => handleDeleteFeedbback()}
+            />
         </>
     );
 }

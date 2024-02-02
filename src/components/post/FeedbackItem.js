@@ -41,7 +41,7 @@ export default function FeedbackItem({
                         <p style={{ marginLeft: "8px" }} className="fw-bold mb-0 chat-name">{name}</p>
                         <p style={{ marginLeft: "8px" }} className="text-muted small mb-0 "><i className="far fa-clock"></i> {messageTime}</p>
                     </div>
-                    <div className='btn dots-cont' onClick={() => onOptionClick()}>
+                    <div className='btn dots-cont dots-cont2' onClick={() => onOptionClick()}>
                         <img src={AppImages.threeDotsMenu} className='dots-img' />
                     </div>
                 </div>

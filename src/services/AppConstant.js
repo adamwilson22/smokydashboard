@@ -32,7 +32,10 @@ export const handleDateString = (str = "") => {
 }
 
 export const AppConstant = {
-    FCM_SERVER_KEY: "AAAALECX4aw:APA91bGpuV8uBdr1X3Cug7aOTV2zXncVsOAKsazltvr5K9mEhTFzg-j_w_S-02YKaDHYgisYocWi9i8yd2D-oW-gEyelWpsEisi4OW08WoXaT7JgkXFMHWNWMS-_K1YT9fQkut5oVx7n",
+    // old key 
+    // FCM_SERVER_KEY: "AAAALECX4aw:APA91bGpuV8uBdr1X3Cug7aOTV2zXncVsOAKsazltvr5K9mEhTFzg-j_w_S-02YKaDHYgisYocWi9i8yd2D-oW-gEyelWpsEisi4OW08WoXaT7JgkXFMHWNWMS-_K1YT9fQkut5oVx7n",
+    // new key
+    FCM_SERVER_KEY: "AAAAHTlGkzM:APA91bHHIpjROdKjCa7L8pC_fRlcivmkX63_bWKkgP1z9gWHFd3iHHAktj1UW3SV-aZjXYSCx_1Fm9YYhkhG2o-JkDESaMCkiLWC_-bqUW1TSYE9vR8Gd9-n0x99Bkm2sLkU3NHps-Ya",
 }
 
 export const showErrorToast = (desc = "") => {

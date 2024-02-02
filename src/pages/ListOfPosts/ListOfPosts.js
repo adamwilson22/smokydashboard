@@ -98,8 +98,8 @@ function ListOfPosts() {
             />
             <Row className='full-height'>
                 <Col className='white-bg '>
+                    <Link className='back-btn override' to={AppRoutes.home}><ArrowBackIcon /> Back to Home </Link>
                     <div style={{ alignItems: "center", display: "flex", flexDirection: "column", }}>
-                        {/* <Link className='back-btn override' to={AppRoutes.listChats}><ArrowBackIcon /> Back to Home </Link> */}
                         <h3><strong>{"Posts posted by user"}</strong></h3>
                         <Box sx={{ width: "100%" }}>
                             <Tabs

@@ -12,7 +12,8 @@ export default function CommentItem({
     likes = [],
     replies = [],
     customStyles = {},
-    onOptionClick,
+    onOptionClick = () => { },
+    showOptions = true
 }) {
     return (
         <div style={customStyles}>
@@ -33,9 +34,11 @@ export default function CommentItem({
                             {createdAt}
                         </span>
                     </div>
-                    <div className='btn dots-cont' onClick={() => onOptionClick()} >
-                        <img src={AppImages.threeDotsMenu} className='dots-img2 rotate-dots' />
-                    </div>
+                    {showOptions &&
+                        <div className='btn dots-cont' onClick={() => onOptionClick()} >
+                            <img src={AppImages.threeDotsMenu} className='dots-img2 rotate-dots' />
+                        </div>
+                    }
                 </div>
             </div>
             <div className='d-flex ' >

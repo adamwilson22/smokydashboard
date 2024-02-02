@@ -15,7 +15,6 @@ function ListOfUsers() {
 
     useEffect(() => {
         getAllUsers();
-        // AppLogger("getAllUsers", "called")
     }, [])
 
     const getAllUsers = async () => {
@@ -27,6 +26,11 @@ function ListOfUsers() {
             }
         })
         setUsersList(userDummyArray)
+
+
+        data.docs.map((doc) => {
+            AppLogger("user item ", doc.data())
+        })
     };
 
     var finalList = []
@@ -43,6 +47,7 @@ function ListOfUsers() {
                 searchKey={"fullName"}
                 showSearh={true}
                 setSearchQuery={(val) => setSearchText(val)}
+                searchKeyEmail={"userEmail"}
             />
             <Row className='full-height'>
                 <Col className='white-bg'>

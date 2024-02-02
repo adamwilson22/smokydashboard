@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { showErrorToast } from '../../services/AppConstant';
+import { showErrorToast, showSuccessToast } from '../../services/AppConstant';
 import { useLocation } from 'react-router-dom';
 import { AppLogger } from '../../services/AppLogger';
 import { AppImages } from '../../services/AppImages';
 import { Button } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
+import AppRoutes from '../../services/AppRoutes';
 import UnitDataService from "../../services/unit.services"
 import Table from 'react-bootstrap/Table';
 import CustomModal from '../CustomModal';
 import '../../App.css';
 
 function Home({ }) {
+  const history = useHistory()
   const { state } = useLocation();
   const [user, setUser] = useState(null);
   const [showBlockModal, setShowBlockModal] = useState(false)
@@ -25,6 +28,8 @@ function Home({ }) {
       await UnitDataService.updateUser(user.uid, !user.status);
       setUser({ ...user, status: !user.status })
       setShowBlockModal(false)
+      history.push(AppRoutes.listUsers);
+      showSuccessToast(`User ${user.status ? "Blocked" : "UnBlocked"} Succesfully`)
     } catch (error) {
       AppLogger("error blocking user ", error)
       showErrorToast(error)

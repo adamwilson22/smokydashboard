@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { AppLogger } from '../../services/AppLogger';
 import { useHistory, } from 'react-router-dom';
-import { handleDateString } from '../../services/AppConstant';
+import { handleDateString, showErrorToast, showSuccessToast } from '../../services/AppConstant';
 import { Button } from 'react-bootstrap';
 import UnitDataService from "../../services/unit.service"
 import firebaseServices from "../../services/unit.services"
@@ -43,12 +43,15 @@ function ListOfEvents() {
     };
 
     const handleRemoveEvent = async () => {
-        // AppLogger("selectedveent", selectedEvent)
+        var finalArray = [...eventsList]
         try {
             await firebaseServices.deleteEvent(selectedEvent.id)
             setShowModal(false)
+            setEventsList(finalArray.filter((item) => item.id != selectedEvent.id))
+            showSuccessToast("Hunt removed successfully")
         } catch (error) {
             AppLogger("error removing product", error)
+            showErrorToast("Hunt delete failed")
         }
     }
 
@@ -90,7 +93,7 @@ function ListOfEvents() {
                                                 <tr>
                                                     {/* <th>Profile Photo</th> */}
                                                     <th>S.No</th>
-                                                    <th>Event Name</th>
+                                                    <th>Hunt Name</th>
                                                     <th>Type</th>
                                                     <th>Description</th>
                                                     <th>Address</th>
@@ -178,7 +181,7 @@ function ListOfEvents() {
                 <CustomModal
                     show={showModal}
                     setShow={(val) => setShowModal(val)}
-                    title={`Remove Event`}
+                    title={`Remove Hunt`}
                     desc={`Are you sure you want to remove ${selectedEvent.eventName}?`}
                     btnText={`Yes`}
                     onClickDone={() => handleRemoveEvent()}

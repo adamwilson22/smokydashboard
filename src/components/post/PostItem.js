@@ -12,6 +12,7 @@ import CustomModal from '../CustomModal';
 import FirebaseServices from "../../services/unit.services"
 import UnitServices from '../../services/unit.services';
 import { showErrorToast, showSuccessToast } from '../../services/AppConstant';
+import DeleteCommentModal from '../DeleteCommentModal';
 
 export default function PostItem({ name, message, profilePhoto, messageTime, item, AllUsers = [] }) {
     const [showGallery, setShowGallery] = useState(false)
@@ -210,7 +211,9 @@ export default function PostItem({ name, message, profilePhoto, messageTime, ite
                 btnText={`Yes`}
                 onClickDone={() => handleRemovePost()}
             />
-            <CustomModal
+            {/* <CustomModal
+            /> */}
+            <DeleteCommentModal
                 show={deleteModal.show}
                 setShow={(val) => setDeleteModal({ ...deleteModal, show: val })}
                 title={`Remove ${deleteModal.type}`}

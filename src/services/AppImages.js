@@ -22,4 +22,7 @@ export const AppImages = {
         Smile: require("../assets/emojis/smile.png"),
         Surprised: require("../assets/emojis/surprised.png"),
     },
+    showPass: require("../assets/showPass.png"),
+    hidePass: require("../assets/hidePass.png"),
+    close: require("../assets/close.png")
 }

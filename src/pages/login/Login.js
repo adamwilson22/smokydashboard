@@ -13,10 +13,12 @@ import { AppLogger } from '../../services/AppLogger';
 import UnitDataService from "../../services/unit.service"
 import { showErrorToast, showSuccessToast } from '../../services/AppConstant';
 import AppRoutes from '../../services/AppRoutes';
+import { AppImages } from '../../services/AppImages';
 
 
 function BasicExample() {
     const history = useHistory()
+    const [showPass, setShowPass] = useState(false)
     const [email, setEmail] = useState(
         // "",
         // "admin@smokebud.com",
@@ -50,6 +52,7 @@ function BasicExample() {
                 // showSuccessToast("Super Admin")
                 localStorage.setItem("USER", JSON.stringify(response.user))
                 history.push(AppRoutes.home);
+                showSuccessToast("Logged In Successfully")
             } else {
                 await logOut();
                 showErrorToast("Invalid Credentials")
@@ -93,13 +96,18 @@ function BasicExample() {
                                     />
                                 </Form.Group>
 
-                                <Form.Group className="mb-4" controlId="formBasicPassword">
+                                <Form.Group className="mb-4 position-relative " controlId="formBasicPassword">
                                     <Form.Control
                                         required
-                                        type="password"
+                                        type={showPass ? "text" : "password"}
                                         placeholder="Password"
                                         onChange={(e) => setPassword(e.target.value)}
                                         value={password}
+                                    />
+                                    <img
+                                        onClick={() => setShowPass(!showPass)}
+                                        className='eye-icon position-absolute'
+                                        src={showPass ? AppImages.showPass : AppImages.hidePass}
                                     />
                                 </Form.Group>
                                 {/* <Row>
