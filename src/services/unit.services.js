@@ -48,9 +48,9 @@ class UnitDataService {
         return getDocs(usersObj);
     }
 
-    updateUser = (id, userStatus) => {
+    updateUser = (id, body) => {
         const userDoc = doc(db, "user", id);
-        return updateDoc(userDoc, { status: userStatus });
+        return updateDoc(userDoc, body);
     };
 
     updatePostFirebase = (id, comments) => {

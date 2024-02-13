@@ -25,7 +25,8 @@ function Home({ }) {
 
   const handleBlockUnBlockUser = async () => {
     try {
-      await UnitDataService.updateUser(user.uid, !user.status);
+      var body = { status: !user.status }
+      await UnitDataService.updateUser(user.uid, body);
       setUser({ ...user, status: !user.status })
       setShowBlockModal(false)
       history.push(AppRoutes.listUsers);

@@ -15,6 +15,7 @@ const AppRoutes = {
     home: "/home",
     login: "/",
     helpAndFeedback: "/help-and-feedback",
+    deleteAccount: "/delete-account"
 
 
 }

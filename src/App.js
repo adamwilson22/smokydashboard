@@ -20,6 +20,7 @@ import ListOfPosts from './pages/ListOfPosts/ListOfPosts';
 import AppRoutes from './services/AppRoutes';
 import './App.css';
 import HelpAndFeedback from './pages/HelpAndFeedback/HelpAndFeedback';
+import DeleteAccount from './pages/login/DeleteAccount';
 
 function App() {
   return (
@@ -51,6 +52,7 @@ function App() {
             <Route component={HelpAndFeedback} path={AppRoutes.helpAndFeedback} ></Route>
             <Route component={ViewChat} path={AppRoutes.viewChat} ></Route>
             <Route component={Home} path={AppRoutes.home} ></Route>
+            <Route component={DeleteAccount} path={AppRoutes.deleteAccount} ></Route>
             <Route component={Login} path={AppRoutes.login} ></Route>
           </Switch>
         </UserAuthContextProvider>
