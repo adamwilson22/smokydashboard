@@ -43,6 +43,11 @@ class UnitDataService {
         return getDocs(userObj);
     }
 
+    getUserByEmail = (email) => {
+        const userObj = query(collection(db, "user"), where("userEmail", "==", email));
+        return getDocs(userObj);
+    }
+
     getNotificationUsers = () => {
         const usersObj = query(collection(db, "user"), where("isNotification", "==", true));
         return getDocs(usersObj);

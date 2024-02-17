@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { useUserAuth } from '../../Context/UserAuthContext';
 import { AppLogger } from '../../services/AppLogger';
 import { showErrorToast, showSuccessToast, showToast } from '../../services/AppConstant';
 import { AppImages } from '../../services/AppImages';
+import { auth } from '../../firebase-config';
+import { get } from 'lodash';
 import unitServices from '../../services/unit.services';
 import unitService from '../../services/unit.service';
 import Button from 'react-bootstrap/Button';
@@ -12,8 +14,10 @@ import logo from "../../assets/logo2.png"
 import logo2 from "../../assets/deer.png"
 import moment from 'moment';
 import CustomModal from '../../components/CustomModal';
+import CustomLoader from '../../components/CustomLoader';
 
 function DeleteAccount() {
+    const { logIn, logOut } = useUserAuth();
     const [showPass, setShowPass] = useState(false)
     const [email, setEmail] = useState(
         "",
@@ -24,27 +28,23 @@ function DeleteAccount() {
         // "OutdoorTrader2024"
     );
     const [showDeleteModal, setShowDeleteModal] = useState(false)
-    const { logIn, user, logOut } = useUserAuth();
+    const [loading, setLoading] = useState(false)
 
     const handleSubmit = async () => {
-        // e.preventDefault()
+        setLoading(true)
         setShowDeleteModal(false)
 
         var isAdmin = false
         var date = moment().utcOffset('+05:00').format('MMMM DD, YYYY');
         var time = moment().utcOffset('+05:00').format('hh:mm:ss A');
         const dateString = `${date} at ${time} UTC+5`
-        // AppLogger("current date time ==== ", `${date} at ${time} UTC+5`)
 
         try {
             const response = await logIn(email, password)
-            // AppLogger("authentication response ==== ", response)
 
             const superAdmins = await unitService.getSuperAdmins();
             superAdmins.docs.forEach((doc) => {
-                // AppLogger("doc details", doc.data())
-                // AppLogger("response.user.uid", response)
-                if (doc.data().id == response.user.email) {
+                if (doc.data().id == get(response, "user.email", "")) {
                     isAdmin = true
                 }
             })
@@ -52,20 +52,40 @@ function DeleteAccount() {
             if (isAdmin) {
                 showToast("Admin can't be deleted")
                 await logOut();
+                setLoading(false)
             } else {
                 try {
+                    deleteUserAuth()
                     var body = { deletedAt: dateString, isDeleted: true }
-                    await unitServices.updateUser(user.uid, body);
+                    const currentUserDetails = await unitServices.getUserByEmail(get(response, "user.email", ""))
+
+                    if (get(currentUserDetails.docs[0], "data.uid", "")) {
+                        await unitServices.updateUser(get(currentUserDetails.docs[0], "data.uid", ""), body);
+                    }
                     showSuccessToast(`User deleted succesfully`)
+                    setLoading(false)
                 } catch (error) {
                     await logOut();
                     AppLogger("error deleting user ", error)
                     showErrorToast(error)
+                    setLoading(false)
                 }
             }
         } catch (err) {
+            console.log("Error === ", err.message)
             showErrorToast("Invalid Credentials")
+            setLoading(false)
         }
+    }
+
+    const deleteUserAuth = () => {
+        auth.currentUser.delete()
+            .then((resp) => {
+                console.log("user delete function response success")
+            })
+            .catch((error) => {
+                console.log("user delete function error", error)
+            });
     }
 
     return (
@@ -73,6 +93,9 @@ function DeleteAccount() {
             <div className='leftlogo'>
                 <img src={logo} alt="Logo" />
             </div>
+            {loading &&
+                <CustomLoader />
+            }
             <Container>
                 <Row>
                     <Col></Col>
@@ -81,6 +104,7 @@ function DeleteAccount() {
                             <div className='logo-wrp'>
                                 <img src={logo2} alt="Logo" />
                             </div>
+
                             <p><strong>Delete Account</strong></p>
                             <Form onSubmit={(e) => {
                                 e.preventDefault()
