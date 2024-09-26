@@ -71,14 +71,17 @@ function NotifyUsers({ }) {
             data: {},
             to: `${fcmToken}`
         }
-        fetch("https://fcm.googleapis.com/fcm/send", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `key=${AppConstant.FCM_SERVER_KEY}`
-            },
-            body: JSON.stringify(apiBody)
-        },)
+        fetch(
+            // "https://fcm.googleapis.com/fcm/send",
+            AppConstant.FirebaseNotiAPIPath,
+            {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${AppConstant.FCM_SERVER_KEY}`
+                },
+                body: JSON.stringify(apiBody)
+            },)
             .then((response) => response.json())
             .then((data) => {
                 // AppLogger("data fcm send notification", data)
