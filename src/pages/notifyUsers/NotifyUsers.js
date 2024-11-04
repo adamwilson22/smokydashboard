@@ -63,14 +63,21 @@ function NotifyUsers({ }) {
 
     const sendNotification = (title, body, fcmToken) => {
         var apiBody = {
-            notification: {
-                body: body,
-                title: title,
-                priority: "high"
-            },
-            data: {},
-            to: `${fcmToken}`
+            deviceToken: [fcmToken],
+            notificationTitle: title,
+            notificationBody: body,
         }
+
+        // var apiBody = {
+        //     notification: {
+        //         body: body,
+        //         title: title,
+        //         priority: "high"
+        //     },
+        //     data: {},
+        //     to: `${fcmToken}`
+        // }
+
         fetch(
             // "https://fcm.googleapis.com/fcm/send",
             AppConstant.FirebaseNotiAPIPath,

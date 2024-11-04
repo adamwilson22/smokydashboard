@@ -35,9 +35,11 @@ export const AppConstant = {
     // old key 
     // FCM_SERVER_KEY: "AAAALECX4aw:APA91bGpuV8uBdr1X3Cug7aOTV2zXncVsOAKsazltvr5K9mEhTFzg-j_w_S-02YKaDHYgisYocWi9i8yd2D-oW-gEyelWpsEisi4OW08WoXaT7JgkXFMHWNWMS-_K1YT9fQkut5oVx7n",
     // new key
-    FCM_SERVER_KEY: "125514978099-nvcd2tf4chshrbfdce5ohl2tb77ob61q.apps.googleusercontent.com",
-    //  "AAAAHTlGkzM:APA91bHHIpjROdKjCa7L8pC_fRlcivmkX63_bWKkgP1z9gWHFd3iHHAktj1UW3SV-aZjXYSCx_1Fm9YYhkhG2o-JkDESaMCkiLWC_-bqUW1TSYE9vR8Gd9-n0x99Bkm2sLkU3NHps-Ya",
-    FirebaseNotiAPIPath: "https://fcm.googleapis.com/v1/projects/outdoor-trader-8acf0/messages:send"
+    FCM_SERVER_KEY:
+        // "125514978099-nvcd2tf4chshrbfdce5ohl2tb77ob61q.apps.googleusercontent.com",
+        "AAAAHTlGkzM:APA91bHHIpjROdKjCa7L8pC_fRlcivmkX63_bWKkgP1z9gWHFd3iHHAktj1UW3SV-aZjXYSCx_1Fm9YYhkhG2o-JkDESaMCkiLWC_-bqUW1TSYE9vR8Gd9-n0x99Bkm2sLkU3NHps-Ya",
+    FirebaseNotiAPIPath: "https://us-central1-outdoor-trader-8acf0.cloudfunctions.net/api/sendNotification"
+    // "https://fcm.googleapis.com/v1/projects/outdoor-trader-8acf0/messages:send"
 }
 
 export const showErrorToast = (desc = "") => {
