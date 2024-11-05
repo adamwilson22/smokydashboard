@@ -15,6 +15,7 @@ import Table from 'react-bootstrap/Table';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import '../../App.css';
+import { get } from 'lodash';
 
 function AllProducts({ }) {
     const history = useHistory();
@@ -42,8 +43,13 @@ function AllProducts({ }) {
     };
 
     const handleRemoveProd = async () => {
+        const date = Date()
         try {
-            await firebaseServices.deleteProduct(selectedProd.id)
+            const body = {
+                isDeleted: true,
+                updatedAt: date.toString()
+            }
+            await firebaseServices.updateProduct(selectedProd.id, body)
             setShowModal(false)
         } catch (error) {
             AppLogger("error removing product", error)
@@ -81,6 +87,18 @@ function AllProducts({ }) {
     var finalList = []
     finalList = searchText ? searchList : storesList
 
+    const handleReportedUsers = (reportedUsers = []) => {
+        var usersList = []
+        reportedUsers.forEach(async (item) => {
+            const userData = await firebaseServices.getUserDetails(item)
+            if (userData) {
+                usersList.push(get(userData, "fullName", ""))
+            }
+        })
+
+        return handleTags(usersList)
+    }
+
     return (
         <>
             <div className='side-wrp'>
@@ -89,7 +107,7 @@ function AllProducts({ }) {
             <Navigation
                 originalList={storesList}
                 updatedList={(val) => setSearchList(val)}
-                searchKey={"productName"}
+                searchKey={"adName"}
                 showSearh={true}
                 setSearchQuery={(val) => setSearchText(val)}
             />
@@ -111,31 +129,33 @@ function AllProducts({ }) {
                                                     <th>Product Name</th>
                                                     <th>Description</th>
                                                     <th>Price</th>
-                                                    <th>Tags</th>
-                                                    <th>Approved</th>
+                                                    <th>Reported By</th>
+                                                    {/* <th>Approved</th> */}
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 {finalList.length != 0 ?
                                                     finalList.map((doc, index) => {
-                                                        return (
+                                                        return !get(doc, "isDeleted", false) && (
                                                             <tr key={doc.id}>
                                                                 <td>{index + 1}</td>
                                                                 <td>
                                                                     <img
-                                                                        src={doc.productImages.length != 0 ? doc.productImages[0] : AppImages.placeholder}
+                                                                        src={
+                                                                            get(doc, "media", []).length != 0
+                                                                                ? get(doc, "media[0].mediaUrl", "") : AppImages.placeholder}
                                                                         alt="Logo"
                                                                         width={60}
                                                                         height={60}
                                                                         style={{ borderRadius: 8, objectFit: "cover" }}
                                                                     />
                                                                 </td>
-                                                                <td>{doc.productName}</td>
-                                                                <td>{doc.productDescription}</td>
-                                                                <td>${doc.productPrice}</td>
-                                                                <td>{handleTags(doc.productTags)}</td>
-                                                                <td>
+                                                                <td>{doc.adName}</td>
+                                                                <td>{get(doc, "description", "") ? get(doc, "description", "") : "-"}</td>
+                                                                <td>${doc.price}</td>
+                                                                <td>{get(doc, "reportedUserIds", []).length > 0 ? handleReportedUsers(doc.reportedUserIds) : "-"}</td>
+                                                                {/* <td>
                                                                     <label class="switch">
                                                                         <input type="checkbox"
                                                                             // value={doc.isApproved}
@@ -148,7 +168,7 @@ function AllProducts({ }) {
                                                                         />
                                                                         <span class="slider round"></span>
                                                                     </label>
-                                                                </td>
+                                                                </td> */}
 
                                                                 {/* <td>{handleDateTime(doc.createdAt)}</td> */}
                                                                 <td className='flexColumn'>
@@ -197,7 +217,7 @@ function AllProducts({ }) {
                     show={showModal}
                     setShow={(val) => setShowModal(val)}
                     title={`Remove Product`}
-                    desc={`Are you sure you want to remove ${selectedProd.productName}?`}
+                    desc={`Are you sure you want to remove ${selectedProd.adName}?`}
                     btnText={`Yes`}
                     onClickDone={() => handleRemoveProd()}
                 />
@@ -207,7 +227,7 @@ function AllProducts({ }) {
                     show={showApproveModal}
                     setShow={(val) => setShowApproveModal(val)}
                     title={`${selectedProd.isApproved ? "Decline" : "Arppove"} Product`}
-                    desc={`Are you sure you want to ${selectedProd.isApproved ? "decline" : "arppove"} ${selectedProd.productName}?`}
+                    desc={`Are you sure you want to ${selectedProd.isApproved ? "decline" : "arppove"} ${selectedProd.adName}?`}
                     btnText={`Yes`}
                     onClickDone={() => handleApprove()}
                 />

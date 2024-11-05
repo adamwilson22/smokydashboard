@@ -29,7 +29,7 @@ class Sidebar extends Component {
                         {/* <Nav.Link href="/list-subscription-payments"><img src={subscIco} alt="Logo" />Subscribed Users</Nav.Link> */}
                         <Nav.Link href={AppRoutes.listEvents}><img src={eventIco} alt="Logo" />Hunts</Nav.Link>
                         {/* <Nav.Link href="/list-stores"><img src={storeIco} alt="Logo" />Stores</Nav.Link> */}
-                        {/* <Nav.Link href="/all-products"><img src={storeIco} alt="Logo" />Products</Nav.Link> */}
+                        <Nav.Link href="/all-products"><img src={storeIco} alt="Logo" />Products</Nav.Link>
                         <Nav.Link href={AppRoutes.notifyUsers}><img src={notifyIco} alt="Logo" />Notify Users</Nav.Link>
                         <Nav.Link href={AppRoutes.listChats}><img src={chatsIco} alt="Logo" />Chats</Nav.Link>
                         <Nav.Link href={AppRoutes.listPosts}><img src={chatsIco} alt="Logo" />Posts</Nav.Link>

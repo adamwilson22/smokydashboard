@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { useHistory, useLocation } from 'react-router-dom';
+import { showErrorToast, showSuccessToast } from '../services/AppConstant';
+import { AppLogger } from '../services/AppLogger';
 import Navigation from '../components/navbar/Navigation'
 import Sidebar from '../components/sidebar/Sidebar'
 import UnitUpdateForm from '../components/form/UnitUpdateForm';
@@ -11,8 +13,7 @@ import '../App.css';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import firebaseServices from "../services/unit.services"
-import { showErrorToast, showSuccessToast } from '../services/AppConstant';
-import { AppLogger } from '../services/AppLogger';
+import { get } from 'lodash';
 
 function EditProduct() {
     const { state } = useLocation();
@@ -28,10 +29,10 @@ function EditProduct() {
         if (state.productDetails) {
             // AppLogger("state.prod", state.productDetails)
             setProduct({
-                name: state.productDetails.productName,
-                desc: state.productDetails.productDescription,
-                price: state.productDetails.productPrice,
-                image: state.productDetails.productImages[0]
+                name: state.productDetails.adName,
+                desc: state.productDetails.description,
+                price: state.productDetails.price,
+                image: get(state, "productDetails.media[0].mediaUrl", "")
             })
         }
     }, [state])
@@ -40,9 +41,9 @@ function EditProduct() {
         e.preventDefault()
         try {
             const body = {
-                productName: product.name,
-                productDescription: product.desc,
-                productPrice: product.price
+                adName: product.name,
+                description: product.desc,
+                price: product.price
             }
             await firebaseServices.updateProduct(state.productDetails.id, body)
             showSuccessToast("Product Updated Successfully")
