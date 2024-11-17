@@ -39,7 +39,7 @@ const Home = ({ setSearchQuery, originalList = [], updatedList = [], searchKey =
       showSuccessToast("Logged Out Sucessfully")
       history.push(AppRoutes.login);
     } catch (error) {
-      console.log(error.message);
+      AppLogger(error.message);
     }
   };
 
@@ -88,7 +88,7 @@ const Home = ({ setSearchQuery, originalList = [], updatedList = [], searchKey =
                   ref={inputRef}
                   type="search"
                   placeholder="Search here..."
-                  className="me-2 px-1"
+                  className="me-2 px-1 search-bar"
                   aria-label="Search"
                   onChange={(e) => handleSearch(e.target.value)}
                 />

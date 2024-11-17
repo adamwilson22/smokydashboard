@@ -1,8 +1,10 @@
-let cacheDate="appV1";
+import { AppLogger } from "../src/services/AppLogger";
 
-this.addEventListener("install",(event)=>{
+let cacheDate = "appV1";
+
+this.addEventListener("install", (event) => {
     event.waitUntil(
-        caches.open(cacheDate).then((cache)=>{
+        caches.open(cacheDate).then((cache) => {
             cache.addAll([
                 "/static/js/bundle.js",
                 "/manifest.json",
@@ -13,4 +15,4 @@ this.addEventListener("install",(event)=>{
     )
 })
 
-self.addEventListener('fetch',() => console.log("fetch"));
+self.addEventListener('fetch', () => AppLogger("fetch"));

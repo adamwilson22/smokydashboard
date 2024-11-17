@@ -9,7 +9,7 @@ import DataTable from "../../components/chart/DataTable";
 function Home() {
     const [unitId, setUnitId] = useState("");
     const getUnitIdHandler = (id) => {
-        console.log("the id of the click unit is:", id);
+        // console.log("the id of the click unit is:", id);
         setUnitId(id);
     }
     return (

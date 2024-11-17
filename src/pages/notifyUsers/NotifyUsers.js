@@ -13,6 +13,7 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import '../../App.css';
+import { get } from 'lodash';
 
 function NotifyUsers({ }) {
     const [listOfUsers, setListOfUsers] = useState([]);
@@ -24,14 +25,14 @@ function NotifyUsers({ }) {
 
     useEffect(() => {
         getUsersForNotification();
-        AppLogger("getUsersForNotification", "called")
+        // AppLogger("getUsersForNotification", "called")
     }, [])
 
     const getUsersForNotification = async () => {
         var dummyList = []
         const data = await FBServices.getNotificationUsers();
         data.docs.map((doc) => {
-            AppLogger("user details", doc.data())
+            // AppLogger("user details", doc.data())
             if (doc.data().fcmToken != "iOS Device")
                 dummyList.push({ value: doc.data().fcmToken, label: doc.data().fullName })
         })
@@ -50,67 +51,62 @@ function NotifyUsers({ }) {
     //     })
     // }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
+        var success = 0
         if (selectedOptions.length != 0) {
-            selectedOptions.forEach((item) => {
-                if (item.value != "*") {
-                    sendNotification(notifyBody.title, notifyBody.body, item.value)
+            for (let index = 0; index < selectedOptions.length; index++) {
+                const element = selectedOptions[index];
+                if (get(element, "value", "") != "*") {
+                    await fetch(
+                        AppConstant.FirebaseNotiAPIPath,
+                        {
+                            method: "POST",
+                            headers: {
+                                'Content-Type': 'application/json',
+                                Authorization: `Bearer ${AppConstant.FCM_SERVER_KEY}`
+                            },
+                            body: JSON.stringify({
+                                deviceToken: [get(element, "value", "")],
+                                notificationTitle: notifyBody.title,
+                                notificationBody: notifyBody.body,
+                            })
+                        },)
+                        .then((response) => response.json())
+                        .then((data) => {
+                            AppLogger("data fcm send notification", data)
+                            if (get(data, "status", "") != "error")
+                                success += 1
+                        })
+                        .catch((error) => {
+                            AppLogger("error fcm send notification", error)
+                        })
                 }
-            })
-        }
-    }
-
-    const sendNotification = (title, body, fcmToken) => {
-        var apiBody = {
-            deviceToken: [fcmToken],
-            notificationTitle: title,
-            notificationBody: body,
+            }
         }
 
-        // var apiBody = {
-        //     notification: {
-        //         body: body,
-        //         title: title,
-        //         priority: "high"
-        //     },
-        //     data: {},
-        //     to: `${fcmToken}`
-        // }
-
-        fetch(
-            // "https://fcm.googleapis.com/fcm/send",
-            AppConstant.FirebaseNotiAPIPath,
-            {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${AppConstant.FCM_SERVER_KEY}`
-                },
-                body: JSON.stringify(apiBody)
-            },)
-            .then((response) => response.json())
-            .then((data) => {
-                // AppLogger("data fcm send notification", data)
+        if (selectedOptions.find((item) => item.label == "All") != undefined || selectedOptions.length != 1) {
+            if (success == selectAllOption.length - 1) {
                 setSelectedOptions([])
-                showSuccessToast("Notification Send Successfully")
                 setNotifyBody({
                     title: "",
                     body: "",
                 })
-            })
-            .catch((error) => {
-                // AppLogger("error fcm send notification", error)
-                showErrorToast("Unable to send Notification")
-            })
+                showSuccessToast("Notifications are sent successfully.")
+            } else {
+                showErrorToast("Failed to send the notifications.")
+            }
+        } else if (success == 1) {
+            showSuccessToast("Notification are sent successfully.")
+        } else {
+            showErrorToast("Failed to send the notification.")
+        }
     }
 
     const selectAllOption = { label: 'Select All', value: '*' };
 
     const handleChange = (newSelectedOptions, actionMeta) => {
         var allSelected = false
-        // AppLogger("value", newSelectedOptions)
-        // AppLogger("actionMeta", actionMeta)
 
         if (actionMeta.action == "select-option") {
             allSelected = actionMeta.option.label == "All"

@@ -72,7 +72,7 @@ function DeleteAccount() {
                 }
             }
         } catch (err) {
-            console.log("Error === ", err.message)
+            AppLogger("Error === ", err.message)
             showErrorToast("Invalid Credentials")
             setLoading(false)
         }
@@ -81,10 +81,10 @@ function DeleteAccount() {
     const deleteUserAuth = () => {
         auth.currentUser.delete()
             .then((resp) => {
-                console.log("user delete function response success")
+                AppLogger("user delete function response success", "")
             })
             .catch((error) => {
-                console.log("user delete function error", error)
+                AppLogger("user delete function error", error)
             });
     }
 

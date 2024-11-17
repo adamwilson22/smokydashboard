@@ -77,6 +77,10 @@ class UnitDataService {
         const snapshot = await getCountFromServer(productsCollection);
         return snapshot.data().count
     }
+    getFeedbackCount = async () => {
+        const snapshot = await getCountFromServer(feedbackColl);
+        return snapshot.data().count
+    }
 
 }
 

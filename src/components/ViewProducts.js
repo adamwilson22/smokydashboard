@@ -38,7 +38,7 @@ function ViewProducts() {
                 AppLogger("product item", doc.data())
             })
         } else {
-            console.log('Error: no products found')
+            AppLogger('Error: no products found', "")
         }
     };
 
